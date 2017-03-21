@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductMapper">
+	<resultMap id="productSelectMap" type="product">
+		<result property="prodNo" 		column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="prodName"		column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail" 	column="prod_detail" 		jdbcType="VARCHAR" />
+		<result property="manuDate" 	column="manufacture_day" 	jdbcType="VARCHAR" />
+		<result property="price" 		column="price" 				jdbcType="NUMERIC" />
+		<result property="fileName" 	column="image_file" 		jdbcType="VARCHAR" />
+		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="proTranCode"	column="tran_status_code"	jdbcType="CHAR"/>
+	</resultMap>
+	
+	<insert id="addProduct" parameterType="product">
+		INSERT INTO product(prod_no, prod_name, prod_detail, manufacture_day
+							, price, image_file, reg_date)
+		VALUES (seq_product_prod_no.nextval,#{prodName},#{prodDetail:VARCHAR}
+				,#{manuDate:VARCHAR},#{price:NUMERIC},#{fileName:VARCHAR},SYSDATE)
+	</insert>
+	
+	<select id="getProduct" parameterType="string"	resultMap="productSelectMap">
+		SELECT prod_no, prod_name, prod_detail, manufacture_day
+				, price, image_file, reg_date
+		FROM product
+		WHERE prod_no = #{prodNo}
+	</select>
+	
+	<update id="updateProduct" parameterType="product">
+		UPDATE product
+		SET prod_name = #{prodName}, prod_detail = #{prodDetail:VARCHAR}
+			, manufacture_day = #{manuDate:VARCHAR}
+			, price = #{price:NUMERIC}, image_file = #{fileName:VARCHAR}
+		WHERE prod_no = #{prodNo}
+	</update>
+	
+	<!-- <select  id="getProductList" parameterType="map" resultMap="productSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.* , ROWNUM AS row_seq
+			FROM ( SELECT p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day
+				, p.price, p.image_file, p.reg_date
+				,CASE WHEN t.tran_status_code ='0' THEN '구매완료'
+					WHEN t.tran_status_code ='1' THEN '배송중'
+					WHEN t.tran_status_code ='2' THEN '배송완료'
+					ELSE '판매중' END AS tran_status_code
+				FROM product p, transaction t
+				WHERE p.prod_no = t.prod_no(+)
+					ORDER BY p.prod_no DESC
+				) inner_table
+			WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+	</select>
+	<select  id="getTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT p.prod_no
+				FROM product p, transaction t
+				WHERE p.prod_no = t.prod_no(+)
+					ORDER BY p.prod_no DESC
+				) countTable
+	</select> -->
+	<select  id="getProductList" parameterType="map" resultMap="productSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.* , ROWNUM AS row_seq
+			FROM ( SELECT p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day
+				, p.price, p.image_file, p.reg_date
+				,CASE WHEN t.tran_status_code ='0' THEN '구매완료'
+					WHEN t.tran_status_code ='1' THEN '배송중'
+					WHEN t.tran_status_code ='2' THEN '배송완료'
+					ELSE '판매중' END AS tran_status_code
+				FROM product p, transaction t
+				WHERE p.prod_no = t.prod_no(+)
+				<if test="search.searchCondition != null">
+					<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+						AND p.prod_no = #{search.searchKeyword}
+					</if>
+					<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+						AND p.prod_name LIKE '%'||#{search.searchKeyword}||'%'
+					</if>
+					<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
+						AND p.price LIKE CONCAT'%'||#{search.searchKeyword}||'%'
+					</if>
+				</if>
+				
+				<if test="search.searchValueLow != search.searchValueHigh">
+					<if test="search.searchValueLow > search.searchValueHigh">
+						AND p.price BETWEEN #{search.searchValueHigh} AND #{search.searchValueLow}
+					</if>
+					<if test="search.searchValueHigh &lt; search.searchValueLow">
+						AND p.price BETWEEN #{search.searchValueLow} AND #{search.searchValueHigh}
+					</if>
+				</if>
+				
+				<if test="search.viewSoldItem">
+					AND t.tran_status_code='0'
+				</if>
+				
+				<if test="sortTarget != null">
+					<choose>
+						<when test="sortTarget=='price'">ORDER BY p.price</when>
+						<when test="sortTarget=='prodName'">ORDER BY p.prod_name</when>
+					</choose>
+					<if test="isDESC == '0'">
+						DESC
+					</if>
+				</if>
+				<if test="sortTarget == null">
+					ORDER BY p.prod_no DESC
+				</if>
+				) inner_table
+			WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+	</select>
+	<select  id="getTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT p.prod_no
+				FROM product p, transaction t
+				WHERE p.prod_no = t.prod_no(+)
+				<if test="searchCondition != null">
+					<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+						AND p.prod_no = #{search.searchKeyword}
+					</if>
+					<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+						AND p.prod_name LIKE '%'||#{search.searchKeyword}||'%'
+					</if>
+					<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
+						AND p.price LIKE CONCAT'%'||#{search.searchKeyword}||'%'
+					</if>
+				</if>
+				
+				<if test="search.searchValueLow != search.searchValueHigh">
+					<if test="search.searchValueLow > search.searchValueHigh">
+						AND p.price BETWEEN #{search.searchValueHigh} AND #{search.searchValueLow}
+					</if>
+					<if test="search.searchValueHigh &lt; search.searchValueLow">
+						AND p.price BETWEEN #{search.searchValueLow} AND #{search.searchValueHigh}
+					</if>
+				</if>
+				
+				<if test="search.viewSoldItem">
+					AND t.tran_status_code='0'
+				</if>
+				
+				<if test="sortTarget != null">
+					<choose>
+						<when test="sortTarget=='price'">ORDER BY p.price</when>
+						<when test="sortTarget=='prodName'">ORDER BY p.prod_name</when>
+					</choose>
+					<if test="isDESC == '0'">
+						DESC
+					</if>
+				</if>
+				<if test="sortTarget == null">
+					ORDER BY p.prod_no DESC
+				</if>
+				) countTable
+	</select>
+</mapper>
