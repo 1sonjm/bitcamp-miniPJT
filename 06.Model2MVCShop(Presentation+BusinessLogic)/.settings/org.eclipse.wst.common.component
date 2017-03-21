@@ -4,7 +4,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
-        <property name="context-root" value="06.Model2MVCShop(Presentation+BusinessLogic)"/>
         <property name="java-output-path" value="/06.Model2MVCShop(Presentation+BusinessLogic)/build/classes"/>
+        <property name="context-root" value="/"/>
     </wb-module>
 </project-modules>

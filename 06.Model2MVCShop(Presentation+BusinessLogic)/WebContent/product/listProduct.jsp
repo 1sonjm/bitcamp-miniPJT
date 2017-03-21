@@ -19,11 +19,34 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <style type="text/css">
-.btn span.glyphicon {
-	opacity: 0;
+/* Hiding the checkbox, but allowing it to be focused */
+.badgebox
+{
+    opacity: 0;
 }
-.btn.active span.glyphicon {
-	opacity: 1;
+
+.badgebox + .badge
+{
+    /* Move the check mark away when unchecked */
+    text-indent: -999999px;
+    /* Makes the badge's width stay the same checked and unchecked */
+	width: 27px;
+}
+
+.badgebox:focus + .badge
+{
+    /* Set something to make the badge looks focused */
+    /* This really depends on the application, in my case it was: */
+    
+    /* Adding a light border */
+    box-shadow: inset 0px 0px 5px;
+    /* Taking the difference out of the padding */
+}
+
+.badgebox:checked + .badge
+{
+    /* Move the check mark back when checked */
+	text-indent: 0;
 }
 #keywordPlace input { width: 150px; }
 #keywordPlace input:focus { width: 200px; }
@@ -37,8 +60,9 @@ function fncGetList(currentPage){
 	document.getElementById("currentPage").value = currentPage;
 	document.detailForm.submit();
 }
-function fncSorting(sortingTarget,isASC){
-	document.getElementById("searchSortingOption").value = sortingTarget+","+isASC;
+function fncSorting(sortingTarget,isDESC){
+	document.getElementById("SortingTarget").value = sortingTarget
+	document.getElementById("SortingDESC").value = isDESC;
 	document.detailForm.submit();
 }
 function fncViewSoldItem(){
@@ -74,13 +98,11 @@ function fncViewSoldItem(){
 <div class="form-inline pull-right">
 	<div class="form-group" id="keywordPlace">
 		<c:if test='${param.menu=="manage"}'>
-			<div class="btn-group" data-toggle="buttons">
-				<label class="btn btn-info active">
-					<input type="checkbox" name="viewSoldItem" autocomplete="off" onclick="fncViewSoldItem()" ${viewSoldItem?'checked':''}>
-					<span class="glyphicon glyphicon-ok"></span>
-				</label>
-				<label>구매물품 보기</label>
-			</div>&nbsp;&nbsp;&nbsp;&nbsp;
+			<label for="default" class="btn btn-default">구매물품 보기
+				<input type="checkbox" id="default" class="badgebox" name="viewSoldItem"
+					onclick="fncGetList('1')" ${search.viewSoldItem?'checked':''}>
+				<span class="badge">&check;</span>
+			</label>
 		</c:if>
 		<select name="searchCondition" class="form-control">
 			<c:if test='${param.menu=="manage"}'>
@@ -103,8 +125,10 @@ function fncViewSoldItem(){
 	<button class="btn btn-default" onclick="javascript:fncGetList('1');">검색</button>
 </div>
 <p>전체 <kbd>${resultPage.totalCount}</kbd> 건수, 현재 <kbd>${search.currentPage}</kbd> 페이지</p><br/>
-<input type="hidden" id="searchSortingOption" name="searchSortingOption" 
-		value="${empty search.searchSortingOption?'?':search.searchSortingOption}">
+<input type="hidden" id="SortingTarget" name="SortingTarget" 
+		value="${empty search.sortingTarget?'?':search.sortingTarget}">
+<input type="hidden" id="SortingDESC" name="SortingDESC" 
+		value="${search.sortingDESC}">
 <table class="table table-hover">
 	<thead>
 		<tr>

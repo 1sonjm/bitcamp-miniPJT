@@ -2,14 +2,15 @@ package com.model2.mvc.common;
 
 
 public class Search {
-	
+
 	///Field
 	private int currentPage;
 	private String searchCondition;
 	private String searchKeyword;
 	private int searchValueLow;
 	private int searchValueHigh;
-	private String searchSortingOption;
+	private String sortingTarget;
+	private boolean sortingDESC;
 	private boolean viewSoldItem;
 	private int pageSize;
 	//==> 리스트화면 currentPage에 해당하는 회원정보를 ROWNUM 사용 SELECT 위해 추가된 Field 
@@ -37,9 +38,12 @@ public class Search {
 
 	public int getSearchValueHigh() {		return searchValueHigh;	}
 	public void setSearchValueHigh(int searchValueHigh) {		this.searchValueHigh = searchValueHigh;	}
+	
+	public String getSortingTarget() {		return sortingTarget;	}
+	public void setSortingTarget(String sortingTarget) {		this.sortingTarget = sortingTarget;	}
 
-	public String getSearchSortingOption() {		return searchSortingOption;	}
-	public void setSearchSortingOption(String searchSortingOption) {		this.searchSortingOption = searchSortingOption;	}
+	public boolean isSortingDESC() {		return sortingDESC;	}
+	public void setSortingDESC(boolean sortingDESC) {		this.sortingDESC = sortingDESC;	}
 
 	public boolean isViewSoldItem() {		return viewSoldItem;	}
 	public void setViewSoldItem(boolean viewSoldItem) {		this.viewSoldItem = viewSoldItem;	}
@@ -69,8 +73,10 @@ public class Search {
 		builder.append(searchValueLow);
 		builder.append(", searchValueHigh=");
 		builder.append(searchValueHigh);
-		builder.append(", searchSortingOption=");
-		builder.append(searchSortingOption);
+		builder.append(", sortingTarget=");
+		builder.append(sortingTarget);
+		builder.append(", sortingDESC=");
+		builder.append(sortingDESC);
 		builder.append(", viewSoldItem=");
 		builder.append(viewSoldItem);
 		builder.append(", pageSize=");
@@ -82,7 +88,5 @@ public class Search {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	///Method
 	
 }

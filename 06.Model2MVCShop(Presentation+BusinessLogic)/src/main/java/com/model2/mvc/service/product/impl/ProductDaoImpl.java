@@ -43,19 +43,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public List<Product> getProductList(Search search) throws Exception {
-		Map<String, Object> searchMap = new HashMap<String, Object>();
-		searchMap.put("sortTarget", null);
-		searchMap.put("isDESC", null);
-		if(search.getSearchSortingOption() != null){
-			if(!search.getSearchSortingOption().equals("?")){
-				String[] sortOptionTemp = search.getSearchSortingOption().split(",");
-				searchMap.put("sortTarget", sortOptionTemp[0]);
-				searchMap.put("isDESC", sortOptionTemp[1]);
-			}
-		}
-		searchMap.put("search", search);
-		
-		return sqlSession.selectList("ProductMapper.getProductList", searchMap);
+		return sqlSession.selectList("ProductMapper.getProductList", search);
 	}
 
 	@Override

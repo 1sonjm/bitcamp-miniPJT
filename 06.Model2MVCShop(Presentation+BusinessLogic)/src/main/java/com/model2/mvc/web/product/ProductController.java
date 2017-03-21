@@ -83,8 +83,11 @@ public class ProductController {
 	
 	@RequestMapping("/listProduct.do")
 	public String listProduct(@ModelAttribute("search")Search search
+							,@RequestParam(value="viewSoldItem", defaultValue="off")String viewSoldItem
 							,Model model)throws Exception{
-
+		if(viewSoldItem.equals("on")){
+			search.setViewSoldItem(true);
+		}
 		if(search.getCurrentPage()==0){
 			search.setCurrentPage(1);
 		}
