@@ -82,7 +82,6 @@ public class AddProductAction extends Action {
 				System.out.println("<script>alert('파일 크기는 1mb까지, 업로드 파일 용량은"+overSize+"mb 입니다')history.back();</script>");
 			}
 		}
-		System.out.println("33333");
 		return "redirect:/listProduct.do?menu=manage";
 	}
 }
