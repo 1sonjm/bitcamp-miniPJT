@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReviewMapper">
+	
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO reviews(review_no, tran_no, prod_no, buyer_id
+							,review_title,review_content,image_name,answer_title
+							,answer_content,grade,reg_date)
+		VALUES (seq_reviews_review_no.nextval,#{purchasehistory.tranNo},#{purchaseItem.prodNo},#{buyer.userId}
+				,#{reviewTitle},#{reviewContent:VARCHAR},#{imageName:VARCHAR},#{answerTitle:VARCHAR}
+				,#{answerContent:VARCHAR},#{grade},SYSDATE)
+	</insert>
+	
+</mapper>

@@ -58,7 +58,7 @@ public class ProductController {
 		
 		productService.addProduct(product);
 		
-		return "redirect:/listProduct.do?menu=manage";
+		return "redirect:/product/listProduct?menu=manage";
 	}
 	
 	@RequestMapping(value="getProduct",method=RequestMethod.GET)
@@ -95,7 +95,7 @@ public class ProductController {
 	public String updateProduct(@ModelAttribute("product")Product product
 							)throws Exception{
 		productService.updateProduct(product);
-		return "redirect:/listProduct.do?menu=manage";
+		return "redirect:/product/listProduct?menu=manage";
 	}
 	
 	@RequestMapping(value="listProduct")

@@ -23,7 +23,7 @@ import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.purchase.PurchaseService;
 
 @Controller
-@RequestMapping("/Purchase/*")
+@RequestMapping("/purchase/*")
 public class PurchaseController {
 
 	@Autowired
@@ -104,7 +104,7 @@ public class PurchaseController {
 		purchaseService.updatePurcahse(purchase);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/getPurchase.do?tranNo="+tranNo);
+		modelAndView.setViewName("redirect:/purchase/getPurchase?tranNo="+tranNo);
 		return modelAndView;
 	}
 	
@@ -118,7 +118,7 @@ public class PurchaseController {
 		purchaseService.updateTranCode(purchase);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/listProduct.do?menu=manage");
+		modelAndView.setViewName("redirect:/purchase/listProduct?menu=manage");
 		return modelAndView;
 	}
 	
@@ -130,7 +130,7 @@ public class PurchaseController {
 		purchaseService.updateTranCode(purchase);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/listPurchase.do");
+		modelAndView.setViewName("redirect:/purchase/listPurchase");
 		return modelAndView;
 	}
 	

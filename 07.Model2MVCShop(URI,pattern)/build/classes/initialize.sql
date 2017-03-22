@@ -58,7 +58,7 @@ CREATE TABLE reviews (
 	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
 	review_title			VARCHAR2(100)	NOT NULL,
 	review_content			VARCHAR2(400),
-	image_name				VARCHAR2()
+	image_name				VARCHAR2(100),
 	answer_title			VARCHAR2(100),
 	answer_content			VARCHAR2(400),
 	grade					NUMBER(1)		DEFAULT 3,
@@ -110,6 +110,15 @@ insert into product values (seq_product_prod_no.nextval,'연꽃','정원을 가꿔보세�
 				,232300, 'AHlbAAAAtDPSiQAA.jpg',to_date('2012/11/15 17:39:01', 'YYYY/MM/DD HH24:MI:SS'));
 insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','20120212'
 				,600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+
+INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
+					, dlvy_date, dlvy_request, tran_status_code, order_date) 
+VALUES (seq_transaction_tran_no.nextval,10000,'user09',1,'test1','111-111-1111'
+		,'테스트주소1','2012/11/11', '주문요청', '0', SYSDATE);
+INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
+					, dlvy_date, dlvy_request, tran_status_code, order_date) 
+VALUES (seq_transaction_tran_no.nextval,10001,'user09',1,'test2','222-222-2222'
+		,'테스트주소2','2012/11/22', '주문요청2', '0', SYSDATE);
 
 commit;
 

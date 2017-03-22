@@ -1,34 +1,36 @@
 package com.model2.mvc.service.domain;
 
-public class Reviews {
+import org.springframework.web.multipart.MultipartFile;
+
+public class Review {
 	
 	private int reviewNo;
-	private int	tranNo;
-	private int prodNo;
-	private String buyerId;
+	private Purchase purchasehistory;
+	private Product purchaseItem;
+	private User buyer;
 	private String reviewTitle;
 	private String reviewContent;
 	private String imageName;
+	private MultipartFile uploadfile;
 	private String answerTitle;
 	private String answerContent;
 	private int grade;
 	private String regDate;
 	
-	public Reviews() {
-		// TODO Auto-generated constructor stub
+	public Review() {
 	}
 
 	public int getReviewNo() {		return reviewNo;	}
 	public void setReviewNo(int reviewNo) {		this.reviewNo = reviewNo;	}
+	
+	public Purchase getPurchasehistory() {		return purchasehistory;	}
+	public void setPurchasehistory(Purchase purchasehistory) {		this.purchasehistory = purchasehistory;	}
 
-	public int getTranNo() {		return tranNo;	}
-	public void setTranNo(int tranNo) {		this.tranNo = tranNo;	}
+	public Product getPurchaseItem() {		return purchaseItem;	}
+	public void setPurchaseItem(Product purchaseItem) {		this.purchaseItem = purchaseItem;	}
 
-	public int getProdNo() {		return prodNo;	}
-	public void setProdNo(int prodNo) {		this.prodNo = prodNo;	}
-
-	public String getBuyerId() {		return buyerId;	}
-	public void setBuyerId(String buyerId) {		this.buyerId = buyerId;	}
+	public User getBuyer() {		return buyer;	}
+	public void setBuyer(User buyer) {		this.buyer = buyer;	}
 
 	public String getReviewTitle() {		return reviewTitle;	}
 	public void setReviewTitle(String reviewTitle) {		this.reviewTitle = reviewTitle;	}
@@ -51,23 +53,28 @@ public class Reviews {
 	public String getRegDate() {		return regDate;	}
 	public void setRegDate(String regDate) {		this.regDate = regDate;	}
 
+	public MultipartFile getUploadfile() {		return uploadfile;	}
+	public void setUploadfile(MultipartFile uploadfile) {		this.uploadfile = uploadfile;	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Reviews [reviewNo=");
+		builder.append("Review [reviewNo=");
 		builder.append(reviewNo);
-		builder.append(", tranNo=");
-		builder.append(tranNo);
-		builder.append(", prodNo=");
-		builder.append(prodNo);
-		builder.append(", buyerId=");
-		builder.append(buyerId);
+		builder.append(", purchasehistory=");
+		builder.append(purchasehistory);
+		builder.append(", purchaseItem=");
+		builder.append(purchaseItem);
+		builder.append(", buyer=");
+		builder.append(buyer);
 		builder.append(", reviewTitle=");
 		builder.append(reviewTitle);
 		builder.append(", reviewContent=");
 		builder.append(reviewContent);
 		builder.append(", imageName=");
 		builder.append(imageName);
+		builder.append(", uploadfile=");
+		builder.append(uploadfile);
 		builder.append(", answerTitle=");
 		builder.append(answerTitle);
 		builder.append(", answerContent=");
@@ -79,5 +86,4 @@ public class Reviews {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }
