@@ -1,0 +1,7 @@
+mybastis dynamicSQL
+
+Q.
+paramterType을 map으로 전달했으나 그안의 domain객체로 전달받는 상황
+
+A. 07
+각각의 if문과 값들을 원자로 전달하니 이상없이 실행됨

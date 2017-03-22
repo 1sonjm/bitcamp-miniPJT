@@ -1,0 +1,12 @@
+BeanCreationException_1
+
+Q.
+Error creating bean with name 'userController': Injection of autowired dependencies failed;
+발생 
+
+A. 06
+<listener>
+   <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+
+web.xml에 누락됨

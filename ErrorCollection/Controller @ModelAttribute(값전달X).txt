@@ -1,0 +1,10 @@
+Controller @ModelAttribute(값전달X)
+
+Q. 
+실행시 전부 wiring이 되고 get방식으로 param을 전달할경우 받아지지만
+@ModelAttribute로는 값이 전달되지 않았다.
+
+A. 06
+JSP안 form의 속성중 enctype="multipart/form-data" 은 이미지를 보낼수있지만
+getParameter를 사용할 수 없었다. 하지만 spring에선 getprameter를 사용하여
+mapping했었기에 값전달이 불가능했다.
