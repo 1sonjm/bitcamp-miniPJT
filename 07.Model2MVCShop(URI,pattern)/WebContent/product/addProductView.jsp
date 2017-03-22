@@ -23,9 +23,10 @@
 </script>
 
 <script type="text/javascript">
+<!--
 function fncAddProduct(){
 	//Form 유효성 검증
- 	/* var name = document.detailForm.prodName.value;
+ 	var name = document.detailForm.prodName.value;
 	var detail = document.detailForm.prodDetail.value;
 	var manuDate = document.detailForm.manuDate.value;
 	var price = document.detailForm.price.value;
@@ -46,7 +47,7 @@ function fncAddProduct(){
 		alert("가격은 반드시 입력하셔야 합니다.");
 		return;
 	}
- */
+
 	document.detailForm.action='/product/addProduct';
 	document.detailForm.submit();
 }
@@ -54,6 +55,7 @@ function fncAddProduct(){
 function resetData(){
 	document.detailForm.reset();
 }
+-->
 </script>
 </head>
 
@@ -127,7 +129,7 @@ function resetData(){
 	<tr>
 		<td width="104" class="ct_write">상품이미지</td>
 		<td class="ct_write01">
-			<input type="file" class="form-control" name="uploadfile" style="width: 250px;">
+			<input type="file" class="form-control" name="uploadfile" style="width: 300px;">
 		</td>
 	</tr>
 </table>

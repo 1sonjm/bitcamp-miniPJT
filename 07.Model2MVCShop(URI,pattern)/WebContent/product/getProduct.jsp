@@ -65,7 +65,7 @@
 			상품이미지 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td class="ct_write01">
-			<img src = "/images/uploadFiles/${product.fileName}" alt="${product.fileName}" width="300"/>
+			<img alt="사진" src="/images/uploadFiles/${product.fileName}" width="300"/>
 		</td>
 	</tr>
 	<tr>
