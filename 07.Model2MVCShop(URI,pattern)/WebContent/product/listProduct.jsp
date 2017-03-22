@@ -126,7 +126,7 @@ function fncViewSoldItem(){
 </div>
 <p>전체 <kbd>${resultPage.totalCount}</kbd> 건수, 현재 <kbd>${search.currentPage}</kbd> 페이지</p><br/>
 <input type="hidden" id="SortingTarget" name="SortingTarget" 
-		value="${empty search.sortingTarget?'?':search.sortingTarget}">
+		value="${empty search.sortingTarget?'':search.sortingTarget}">
 <input type="hidden" id="SortingDESC" name="SortingDESC" 
 		value="${search.sortingDESC}">
 <table class="table table-hover">
@@ -157,7 +157,7 @@ function fncViewSoldItem(){
 		<tr class="ct_list_pop">
 			<c:if test='${param.menu=="search"}'>
 				<td class="ct_line02">
-					<img alt="사진" src="./images/uploadFiles/${product.fileName}" width="100"/>
+					<img alt="사진" src="/images/uploadFiles/${product.fileName}" width="100"/>
 				</td>
 			</c:if>
 			<c:set var="i" value="${i+1}"/>

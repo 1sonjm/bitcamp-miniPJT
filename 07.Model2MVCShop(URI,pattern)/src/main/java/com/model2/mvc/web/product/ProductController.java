@@ -1,5 +1,6 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
@@ -38,11 +40,24 @@ public class ProductController {
 	@Value("#{commonProperties['pageSize']?: 2}")
 	int pageSize;
 	
-	@RequestMapping(value="addProduct",method=RequestMethod.GET)
+	@RequestMapping(value="addProduct",method=RequestMethod.POST)
 	public String addProduct(@ModelAttribute("product")Product product
+							,HttpSession session
 							) throws Exception{
 		product.setManuDate(product.getManuDate().replace("-", ""));
+		
+		MultipartFile uploadfile = product.getUploadfile();
+		if (uploadfile != null) {
+			String fileName = uploadfile.getOriginalFilename();
+			product.setFileName(fileName);
+
+			File file = new File(session.getServletContext().getRealPath("/")
+								+"images/uploadFiles/" + fileName);
+			uploadfile.transferTo(file);
+		}
+		
 		productService.addProduct(product);
+		
 		return "redirect:/listProduct.do?menu=manage";
 	}
 	

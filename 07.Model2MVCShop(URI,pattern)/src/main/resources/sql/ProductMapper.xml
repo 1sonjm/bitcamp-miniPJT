@@ -53,7 +53,7 @@
 					<choose>
 						<when test="searchCondition == 0 and searchKeyword !=''">AND p.prod_no = #{searchKeyword}</when>
 						<when test="searchCondition == 1 and searchKeyword !=''">AND p.prod_name LIKE '%'||#{searchKeyword}||'%'</when>
-						<when test="earchCondition == 2 and searchKeyword !=''">AND p.price LIKE '%'||#{searchKeyword}||'%'</when>
+						<when test="searchCondition == 2 and searchKeyword !=''">AND p.price LIKE '%'||#{searchKeyword}||'%'</when>
 					</choose>
 				</if>
 				
@@ -66,16 +66,17 @@
 					AND t.tran_status_code = '0'
 				</if>
 				
+				ORDER BY
 				<if test="sortingTarget != null">
 					<choose>
-						<when test="sortingTarget =='price'">ORDER BY p.price</when>
-						<when test="sortingTarget =='prodName'">ORDER BY p.prod_name</when>
+						<when test="sortingTarget =='price'">p.price</when>
+						<when test="sortingTarget =='prodName'">p.prod_name</when>
 					</choose>
-					<if test="!sortingDESC">DESC</if>
 				</if>
-				<if test="sortingTarget == null">
-					ORDER BY p.prod_no DESC
+				<if test="sortingTarget == null || sortingTarget ==''">
+					p.prod_no
 				</if>
+				<if test="!sortingDESC">DESC</if>
 				) inner_table
 			WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
@@ -85,7 +86,34 @@
 		FROM( SELECT p.prod_no
 				FROM product p, transaction t
 				WHERE p.prod_no = t.prod_no(+)
-					ORDER BY p.prod_no DESC
+				<if test="searchCondition != null">
+					<choose>
+						<when test="searchCondition == 0 and searchKeyword !=''">AND p.prod_no = #{searchKeyword}</when>
+						<when test="searchCondition == 1 and searchKeyword !=''">AND p.prod_name LIKE '%'||#{searchKeyword}||'%'</when>
+						<when test="searchCondition == 2 and searchKeyword !=''">AND p.price LIKE '%'||#{searchKeyword}||'%'</when>
+					</choose>
+				</if>
+				
+				<if test="searchValueLow != searchValueHigh">
+					<if test="searchValueLow > searchValueHigh">AND p.price BETWEEN #{searchValueHigh} AND #{searchValueLow}</if>
+					<if test="searchValueLow &lt; searchValueHigh">AND p.price BETWEEN #{searchValueLow} AND #{searchValueHigh}</if>
+				</if>
+				
+				<if test="viewSoldItem">
+					AND t.tran_status_code = '0'
+				</if>
+				
+				ORDER BY
+				<if test="sortingTarget != null">
+					<choose>
+						<when test="sortingTarget =='price'">p.price</when>
+						<when test="sortingTarget =='prodName'">p.prod_name</when>
+					</choose>
+				</if>
+				<if test="sortingTarget == null || sortingTarget ==''">
+					p.prod_no
+				</if>
+				<if test="!sortingDESC">DESC</if>
 				) countTable
 	</select>
 </mapper>

@@ -23,10 +23,9 @@
 </script>
 
 <script type="text/javascript">
-<!--
 function fncAddProduct(){
 	//Form 유효성 검증
- 	var name = document.detailForm.prodName.value;
+ 	/* var name = document.detailForm.prodName.value;
 	var detail = document.detailForm.prodDetail.value;
 	var manuDate = document.detailForm.manuDate.value;
 	var price = document.detailForm.price.value;
@@ -47,7 +46,7 @@ function fncAddProduct(){
 		alert("가격은 반드시 입력하셔야 합니다.");
 		return;
 	}
-
+ */
 	document.detailForm.action='/product/addProduct';
 	document.detailForm.submit();
 }
@@ -55,7 +54,6 @@ function fncAddProduct(){
 function resetData(){
 	document.detailForm.reset();
 }
--->
 </script>
 </head>
 
@@ -104,9 +102,9 @@ function resetData(){
 			제조일자 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td class="ct_write01">
-			<div class="form-group col-md-1">
+			<div class="form-group col-xs-2">
 				<div class="input-group">
-				<input type="text" class="form-control" name="manuDate" readonly="readonly" style="width: 80px;">
+				<input type="text" class="form-control" name="manuDate" readonly="readonly" style="width: 150px;">
 					<div class="input-group-addon"><img src="../images/ct_icon_date.gif" width="15" height="15" 
 											onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/></div>
 				</div>
@@ -118,9 +116,9 @@ function resetData(){
 			가격 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td class="ct_write01">
-			<div class="form-group col-md-2">
+			<div class="form-group col-xs-2">
 				<div class="input-group">
-					<input type="text" class="form-control" name="fileName" maxlength="5" style="width: 150px;">
+					<input type="text" class="form-control" name="price" maxlength="5" style="width: 150px;">
 					<div class="input-group-addon">원</div>
 				</div>
 			</div>
@@ -129,7 +127,7 @@ function resetData(){
 	<tr>
 		<td width="104" class="ct_write">상품이미지</td>
 		<td class="ct_write01">
-			<input type="text" class="form-control" name="fileName" placeholder="이미지명" style="width: 150px;">
+			<input type="file" class="form-control" name="uploadfile" style="width: 250px;">
 		</td>
 	</tr>
 </table>
