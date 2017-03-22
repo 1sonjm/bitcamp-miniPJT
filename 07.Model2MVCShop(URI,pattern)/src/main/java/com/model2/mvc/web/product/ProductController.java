@@ -54,7 +54,7 @@ public class ProductController {
 		Product product = productService.getProduct(prodNo);
 		product.setProdNo(prodNo);
 		model.addAttribute("product",product);
-
+		
 		Map<Integer,String> viewListMap = new HashMap<Integer,String>();
 		if(session.getAttribute("viewListMap") != null){
 			viewListMap = (HashMap<Integer,String>)session.getAttribute("viewListMap");

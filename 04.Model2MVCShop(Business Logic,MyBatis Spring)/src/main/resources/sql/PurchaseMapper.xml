@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="PurchaseMapper">
+	<resultMap id="purchaseSelectMap" type="purchase">
+		<result property="tranNo"				column="tran_no"			jdbcType="INTEGER" />
+		<result property="paymentOption"		column="payment_option"		jdbcType="CHAR" />
+		<result property="receiverName"			column="receiver_name"		jdbcType="VARCHAR" />
+		<result property="receiverPhone"		column="receiver_phone"		jdbcType="VARCHAR" />
+		<result property="dlvyAddr"				column="dlvy_addr"			jdbcType="VARCHAR" />
+		<result property="dlvyDate"				column="dlvy_date"			jdbcType="DATE" />
+		<result property="dlvyRequest"			column="dlvy_request"		jdbcType="VARCHAR" />
+		<result property="tranCode"				column="tran_status_code"	jdbcType="CHAR" />
+		<result property="orderDate"			column="order_date"			jdbcType="DATE" />
+		<association property="purchaseProd" resultMap="productDomain"/>
+		<association property="buyer" resultMap="userDomain"/>
+		<!-- association에 result맵을 다른 경로의 resultmap을 가져와서 넣어주자 -->
+	</resultMap>
+
+	<!-- 필드에 객체를 받아올경우 그 객체의 내용을 연결해주는 작업이 필요, 여러개의 결과라면 collection? -->
+	<resultMap id="productDomain" type="product">
+		<result property="prodNo" 		column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="prodName"		column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail" 	column="prod_detail" 		jdbcType="VARCHAR" />
+		<result property="manuDate" 	column="manufacture_day"	jdbcType="VARCHAR" />
+		<result property="price" 		column="price" 				jdbcType="NUMERIC" />
+		<result property="fileName" 	column="image_file" 		jdbcType="VARCHAR" />
+		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+	</resultMap>
+	<resultMap id="userDomain" type="user">
+		<result property="userId" 		column="user_id" 		jdbcType="VARCHAR"/>
+		<result property="userName"		column="user_name" 		jdbcType="VARCHAR" />
+		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+		<result property="role" 		column="role" 			jdbcType="VARCHAR" />
+		<result property="ssn" 			column="ssn" 			jdbcType="VARCHAR" />
+		<result property="phone" 		column="cell_phone" 	jdbcType="VARCHAR" />
+		<result property="addr" 		column="addr" 			jdbcType="VARCHAR" />
+		<result property="email" 		column="email" 			jdbcType="VARCHAR"  />
+		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
+	</resultMap>
+
+	
+	<insert id="addPurchase" parameterType="purchase">
+		INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option
+								, receiver_name, receiver_phone, dlvy_addr
+								, dlvy_date, dlvy_request, tran_status_code, order_date)
+		VALUES (seq_transaction_tran_no.nextval,#{purchaseProd.prodNo},#{buyer.userId},#{paymentOption:CHAR}
+				,#{receiverName:VARCHAR},#{receiverPhone:VARCHAR},#{dlvyAddr:VARCHAR}
+				,#{dlvyDate:DATE}, #{dlvyRequest:VARCHAR}, #{tranCode:CHAR}, SYSDATE)
+	</insert>
+	
+	<update id="updatePurchase" parameterType="purchase">
+		UPDATE transaction SET payment_option=#{paymentOption:CHAR}, receiver_name=#{receiverName:VARCHAR}, receiver_phone=#{receiverPhone:VARCHAR}
+								, dlvy_addr=#{dlvyAddr:VARCHAR}, dlvy_request=#{dlvyRequest:VARCHAR}, dlvy_date=#{dlvyDate:DATE}
+		WHERE tran_no = #{tranNo}
+	</update>
+	
+	<update id="updateTranCode" parameterType="purchase">
+		UPDATE transaction SET tran_status_code = #{tranCode}
+		WHERE
+			<if test="tranNo!=0">tran_no = #{tranNo}</if>
+			<if test="tranNo==0">prod_no = #{prodNo}</if>
+	</update>
+	
+	<select id="getPurchase" resultMap="purchaseSelectMap">
+		SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
+				, dlvy_request, tran_status_code, order_date, TO_CHAR(dlvy_date,'yyyymmdd') dlvy_date
+		FROM transaction WHERE tran_no= #{tranNo}
+		ORDER BY tran_no DESC
+	</select>
+
+	<select  id="getPurchaseList" parameterType="map" resultMap="purchaseSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.* , ROWNUM AS row_seq
+			FROM ( SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
+						, dlvy_request, NVL(tran_status_code,'3') tran_status_code, order_date, dlvy_date
+				FROM transaction WHERE buyer_id = #{buyerId}
+				ORDER BY tran_no DESC) inner_table
+			WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+	</select>
+	<select  id="getTotalCount" parameterType="map"  resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
+					, dlvy_request, NVL(tran_status_code,'3') tran_status_code, order_date, dlvy_date
+			FROM transaction WHERE buyer_id= #{buyerId}) countTable
+	</select>
+</mapper>

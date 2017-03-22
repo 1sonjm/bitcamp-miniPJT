@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+ 	
+ 	
+	<resultMap id="userSelectMap" type="user">
+		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
+		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
+		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
+		<result property="ssn" 				column="ssn" 					jdbcType="VARCHAR" />
+		<result property="phone" 			column="cell_phone" 		jdbcType="VARCHAR" />
+		<result property="addr" 				column="addr" 					jdbcType="VARCHAR" />
+		<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
+		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+	</resultMap>
+	
+	
+	<!-- SQL : SELECT LIST  ::  다양한 parameterType 사용 1-->
+	<select  id="getUserList"  parameterType="map"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT user_id , user_name , email
+											FROM users
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				user_id = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				user_name = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY user_id ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	<!-- SQL : SELECT LIST  ::  다양한 parameterType 사용 2-->
+	<select  id="getUserList"  parameterType="map"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT user_id , user_name , email
+											FROM users
+											<if test="object.searchCondition != null">
+												<where>
+													<if test="object.searchCondition == 0 and object.searchKeyword !='' ">
+										 				user_id = #{object.searchKeyword}
+													</if>
+													<if test="object.searchCondition == 1 and object.searchKeyword !='' ">
+										 				user_name = #{object.searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY user_id ) inner_table
+						WHERE ROWNUM &lt;= #{object.endRowNum} )
+		WHERE row_seq BETWEEN #{object.startRowNum} AND #{object.endRowNum} 
+	 </select>
+	 
+</mapper>

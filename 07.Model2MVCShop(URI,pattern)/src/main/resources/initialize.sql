@@ -1,16 +1,16 @@
 
+DROP TABLE reviews;
 DROP TABLE transaction;
 DROP TABLE product;
 DROP TABLE users;
-
-DROP SEQUENCE seq_product_prod_no;
+DROP SEQUENCE seq_reviews_review_no;
 DROP SEQUENCE seq_transaction_tran_no;
-
+DROP SEQUENCE seq_product_prod_no;
 PURGE recyclebin;
 
-CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 10000;
+CREATE SEQUENCE seq_reviews_review_no	INCREMENT BY 1 START WITH 10000;
 CREATE SEQUENCE seq_transaction_tran_no	INCREMENT BY 1 START WITH 10000;
-
+CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 10000;
 
 CREATE TABLE users ( 
 	user_id 				VARCHAR2(20)	NOT NULL,
@@ -24,7 +24,6 @@ CREATE TABLE users (
 	reg_date 				DATE,
 	PRIMARY KEY(user_id)
 );
-
 
 CREATE TABLE product ( 
 	prod_no 				NUMBER 			NOT NULL,
@@ -54,11 +53,12 @@ CREATE TABLE transaction (
 
 CREATE TABLE reviews ( 
 	review_no				NUMBER			NOT NULL,
-	tran_no 				NUMBER 			NOT NULL REFERENCES product(tran_no),
+	tran_no 				NUMBER 			NOT NULL REFERENCES transaction(tran_no),
 	prod_no 				NUMBER(16)		NOT NULL REFERENCES product(prod_no),
 	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
 	review_title			VARCHAR2(100)	NOT NULL,
 	review_content			VARCHAR2(400),
+	image_name				VARCHAR2()
 	answer_title			VARCHAR2(100),
 	answer_content			VARCHAR2(400),
 	grade					NUMBER(1)		DEFAULT 3,

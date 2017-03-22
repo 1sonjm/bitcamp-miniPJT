@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductMapper">
+	<resultMap id="productSelectMap" type="product">
+		<result property="prodNo" 		column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="prodName"		column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="prodDetail" 	column="prod_detail" 		jdbcType="VARCHAR" />
+		<result property="manuDate" 	column="manufacture_day" 	jdbcType="VARCHAR" />
+		<result property="price" 		column="price" 				jdbcType="NUMERIC" />
+		<result property="fileName" 	column="image_file" 		jdbcType="VARCHAR" />
+		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+	</resultMap>
+	
+	<insert id="addProduct" parameterType="product">
+		INSERT INTO product(prod_no, prod_name, prod_detail, manufacture_day
+							, price, image_file, reg_date)
+		VALUES (seq_product_prod_no.nextval,#{prodName},#{prodDetail:VARCHAR}
+				,#{manuDate:VARCHAR},#{price:NUMERIC},#{fileName:VARCHAR},SYSDATE)
+	</insert>
+	
+	<select id="getProduct" parameterType="string"	resultMap="productSelectMap">
+		SELECT prod_name, prod_detail, manufacture_day
+				, price, image_file, reg_date
+		FROM product
+		WHERE prod_no = #{prodNo}
+	</select>
+	
+	<update id="updateProduct" parameterType="product">
+		UPDATE product
+		SET prod_name = #{prodName}, prod_detail = #{prodDetail:VARCHAR}
+			, manufacture_day = #{manuDate:VARCHAR}
+			, price = #{price:NUMERIC}, image_file = #{fileName:VARCHAR}
+		WHERE prod_no = #{prodNo}
+	</update>
+	
+	<select  id="getProductList"  parameterType="search"	resultMap="productSelectMap">
+		SELECT *
+		FROM ( SELECT inner_table.* , ROWNUM AS row_seq
+			FROM ( SELECT p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day
+				, p.price, p.image_file, p.reg_date, NVL(t.tran_status_code,'3') tran_status_code
+				FROM product p, transaction t
+				WHERE p.prod_no = t.prod_no(+)
+				<if test="searchCondition != null">
+					<if test="searchCondition == 0 and searchKeyword !='' ">
+						AND prod_no = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 1 and searchKeyword !='' ">
+						AND prod_name LIKE CONCAT('%',CONCAT(#{searchKeyword},'%'))
+					</if>
+					<if test="searchCondition == 2 and searchKeyword !='' ">
+						AND price LIKE CONCAT('%',CONCAT(#{searchKeyword},'%'))
+					</if>
+				</if>
+					
+				<if test="searchValueLow != searchValueHigh">
+					<if test="searchValueLow > searchValueHigh">
+						AND price BETWEEN #{searchValueHigh} AND #{searchValueLow}
+					</if>
+					<if test="searchValueHigh &lt; searchValueLow">
+						AND price BETWEEN #{searchValueLow} AND #{searchValueHigh}
+					</if>
+				</if>
+				ORDER BY prod_no DESC ) inner_table
+			WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT p.prod_no
+				FROM product p, transaction t
+				WHERE p.prod_no = t.prod_no(+)
+				<if test="searchCondition != null">
+					<if test="searchCondition == 0 and searchKeyword !='' ">
+						AND prod_no = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 1 and searchKeyword !='' ">
+						AND prod_name LIKE CONCAT('%',CONCAT(#{searchKeyword},'%'))
+					</if>
+					<if test="searchCondition == 2 and searchKeyword !='' ">
+						AND price LIKE CONCAT('%',CONCAT(#{searchKeyword},'%'))
+					</if>
+				</if>
+					
+				<if test="searchValueLow != searchValueHigh">
+					<if test="searchValueLow > searchValueHigh">
+						AND price BETWEEN #{searchValueHigh} AND #{searchValueLow}
+					</if>
+					<if test="searchValueHigh &lt; searchValueLow">
+						AND price BETWEEN #{searchValueLow} AND #{searchValueHigh}
+					</if>
+				</if>
+				) countTable
+	</select>
+</mapper>
