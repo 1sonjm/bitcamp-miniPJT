@@ -36,8 +36,8 @@ public class ReviewServiceTest {
 	@Qualifier("reviewServiceImpl")
 	private ReviewService reviewService;
 
-	@Test
-	public void testAddProduct() throws Exception {
+	//@Test
+	public void testAddReview() throws Exception {
 		User user = new User();
 		Product product = new Product();
 		Purchase purchase = new Purchase();
@@ -59,67 +59,42 @@ public class ReviewServiceTest {
 		Assert.assertEquals(1, reviewService.insertReview(review));
 	}
 
-	/*
 	//@Test
-	public void testGetProduct() throws Exception {
-
-		Product product = new Product();		
-		product = productService.getProduct(10020);
-
-		//==> console 확인
-		//System.out.println(user);
-		//==> API 확인
-		Assert.assertEquals("vkdlfaud", product.getFileName());
-		Assert.assertEquals("20171117", product.getManuDate());
-		Assert.assertEquals(2222, product.getPrice());
-		Assert.assertEquals("상세정보", product.getProdDetail());
-		Assert.assertEquals("테스트제품영", product.getProdName());
+	public void testGetReivewList() throws Exception {
+		System.out.println(reviewService.getReviewList(10000));
 	}
+	
+	//@Test
+	public void testGetReivew() throws Exception {
+		Review review = new Review();
+		review.setReviewNo(10000);
+		
+		System.out.println(reviewService.getReview(review.getReviewNo()));
+	}
+
+	
 	//@Test	
 	public void testUpdateProduct() throws Exception{
+		Review review = new Review();
+		review.setReviewNo(10000);
+		User user = new User();
+		user.setRole("admin");
+		review.setBuyer(user);
+		review.setAnswerContent("변경내용");
+		review.setAnswerTitle("변경제목");
 		
-		Product product = new Product();
-		
-		product.setProdNo(10020);
-		product.setProdName("바뀐이름");
-		
-		Assert.assertEquals(1, productService.updateProduct(product));
+		System.out.println(reviewService.updateReview(review));
 	 }
-
-	 //==>  주석을 풀고 실행하면....
-	 //@Test
+/*
+	 @Test
 	 public void testGetProductListAll() throws Exception{
-		 
-	 	Search search = new Search();
-	 	search.setCurrentPage(1);
-	 	search.setPageSize(3);
-	 	Map<String,Object> map = productService.getProductList(search);
-	 	
-	 	List<Object> list = (List<Object>)map.get("list");
-	 	Assert.assertEquals(3, list.size());
-	 	
-		//==> console 확인
-	 	//System.out.println(list);
-	 	
-	 	Integer totalCount = (Integer)map.get("totalCount");
-	 	System.out.println(totalCount);
-	 	
-	 	System.out.println("=======================================");
-	 	
-	 	search.setCurrentPage(1);
-	 	search.setPageSize(3);
-	 	search.setSearchCondition("0");
-	 	search.setSearchKeyword("");
-	 	map = productService.getProductList(search);
-	 	
-	 	list = (List<Object>)map.get("list");
-	 	Assert.assertEquals(3, list.size());
-	 	
-	 	//==> console 확인
-	 	//System.out.println(list);
-	 	
-	 	totalCount = (Integer)map.get("totalCount");
-	 	System.out.println(totalCount);
+		Review review = new Review();
+			review.setReviewNo(10000);
+			User user = new User();
+			user.setRole("admin");
+			review.setBuyer(user);
+			
+			System.out.println(reviewService.updateReview(review));
 	 }
 
 	 //@Test

@@ -5,6 +5,34 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ReviewMapper">
+	<resultMap type="review" id="reviewSelectMap">
+		<result property="reviewNo" 		column="review_no" 		jdbcType="INTEGER"/>
+		<result property="reviewTitle" 		column="review_title" 	jdbcType="VARCHAR"/>
+		<result property="reviewContent" 	column="review_content" jdbcType="VARCHAR"/>
+		<result property="imageName" 		column="image_name" 	jdbcType="VARCHAR"/>
+		<result property="answerTitle" 		column="answer_title" 	jdbcType="VARCHAR"/>
+		<result property="answerContent" 	column="answer_content" jdbcType="VARCHAR"/>
+		<result property="grade" 			column="grade" 			jdbcType="INTEGER"/>
+		<result property="regDate" 			column="reg_date" 		jdbcType="DATE"/>
+		<association property="purchasehistory"	resultMap="purchaseDomain"/>
+		<association property="purchaseItem"	resultMap="productDomain"/>
+		<association property="buyer"			resultMap="userDomain"/>
+	</resultMap>
+	
+	<resultMap id="purchaseDomain" type="purchase">
+		<result property="tranNo"				column="tran_no"			jdbcType="INTEGER" />
+		<result property="tranCode"				column="tran_status_code"	jdbcType="CHAR" />
+		<result property="orderDate"			column="order_date"			jdbcType="DATE" />
+	</resultMap>
+	<resultMap id="productDomain" type="product">
+		<result property="prodNo" 		column="prod_no" 			jdbcType="INTEGER"/>
+		<result property="prodName"		column="prod_name" 			jdbcType="VARCHAR" />
+		<result property="price" 		column="price" 				jdbcType="NUMERIC" />
+	</resultMap>
+	<resultMap id="userDomain" type="user">
+		<result property="userId" 		column="buyer_id" 		jdbcType="VARCHAR"/>
+		<result property="role" 		column="role" 			jdbcType="VARCHAR" />
+	</resultMap>
 	
 	<insert id="insertReview" parameterType="review">
 		INSERT INTO reviews(review_no, tran_no, prod_no, buyer_id
@@ -15,4 +43,29 @@
 				,#{answerContent:VARCHAR},#{grade},SYSDATE)
 	</insert>
 	
+	<select id="getReviewList" resultMap="reviewSelectMap" parameterType="int">
+		Select review_no, tran_no, prod_no, buyer_id
+				,review_title,review_content,image_name,answer_title
+				,answer_content,grade,reg_date
+		FROM reviews
+		WHERE prod_no = #{prodNo}
+	</select>
+	<select id="getReview" resultMap="reviewSelectMap" parameterType="int">
+		Select review_no, tran_no, prod_no, buyer_id
+				,review_title,review_content,image_name,answer_title
+				,answer_content,grade,reg_date
+		FROM reviews
+		WHERE review_no = #{reviewNo}
+	</select>
+	
+	<update id="updateReview" parameterType="review">
+		UPDATE reviews SET
+			<if test="buyer.role != 'admin'">
+				review_title= #{reviewTitle},review_content= #{reviewContent},image_name= #{imageName},grade= #{grade}
+			</if>
+			<if test="buyer.role == 'admin'">
+				answer_title= #{answerTitle},answer_content= #{answerContent}
+			</if>
+		WHERE review_no = ${reviewNo}
+	</update>
 </mapper>

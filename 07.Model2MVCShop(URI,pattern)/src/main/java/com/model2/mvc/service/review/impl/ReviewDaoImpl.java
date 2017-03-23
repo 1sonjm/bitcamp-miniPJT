@@ -1,5 +1,7 @@
 package com.model2.mvc.service.review.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,17 +28,21 @@ public class ReviewDaoImpl implements ReviewDao {
 	public int insertReview(Review review) throws Exception {
 		return sqlSession.insert("ReviewMapper.insertReview", review);
 	}
+	
+	@Override	
+	public List<Review> getReviewList(int prodNo) throws Exception {
+		return sqlSession.selectList("ReviewMapper.getReviewList", prodNo);
+	}
 
 	@Override
 	public Review getReview(int reviewNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("ReviewMapper.getReview", reviewNo);
 	}
 
 	@Override
 	public int updateReview(Review review) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("ReviewMapper.updateReview", review);
 	}
+
 
 }

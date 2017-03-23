@@ -1,5 +1,8 @@
 package com.model2.mvc.service.review.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -28,15 +31,18 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
+	public List<Review> getReviewList(int prodNo) throws Exception {
+		return reviewDao.getReviewList(prodNo);
+	}
+	
+	@Override
 	public Review getReview(int reviewNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return reviewDao.getReview(reviewNo);
 	}
 
 	@Override
 	public int updateReview(Review review) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewDao.updateReview(review);
 	}
 
 }

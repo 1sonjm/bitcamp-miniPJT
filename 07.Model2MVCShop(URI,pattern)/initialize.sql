@@ -113,12 +113,16 @@ insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','201
 
 INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
 					, dlvy_date, dlvy_request, tran_status_code, order_date) 
-VALUES (seq_transaction_tran_no.nextval,10000,'user09',1,'test1','111-111-1111'
-		,'테스트주소1','2012/11/11', '주문요청', '0', SYSDATE);
+	VALUES (seq_transaction_tran_no.nextval,10000,'user09',1,'test1','111-111-1111'
+			,'테스트주소1','2012/11/11', '주문요청', '0', SYSDATE);
 INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
 					, dlvy_date, dlvy_request, tran_status_code, order_date) 
-VALUES (seq_transaction_tran_no.nextval,10001,'user09',1,'test2','222-222-2222'
-		,'테스트주소2','2012/11/22', '주문요청2', '0', SYSDATE);
+	VALUES (seq_transaction_tran_no.nextval,10000,'user09',1,'test2','222-222-2222'
+			,'테스트주소2','2012/11/22', '주문요청2', '0', SYSDATE);
+INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
+					, dlvy_date, dlvy_request, tran_status_code, order_date) 
+	VALUES (seq_transaction_tran_no.nextval,10001,'user09',1,'test2','333-222-2222'
+			,'테스트주소3','2012/11/22', '주문요청3', '0', SYSDATE);
 
 commit;
 

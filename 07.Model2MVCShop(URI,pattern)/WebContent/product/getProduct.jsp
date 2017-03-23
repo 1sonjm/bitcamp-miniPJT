@@ -89,6 +89,40 @@
 </table>
 </form>
 
+<table class="table">
+	<tr>
+		<td>사진</td>
+		<td>구매자ID</td>
+		<td>제목</td>
+		<td>등록일자</td>
+	</tr>
+	<c:forEach var="review" items="${reviewList}" begin="0" step="1">
+		<tr>
+			<td>
+				<c:if test="${review.imageName} != null">
+					<img src="" width="50">
+				</c:if>
+			</td>
+			<td>${review.buyer.userId}</td>
+			<td>
+				<a href="/reivew/getReview/${review.reviewNo}">
+					${review.reviewTitle}
+				</a>
+			</td>
+			<td>${review.regDate}</td>
+		</tr>
+			<tr>
+				<td></td>
+				<td>┕></td>
+				<td>
+					<a href="/reivew/getReview/${review.reviewNo}">
+						${review.answerTitle}
+					</a>
+				</td>
+				<td></td>
+			</tr>
+	</c:forEach>
+</table>
 <c:if test='${param.menu!="soldout"}'>
 	<button class="btn btn-default" onclick="location.href='/product/addPurchaseView?prodNo=${product.prodNo}'">구매</button>
 </c:if>

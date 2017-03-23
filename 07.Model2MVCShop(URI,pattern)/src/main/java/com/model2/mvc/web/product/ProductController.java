@@ -1,6 +1,7 @@
 package com.model2.mvc.web.product;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.product.ProductService;
+import com.model2.mvc.service.review.ReviewService;
 
 @Controller
 @RequestMapping("/product/*")
@@ -29,6 +31,10 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("reviewServiceImpl")
+	private ReviewService reviewService;
 	
 	public ProductController() {
 		System.out.println(this.getClass());
@@ -46,8 +52,20 @@ public class ProductController {
 							) throws Exception{
 		product.setManuDate(product.getManuDate().replace("-", ""));
 		
+		
+		
 		MultipartFile uploadfile = product.getUploadfile();
 		if (uploadfile != null) {
+			/*  if이 없어서 그런가?
+			FileOutputStream fos;
+
+			byte fileData[] = product.getUploadfile().getBytes();
+			fos = new FileOutputStream(session.getServletContext().getRealPath("/") + "images\\uploadFiles\\" + product.getFileName());
+			fos.write(fileData);
+
+			fos.close();
+			*/
+			//이런식으로 파일명을 안받아서그런가?
 			String fileName = uploadfile.getOriginalFilename();
 			product.setFileName(fileName);
 
@@ -78,7 +96,10 @@ public class ProductController {
 		if(viewListMap.size()>6){
 			viewListMap.remove(6);
 		}
+		
+		model.addAttribute("reviewList",reviewService.getReviewList(prodNo));
 		session.setAttribute("viewListMap", viewListMap);
+		System.out.println("#"+reviewService.getReviewList(prodNo));
 		
 		return "forward:/product/getProduct.jsp";
 	}

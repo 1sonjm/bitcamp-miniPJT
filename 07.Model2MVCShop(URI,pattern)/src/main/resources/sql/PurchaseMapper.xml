@@ -15,8 +15,8 @@
 		<result property="dlvyRequest"			column="dlvy_request"		jdbcType="VARCHAR" />
 		<result property="tranCode"				column="tran_status_code"	jdbcType="CHAR" />
 		<result property="orderDate"			column="order_date"			jdbcType="DATE" />
-		<association property="purchaseProd" resultMap="productDomain"/>
-		<association property="buyer" resultMap="userDomain"/>
+		<association property="purchaseProd"	resultMap="productDomain"/>
+		<association property="buyer" 			resultMap="userDomain"/>
 		<!-- association에 result맵을 다른 경로의 resultmap을 가져와서 넣어주자 -->
 	</resultMap>
 
