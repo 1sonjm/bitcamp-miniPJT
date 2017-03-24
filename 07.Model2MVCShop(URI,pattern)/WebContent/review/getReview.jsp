@@ -23,32 +23,72 @@
 
 <form name="detailForm" method="post">
 
+<table>
+	<tr>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="3"></td>
+  </tr>
+</table>
+
 <table class="table">
 	<tr>
 		<td>제품명</td>
-		<td>${ }</td>
 		<td>구매자</td>
-		<td>${ }</td>
+		<td>평점</td>
+		<td>등록일</td>
+	</tr>
+	<tr>
+		<td>${purchaseItem.prodName}</td>
+		<td>${buyer.userId}</td>
+		<td>${grade}</td>
+		<td>${regDate}</td>
 	</tr>
 	<tr>
 		<td>제목</td>
 		<td colspan="3">
+			${reviewTitle }
 		</td>
 	</tr>
 	<tr>
 		<td>내용</td>
 		<td colspan="3">
+			<c:if test="${imageName}!=null">
+				<img src="images/reviewImages/${imageName}"><br/>
+			</c:if>
+			${reviewContent}
 		</td>
 	</tr>
 	<c:if test="">
 		<tr>
 			<td>답변제목</td>
 			<td colspan="3">
+				${answerTitle}
 			</td>
 		</tr>
 		<tr>
 			<td>답변내용</td>
 			<td colspan="3">
+				${answerContent }
 			</td>
 		</tr>
 	</c:if>
@@ -56,8 +96,11 @@
 </table>
 
 </form>
-<c:if test='${param.menu!="soldout"}'>
-	<button class="btn btn-default" onclick="location.href='/product/addPurchaseView?prodNo=${product.prodNo}'">구매</button>
+<c:if test='${role=="admin"}'>
+	<button class="btn btn-default" onclick="location.href='/product/addPurchaseView?prodNo=${product.prodNo}'">답변등록</button>
+</c:if>
+<c:if test='${role=="user"}'>
+	<button class="btn btn-default" onclick="location.href='/product/addPurchaseView?prodNo=${product.prodNo}'">수정</button>
 </c:if>
 <button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
 

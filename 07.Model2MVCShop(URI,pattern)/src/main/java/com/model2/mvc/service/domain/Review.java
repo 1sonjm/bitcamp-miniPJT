@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class Review {
 	
 	private int reviewNo;
+	//네이밍을 Purchase객체면 domainPurchase라고 하면어떨까
+	// domainProduct,domainUser가 되서 이해가 더 쉬워지는거지
 	private Purchase purchasehistory;
 	private Product purchaseItem;
 	private User buyer;
