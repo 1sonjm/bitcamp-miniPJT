@@ -14,6 +14,7 @@ public class Product {
 	private int price;
 	private String prodDetail;
 	private String prodName;
+	private int prodStock;
 	private int prodNo;
 	private Date regDate;
 	private String prodTranCode;
@@ -21,12 +22,6 @@ public class Product {
 	public Product(){
 	}
 	
-	public String getProTranCode() {
-		return prodTranCode;
-	}
-	public void setProTranCode(String proTranCode) {
-		this.prodTranCode = proTranCode;
-	}
 	public String getFileName() {
 		return fileName;
 	}
@@ -78,6 +73,22 @@ public class Product {
 		this.uploadFile = uploadfile;
 	}
 
+	public int getProdStock() {
+		return prodStock;
+	}
+
+	public void setProdStock(int prodStock) {
+		this.prodStock = prodStock;
+	}
+
+	public String getProdTranCode() {
+		return prodTranCode;
+	}
+
+	public void setProdTranCode(String prodTranCode) {
+		this.prodTranCode = prodTranCode;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -93,15 +104,15 @@ public class Product {
 		builder.append(prodDetail);
 		builder.append(", prodName=");
 		builder.append(prodName);
+		builder.append(", prodStock=");
+		builder.append(prodStock);
 		builder.append(", prodNo=");
 		builder.append(prodNo);
 		builder.append(", regDate=");
 		builder.append(regDate);
-		builder.append(", proTranCode=");
+		builder.append(", prodTranCode=");
 		builder.append(prodTranCode);
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 }

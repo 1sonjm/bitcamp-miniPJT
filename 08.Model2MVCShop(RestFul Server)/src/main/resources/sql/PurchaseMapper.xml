@@ -42,7 +42,7 @@
 		<result property="regDate" 		column="reg_date" 		jdbcType="DATE" />
 	</resultMap>
 
-	
+		
 	<insert id="addPurchase" parameterType="purchase">
 		INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option
 								, receiver_name, receiver_phone, dlvy_addr
@@ -51,6 +51,9 @@
 				,#{receiverName:VARCHAR},#{receiverPhone:VARCHAR},#{dlvyAddr:VARCHAR}
 				,#{dlvyDate:DATE}, #{dlvyRequest:VARCHAR}, '0', SYSDATE)
 	</insert>
+	<update id="updateAddPurchase" parameterType="purchase">
+		UPDATE product SET prod_stock=prod_stock-1 WHERE prod_no = #{purchaseProd.prodNo}
+	</update>
 	
 	<update id="updatePurchase" parameterType="purchase">
 		UPDATE transaction SET payment_option=#{paymentOption:CHAR}, receiver_name=#{receiverName:VARCHAR}, receiver_phone=#{receiverPhone:VARCHAR}

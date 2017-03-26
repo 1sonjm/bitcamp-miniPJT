@@ -83,12 +83,21 @@
 		<td class="ct_write01">${product.price }</td>
 	</tr>
 	<tr>
+		<td width="104" class="ct_write">재고</td>
+		<td class="ct_write01">${product.prodStock }</td>
+	</tr>
+	<tr>
 		<td width="104" class="ct_write">등록일자</td>
 		<td class="ct_write01">${product.regDate }</td>
 	</tr>
 </table>
 </form>
+<c:if test='${param.menu!="soldout"}'>
+	<button class="btn btn-default" onclick="location.href='/purchase/addPurchaseView?prodNo=${product.prodNo}'">구매</button>
+</c:if>
+<button class="btn btn-default" onclick="location.href='/review/addReviewView?prodNo=${product.prodNo}'">구매</button>
 
+<button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
 <table class="table">
 	<tr>
 		<td>사진</td>
@@ -123,10 +132,6 @@
 			</tr>
 	</c:forEach>
 </table>
-<c:if test='${param.menu!="soldout"}'>
-	<button class="btn btn-default" onclick="location.href='/product/addPurchaseView?prodNo=${product.prodNo}'">구매</button>
-</c:if>
-<button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
 
 </body>
 </html>

@@ -28,7 +28,9 @@ public class PurchaseDaoImpl implements PurchaseDao {
 
 	@Override
 	public int insertPurchase(Purchase purchase) throws Exception {
-		return sqlSession.insert("PurchaseMapper.addPurchase",purchase);
+		int result = sqlSession.insert("PurchaseMapper.addPurchase",purchase);
+		result += sqlSession.update("PurchaseMapper.updateAddPurchase", purchase);
+		return result;
 	}
 	@Override
 	public int updatePurchase(Purchase purchase) throws Exception {

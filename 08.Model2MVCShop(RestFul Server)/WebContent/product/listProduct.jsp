@@ -146,6 +146,7 @@ function fncViewSoldItem(){
 				<a href="javascript:fncSorting('price','1')">↓</a>
 				<a href="javascript:fncSorting('price','0')">↑</a>
 			</td>
+			<td class="ct_list_b" width="150">재고</td>
 			<c:if test='${param.menu=="manage"}'>
 				<td class="ct_list_b">등록일</td>
 			</c:if>
@@ -165,23 +166,24 @@ function fncViewSoldItem(){
 				<td align="center">${i}</td>
 			</c:if>
 				<td align="left">
-					<c:if test='${product.proTranCode=="판매중"}'>
+					<c:if test='${product.prodStock!=0}'>
 						<a href='/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}'>
 						${product.prodName}</a>
 					</c:if>
-					<c:if test='${product.proTranCode!="판매중"}'>
+					<c:if test='${product.prodStock==0}'>
 						<a href='/product/getProduct?prodNo=${product.prodNo}&menu=soldout'>
 						${product.prodName}
 						</a>
 					</c:if>
 				</td>
 			<td align="left">${product.price}</td>
+			<td align="left">${product.prodStock}</td>
 			<c:if test='${param.menu=="manage"}'>
 				<td align="left">${product.regDate}</td>
 			</c:if>
 			<td align="left">
-				${product.proTranCode}
-				<c:if test='${param.menu=="manage" && product.proTranCode=="구매완료"}'>
+				${product.prodTranCode}
+				<c:if test='${param.menu=="manage" && product.prodTranCode=="구매완료"}'>
 					<a href="/product/updateTranCodeByProd?prodNo=${product.prodNo}">배송하기</a>
 				</c:if>
 			</td>
