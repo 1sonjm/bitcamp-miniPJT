@@ -1,4 +1,4 @@
-package com.model2.mvc.web;
+package com.model2.mvc.web.review;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

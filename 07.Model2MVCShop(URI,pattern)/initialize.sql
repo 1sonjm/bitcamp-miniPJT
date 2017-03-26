@@ -66,14 +66,10 @@ CREATE TABLE reviews (
 	PRIMARY KEY(review_no)
 );
 
-INSERT 
-INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 
-VALUES ( 'admin', 'admin', '1234', 'admin', NULL, NULL, '서울시 서초구', 'admin@mvc.com',to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS')); 
-
-INSERT 
-INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 
-VALUES ( 'manager', 'manager', '1234', 'admin', NULL, NULL, NULL, 'manager@mvc.com', to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));          
-
+INSERT INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 
+VALUES ( 'admin', 'admin', '1234', 'admin', NULL, NULL, '서울시 서초구', 'admin@mvc.com',to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));
+INSERT INTO users ( user_id, user_name, password, role, ssn, cell_phone, addr, email, reg_date ) 
+VALUES ( 'manager', 'manager', '1234', 'admin', NULL, NULL, NULL, 'manager@mvc.com', to_date('2012/01/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));
 INSERT INTO users VALUES ( 'user01', 'SCOTT', '1111', 'user', NULL, NULL, NULL, NULL, sysdate); 
 INSERT INTO users VALUES ( 'user02', 'SCOTT', '2222', 'user', NULL, NULL, NULL, NULL, sysdate); 
 INSERT INTO users VALUES ( 'user03', 'SCOTT', '3333', 'user', NULL, NULL, NULL, NULL, sysdate); 
@@ -94,6 +90,7 @@ INSERT INTO users VALUES ( 'user17', 'SCOTT', '1717', 'user', NULL, NULL, NULL, 
 INSERT INTO users VALUES ( 'user18', 'SCOTT', '1818', 'user', NULL, NULL, NULL, NULL, sysdate);
 INSERT INTO users VALUES ( 'user19', 'SCOTT', '1919', 'user', NULL, NULL, NULL, NULL, sysdate);           
            
+
 insert into product values (seq_product_prod_no.nextval,'vaio vgn FS70B','소니 바이오 노트북 신동품','20120514'
 				,2000000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/12/14 11:27:27', 'YYYY/MM/DD HH24:MI:SS'));
 insert into product values (seq_product_prod_no.nextval,'자전거','자전거 좋아요~','20120514'
@@ -111,6 +108,8 @@ insert into product values (seq_product_prod_no.nextval,'연꽃','정원을 가꿔보세�
 insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','20120212'
 				,600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
 
+				
+			
 INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
 					, dlvy_date, dlvy_request, tran_status_code, order_date) 
 	VALUES (seq_transaction_tran_no.nextval,10000,'user09',1,'test1','111-111-1111'
@@ -124,6 +123,15 @@ INSERT INTO transaction(tran_no, prod_no, buyer_id, payment_option, receiver_nam
 	VALUES (seq_transaction_tran_no.nextval,10001,'user09',1,'test2','333-222-2222'
 			,'테스트주소3','2012/11/22', '주문요청3', '0', SYSDATE);
 
+			
+			
+INSERT INTO reviews(review_no, tran_no, prod_no, buyer_id
+					,review_title,review_content,image_name,answer_title
+					,answer_content,grade,reg_date)
+		VALUES (seq_reviews_review_no.nextval,10000,10000,'user09'
+				,'리뷰제목','내용',NULL,'답변제목'
+				,'답변내용',3,SYSDATE)
+			
 commit;
 
 

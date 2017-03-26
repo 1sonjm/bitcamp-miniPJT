@@ -44,18 +44,18 @@
 	</insert>
 	
 	<select id="getReviewList" resultMap="reviewSelectMap" parameterType="int">
-		Select review_no, tran_no, prod_no, buyer_id
+		SELECT review_no, tran_no, prod_no, buyer_id
 				,review_title,review_content,image_name,answer_title
 				,answer_content,grade,reg_date
 		FROM reviews
 		WHERE prod_no = #{prodNo}
 	</select>
 	<select id="getReview" resultMap="reviewSelectMap" parameterType="int">
-		Select review_no, tran_no, prod_no, buyer_id
-				,review_title,review_content,image_name,answer_title
-				,answer_content,grade,reg_date
-		FROM reviews
-		WHERE review_no = #{reviewNo}
+		Select r.review_no, r.tran_no, r.prod_no, r.buyer_id
+				,r.review_title,r.review_content,r.image_name,r.answer_title
+				,r.answer_content,r.grade,r.reg_date,p.prod_name,t.order_date
+		FROM reviews r, product p, transaction t
+		WHERE r.prod_no = p.prod_no AND r.tran_no = t.tran_no AND r.review_no = #{reviewNo}
 	</select>
 	
 	<update id="updateReview" parameterType="review">

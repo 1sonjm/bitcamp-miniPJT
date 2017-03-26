@@ -105,7 +105,7 @@
 			</td>
 			<td>${review.buyer.userId}</td>
 			<td>
-				<a href="/reivew/getReview/${review.reviewNo}">
+				<a href="/review/getReview/${review.reviewNo}">
 					${review.reviewTitle}
 				</a>
 			</td>
@@ -115,7 +115,7 @@
 				<td></td>
 				<td>¦Æ></td>
 				<td>
-					<a href="/reivew/getReview/${review.reviewNo}">
+					<a href="/review/getReview/${review.reviewNo}">
 						${review.answerTitle}
 					</a>
 				</td>

@@ -1,4 +1,6 @@
-package com.model2.mvc.web;
+package com.model2.mvc.web.review;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,8 +25,10 @@ public class ReviewController {
 	
 	@RequestMapping(value="getReview/{reviewNo}")
 	public String getReview(@PathVariable int reviewNo
-							,Model model) throws Exception{
+							,Model model
+							,HttpSession session) throws Exception{
 		
+		model.addAttribute("user", session.getAttribute("user"));
 		model.addAttribute("review",reviewService.getReview(reviewNo));
 		
 		return "forward:/review/getReview.jsp";

@@ -42,7 +42,7 @@
 		</association>
 	</resultMap>
 	
-	<select id="findPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
+	<select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
 		select
 		t.TRAN_NO tranNo,
 		<!-- t.prod_no prodNo, -->
@@ -76,8 +76,7 @@
 		u.REG_DATE user_reg_date
 				
 		from TRANSACTION t, PRODUCT p, USERS u
-		where t.prod_no = p.prod_no AND t.buyer_id = u.user_id
-		<if test="tranNo != null">AND t.TRAN_NO=#{tranNo}</if>
+		where t.prod_no = p.prod_no AND t.buyer_id = u.user_id AND t.TRAN_NO=10000
 	</select>
 	
 </mapper>
