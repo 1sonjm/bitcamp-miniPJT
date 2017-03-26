@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
-<head>
-<!-- jQuery -->
+<head><!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
@@ -16,13 +15,28 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<title>상품등록</title>
+
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<title>Insert title here</title> 
+<script type="text/javascript" src="../javascript/calendar.js">
+</script>
+
+<script type="text/javascript">
+function fncUpdateReview(){
+	document.detailForm.action='/review/updateAnswer/${review.reviewNo}';
+	document.detailForm.submit();
+}
+
+function resetData(){
+	document.detailForm.reset();
+}
+</script>
 </head>
 
-<form name="detailForm" method="post">
+<body bgcolor="#ffffff" text="#000000">
 
+<form name="detailForm" method="post">
 <table class="table">
 	<tr>
 		<td>제품명</td>
@@ -33,48 +47,28 @@
 	<tr>
 		<td>${review.purchaseItem.prodName}</td>
 		<td>${review.buyer.userId}</td>
-		<td>${review.grade}</td>
+		<td><input type="text" size="3" maxlength="1" name="grade" value="${review.grade}"/></td>
 		<td>${review.regDate}</td>
 	</tr>
 	<tr>
 		<td>제목</td>
 		<td colspan="3">
-			${review.reviewTitle }
+			<input type="text" class="form-control" name="answerTitle" value="${review.reviewTitle }">
 		</td>
 	</tr>
 	<tr>
 		<td>내용</td>
 		<td colspan="3">
-			<c:if test="${review.imageName != null}">
-				<img src="images/reviewImages/${review.imageName}"><br/>
-			</c:if>
-			${review.reviewContent}
+			<textarea name="answerContent" rows="4" cols="50">
+				${review.reviewContent}
+			</textarea>
 		</td>
 	</tr>
-	<c:if test="${review.answerTitle != null}">
-		<tr>
-			<td>답변제목</td>
-			<td colspan="3">
-				${review.answerTitle}
-			</td>
-		</tr>
-		<tr>
-			<td>답변내용</td>
-			<td colspan="3">
-				${review.answerContent }
-			</td>
-		</tr>
-	</c:if>
-	
 </table>
-</form>
-<c:if test='${user.role=="admin"}'>
-	<button class="btn btn-default" onclick="location.href='/product/updateAnswerView?prodNo=${review.reviewNo}'">답변등록/수정</button>
-</c:if>
-<c:if test='${user.role=="user" && empty review.answerTitle}'>
-	<button class="btn btn-default" onclick="location.href='/product/updateReviewView?prodNo=${review.reviewNo}'">수정</button>
-</c:if>
-<button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
 
+<button class="btn btn-default" onclick="javascript:fncUpdateReview();">등록</button>
+<button class="btn btn-default" onclick="javascript:resetData();">취소</button>
+
+</form>
 </body>
 </html>

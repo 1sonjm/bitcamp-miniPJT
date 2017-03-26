@@ -95,7 +95,6 @@
 <c:if test='${param.menu!="soldout"}'>
 	<button class="btn btn-default" onclick="location.href='/purchase/addPurchaseView?prodNo=${product.prodNo}'">구매</button>
 </c:if>
-<button class="btn btn-default" onclick="location.href='/review/addReviewView?prodNo=${product.prodNo}'">구매</button>
 
 <button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
 <table class="table">

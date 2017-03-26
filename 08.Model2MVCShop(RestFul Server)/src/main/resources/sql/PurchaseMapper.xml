@@ -69,9 +69,10 @@
 	</update>
 	
 	<select id="getPurchase" resultMap="purchaseSelectMap">
-		SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
-				, dlvy_request, tran_status_code, order_date, TO_CHAR(dlvy_date,'yyyymmdd') dlvy_date
-		FROM transaction WHERE tran_no= #{tranNo}
+		SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.dlvy_addr
+				, t.dlvy_request, t.tran_status_code, t.order_date, TO_CHAR(t.dlvy_date,'yyyymmdd') dlvy_date
+				,p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date
+		FROM transaction t,product p WHERE p.prod_no = t.prod_no AND tran_no= 10000
 		ORDER BY tran_no DESC
 	</select>
 

@@ -143,7 +143,7 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="listPurchase",method=RequestMethod.GET)
+	@RequestMapping(value="listPurchase")
 	public ModelAndView listPurchase(@ModelAttribute("search")Search search
 									,HttpSession session
 									) throws Exception{

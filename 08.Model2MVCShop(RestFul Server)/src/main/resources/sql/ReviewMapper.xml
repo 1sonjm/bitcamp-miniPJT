@@ -38,7 +38,7 @@
 		INSERT INTO reviews(review_no, tran_no, prod_no, buyer_id
 							,review_title,review_content,image_name,answer_title
 							,answer_content,grade,reg_date)
-		VALUES (seq_reviews_review_no.nextval,#{purchasehistory.tranNo},#{purchaseItem.prodNo},#{buyer.userId}
+		VALUES (seq_reviews_review_no.nextval,#{purchasehistory.tranNo},#{purchasehistory.purchaseProd.prodNo},#{purchasehistory.buyer.userId}
 				,#{reviewTitle},#{reviewContent:VARCHAR},#{imageName:VARCHAR},#{answerTitle:VARCHAR}
 				,#{answerContent:VARCHAR},#{grade},SYSDATE)
 	</insert>

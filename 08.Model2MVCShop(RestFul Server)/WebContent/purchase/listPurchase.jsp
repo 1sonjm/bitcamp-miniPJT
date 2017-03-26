@@ -83,6 +83,10 @@
 			<c:if test='${tranCode=="구매완료"}'>
 				<a href="/purchase/updatePurchaseView?tranNo=${purchase.tranNo}">배송정보 변경</a>
 			</c:if>
+			<c:if test='${tranCode=="배송완료"}'>
+				<a href="/review/addReviewView/${purchase.tranNo}">후기작성</a>
+			</c:if>
+				<a href="/review/addReviewView/${purchase.tranNo}">후기작성</a>
 		</td>
 	</tr>
 	</c:forEach>

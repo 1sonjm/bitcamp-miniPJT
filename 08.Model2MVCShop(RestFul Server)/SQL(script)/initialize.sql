@@ -56,8 +56,8 @@ CREATE TABLE transaction (
 CREATE TABLE reviews ( 
 	review_no				NUMBER			NOT NULL,
 	tran_no 				NUMBER 			NOT NULL REFERENCES transaction(tran_no),
-	prod_no 				NUMBER(16)		NOT NULL REFERENCES product(prod_no),
-	buyer_id 				VARCHAR2(20)	NOT NULL REFERENCES users(user_id),
+	prod_no 				NUMBER 			NOT NULL REFERENCES product(prod_no),
+	buyer_id 				VARCHAR2(20) 	NOT NULL REFERENCES users(user_id),
 	review_title			VARCHAR2(100)	NOT NULL,
 	review_content			VARCHAR2(400),
 	image_name				VARCHAR2(100),
