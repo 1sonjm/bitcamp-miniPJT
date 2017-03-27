@@ -63,7 +63,6 @@ public class ReviewController {
 
 		Purchase purchase = purchaseService.getPurchase(tranNo);
 		review.setPurchasehistory(purchase);
-		
 		reviewService.insertReview(review);
 		return "redirect:/purchase/listPurchase";
 	}

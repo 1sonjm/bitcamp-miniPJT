@@ -96,7 +96,7 @@ public class ProductController {
 		if(viewListMap.size()>6){
 			viewListMap.remove(6);
 		}
-		
+		System.out.println("#"+reviewService.getReviewList(prodNo));
 		model.addAttribute("reviewList",reviewService.getReviewList(prodNo));
 		session.setAttribute("viewListMap", viewListMap);
 		
