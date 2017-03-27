@@ -45,4 +45,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDao.updateReview(review);
 	}
 
+	@Override
+	public int updateAnswer(Review review) throws Exception {
+		return reviewDao.updateAnswer(review);
+	}
+
 }

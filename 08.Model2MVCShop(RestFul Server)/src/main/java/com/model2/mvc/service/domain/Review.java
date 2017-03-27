@@ -65,10 +65,6 @@ public class Review {
 		builder.append(reviewNo);
 		builder.append(", purchasehistory=");
 		builder.append(purchasehistory);
-		builder.append(", purchaseItem=");
-		builder.append(purchaseItem);
-		builder.append(", buyer=");
-		builder.append(buyer);
 		builder.append(", reviewTitle=");
 		builder.append(reviewTitle);
 		builder.append(", reviewContent=");

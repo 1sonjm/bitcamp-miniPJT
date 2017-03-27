@@ -38,10 +38,8 @@ public class ReviewController {
 	
 	@RequestMapping(value="getReview/{reviewNo}")
 	public String getReview(@PathVariable int reviewNo
-							,Model model
-							,HttpSession session) throws Exception{
+							,Model model) throws Exception{
 		
-		model.addAttribute("user", session.getAttribute("user"));
 		model.addAttribute("review",reviewService.getReview(reviewNo));
 		
 		return "forward:/review/getReview.jsp";
@@ -66,13 +64,22 @@ public class ReviewController {
 		reviewService.insertReview(review);
 		return "redirect:/purchase/listPurchase";
 	}
-	
+
+	@RequestMapping(value="updateReviewView/{reviewNo}")
+	public String updateReviewView(@PathVariable int reviewNo
+								,@ModelAttribute("review")Review review
+								,Model model) throws Exception{
+		
+		model.addAttribute(reviewService.getReview(reviewNo));
+		return "forward:/review/updateReviewView.jsp";
+	}
 	@RequestMapping(value="updateReview/{reviewNo}")
 	public String updateReview(@PathVariable int reviewNo
+								,@ModelAttribute("review")Review review
 								,Model model) throws Exception{
 
-
-		return "redirect:/product/getProduct/"+reviewNo;
+		reviewService.updateReview(review);
+		return "redirect:/product/listProduct?menu=search";
 	}
 	
 	@RequestMapping(value="updateAnswerView/{reviewNo}")
@@ -81,15 +88,13 @@ public class ReviewController {
 									,Model model) throws Exception{
 		
 		model.addAttribute("review",reviewService.getReview(reviewNo));
-		
 		return "forward:/review/updateAnswerView.jsp";
 	}
-	
 	@RequestMapping(value="updateAnswer/{reviewNo}")
 	public String updateAnswer(@PathVariable int reviewNo
-								,Model model) throws Exception{
+								,@ModelAttribute("review")Review review) throws Exception{
 
-
+		reviewService.updateAnswer(review);
 		return "redirect:/review/getReview/"+reviewNo;
 	}
 }

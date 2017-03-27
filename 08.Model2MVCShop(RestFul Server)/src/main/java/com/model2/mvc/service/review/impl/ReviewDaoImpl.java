@@ -44,5 +44,10 @@ public class ReviewDaoImpl implements ReviewDao {
 		return sqlSession.update("ReviewMapper.updateReview", review);
 	}
 
+	@Override
+	public int updateAnswer(Review review) throws Exception {
+		return sqlSession.update("ReviewMapper.updateAnswer", review);
+	}
+
 
 }

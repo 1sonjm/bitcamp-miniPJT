@@ -69,10 +69,10 @@
 </table>
 </form>
 <c:if test='${user.role=="admin"}'>
-	<button class="btn btn-default" onclick="location.href='/product/updateAnswerView?prodNo=${review.reviewNo}'">답변등록/수정</button>
+	<button class="btn btn-default" onclick="location.href='/review/updateAnswerView/${review.reviewNo}'">답변등록/수정</button>
 </c:if>
 <c:if test='${user.role=="user" && empty review.answerTitle}'>
-	<button class="btn btn-default" onclick="location.href='/product/updateReviewView?prodNo=${review.reviewNo}'">수정</button>
+	<button class="btn btn-default" onclick="location.href='/review/updateReviewView/${review.reviewNo}'">수정</button>
 </c:if>
 <button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
 

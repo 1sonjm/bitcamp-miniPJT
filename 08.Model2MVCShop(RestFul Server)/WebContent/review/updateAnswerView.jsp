@@ -40,24 +40,22 @@ function resetData(){
 <table class="table">
 	<tr>
 		<td>후기 제목</td>
-		<td>${reveiw.reviewTitle}</td>
+		<td>${review.reviewTitle}</td>
 	</tr>
 	<tr>
 		<td>후기 내용</td>
-		<td>${reveiw.reviewContent}</td>
+		<td>${review.reviewContent}</td>
 	</tr>
 	<tr>
 		<td>답변 제목</td>
 		<td>
-			<input type="text" class="form-control" name="answerTitle">
+			<input type="text" class="form-control" name="answerTitle" value="${review.answerTitle}">
 		</td>
 	</tr>
 	<tr>
 		<td>답변 내용</td>
 		<td>
-			<textarea name="answerContent" rows="4" cols="50">
-				${review.answerContent}
-			</textarea>
+			<textarea name="answerContent" rows="4" cols="50">${review.answerContent}</textarea>
 		</td>
 	</tr>
 	

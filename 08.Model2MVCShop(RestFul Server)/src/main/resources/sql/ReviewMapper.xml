@@ -59,13 +59,13 @@
 	</select>
 	
 	<update id="updateReview" parameterType="review">
-		UPDATE reviews SET
-			<if test="buyer.role != 'admin'">
-				review_title= #{reviewTitle},review_content= #{reviewContent},image_name= #{imageName},grade= #{grade}
-			</if>
-			<if test="buyer.role == 'admin'">
-				answer_title= #{answerTitle},answer_content= #{answerContent}
-			</if>
-		WHERE review_no = ${reviewNo}
+		UPDATE reviews
+		SET review_title= #{reviewTitle}, review_content= #{reviewContent:VARCHAR}, image_name= #{imageName:VARCHAR},grade= #{grade}
+		WHERE review_no = #{reviewNo}
+	</update>
+	<update id="updateAnswer" parameterType="review">
+		UPDATE reviews
+		SET answer_title= #{answerTitle},answer_content= #{answerContent:VARCHAR}
+		WHERE review_no = #{reviewNo}
 	</update>
 </mapper>

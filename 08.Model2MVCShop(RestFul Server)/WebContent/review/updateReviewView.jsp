@@ -24,7 +24,7 @@
 
 <script type="text/javascript">
 function fncUpdateReview(){
-	document.detailForm.action='/review/updateAnswer/${review.reviewNo}';
+	document.detailForm.action='/review/updateReview/${review.reviewNo}';
 	document.detailForm.submit();
 }
 
@@ -53,15 +53,13 @@ function resetData(){
 	<tr>
 		<td>제목</td>
 		<td colspan="3">
-			<input type="text" class="form-control" name="answerTitle" value="${review.reviewTitle }">
+			<input type="text" class="form-control" name="reviewTitle" value="${review.reviewTitle }">
 		</td>
 	</tr>
 	<tr>
 		<td>내용</td>
 		<td colspan="3">
-			<textarea name="answerContent" rows="4" cols="50">
-				${review.reviewContent}
-			</textarea>
+			<textarea name="reviewContent" rows="4" cols="50">${review.reviewContent}</textarea>
 		</td>
 	</tr>
 </table>
