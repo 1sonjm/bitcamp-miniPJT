@@ -29,5 +29,5 @@
 >
 # 09.Model2MVCShop(jQuery)
 >
-* JavaScript Framework인 jQuery를 이용하여 jsp의 dynamic content와 static content의 coupling을 낮추고
-동적 UI구성의 편의성을 높임
+* JavaScript Framework인 [jQuery](https://github.com/1sonjm/bitcamp-miniPJT/wiki/Framework#jQuery)를 
+이용하여 jsp의 dynamic content(JavaScript)와 static content(HTML tags)의 coupling을 낮추고 동적 UI구성의 편의성을 높임
