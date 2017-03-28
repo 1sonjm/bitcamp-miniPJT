@@ -50,6 +50,7 @@ CREATE TABLE transaction (
 	tran_status_code		CHAR(3),
 	order_date 				DATE,
 	dlvy_date 				DATE,
+	create_review			NUMBER(1) 		DEFAULT 0,
 	PRIMARY KEY(tran_no)
 );
 
