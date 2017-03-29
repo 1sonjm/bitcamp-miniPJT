@@ -18,7 +18,7 @@
 	
 		//=====기존Code 주석 처리 후  jQuery 변경 ======//
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
-		function fncGetUserList(currentPage) {
+		function fncGetList(currentPage) {
 			//document.getElementById("currentPage").value = currentPage;
 			$("#currentPage").val(currentPage)
 		   	//document.detailForm.submit();
@@ -34,7 +34,7 @@
 			 $( "td.ct_btn01:contains('검색')" ).on("click" , function() {
 				//Debug..
 				//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
-				fncGetUserList(1);
+				fncGetList(1);
 			});
 			
 			
@@ -111,7 +111,7 @@
 					<td width="17" height="23"><img src="/images/ct_btnbg01.gif" width="17" height="23"></td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
 						<!-- ////////////////// jQuery Event 처리로 변경됨 /////////////////////////
-							<a href="javascript:fncGetUserList('1');">검색</a>
+							<a href="javascript:fncGetList('1');">검색</a>
 							////////////////////////////////////////////////////////////////////////////////////////////////// -->
 						검색
 					</td>

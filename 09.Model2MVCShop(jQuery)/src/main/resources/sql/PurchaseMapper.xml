@@ -15,6 +15,7 @@
 		<result property="dlvyRequest"			column="dlvy_request"		jdbcType="VARCHAR" />
 		<result property="tranCode"				column="tran_status_code"	jdbcType="CHAR" />
 		<result property="orderDate"			column="order_date"			jdbcType="DATE" />
+		<result property="createReview"			column="create_review"		jdbcType="BOOLEAN" />
 		<association property="purchaseProd"	resultMap="productDomain"/>
 		<association property="buyer" 			resultMap="userDomain"/>
 		<!-- association에 result맵을 다른 경로의 resultmap을 가져와서 넣어주자 -->
@@ -71,7 +72,7 @@
 	<select id="getPurchase" parameterType="int" resultMap="purchaseSelectMap">
 		SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.dlvy_addr
 				, t.dlvy_request, t.tran_status_code, t.order_date, TO_CHAR(t.dlvy_date,'yyyymmdd') dlvy_date
-				,p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date
+				,DECODE(t.create_review,1,'true','false'),p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date
 		FROM transaction t,product p WHERE p.prod_no = t.prod_no AND tran_no= #{tranNo}
 		ORDER BY tran_no DESC
 	</select>

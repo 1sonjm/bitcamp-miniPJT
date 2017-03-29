@@ -7,11 +7,11 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
 
 <script type="text/javascript">
-<!--
 function fncAddProduct(){
 	//Form 유효성 검증
  	var name = document.detailForm.prodName.value;
@@ -35,11 +35,23 @@ function fncAddProduct(){
 		alert("가격은 반드시 입력하셔야 합니다.");
 		return;
 	}
-		
-	document.detailForm.action='/product/updateProduct';
-	document.detailForm.submit();
 }
--->
+$(function(){
+	$("img[src='../images/ct_icon_date.gif']").on("click",function(){
+		show_calendar('document.detailForm.manuDate', $("img[src='../images/ct_icon_date.gif']").val());
+		$('input[name="manuDate"]').text().replace('-', '');
+	});
+	$('td.ct_btn01[background="/images/ct_btnbg02.gif"]:contains("수정")').on('click',function(){
+		fncAddProduct();
+		$('input[name="manuDate"]').text().replace('-', '');
+		$('form').attr('action','/product/updateProduct').submit();
+	});
+	$($('td.ct_btn01[background="/images/ct_btnbg02.gif"]')[1]).click(function(event) {
+	//$('td.ct_btn01[background="/images/ct_btnbg02.gif"]:contains("취소")').click(function(event) {
+		event.preventDefault();
+		history.back(1);
+	});
+});
 </script>
 </head>
 
@@ -113,8 +125,7 @@ function fncAddProduct(){
 		<td class="ct_write01">
 			<input type="text" readonly="readonly" name="manuDate" value="${product.getManuDate()}" 	
 						class="ct_input_g" style="width: 100px; height: 19px" maxLength="10" minLength="6">&nbsp;
-						<img 	src="../images/ct_icon_date.gif" width="15" height="15" 
-									onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)" />
+						<img 	src="../images/ct_icon_date.gif" width="15" height="15" />
 		</td>
 	</tr>
 	<tr>
@@ -156,7 +167,7 @@ function fncAddProduct(){
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-						<a href="javascript:fncAddProduct();">수정</a>
+						수정
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -166,7 +177,7 @@ function fncAddProduct(){
 						<img src="/images/ct_btnbg01.gif"width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						<a href="javascript:history.go(-1)">취소</a>
+						취소
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

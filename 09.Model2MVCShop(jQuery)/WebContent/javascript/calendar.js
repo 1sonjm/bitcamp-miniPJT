@@ -136,7 +136,8 @@
 
 		function str2dt (str_datetime,str_target)
 		{
-			var re_date = /^(\d+)\-(\d+)\-(\d+)$/; 
+			var re_date = /^(\d+)\-(\d+)\-(\d+)$/;
+			//var re_date = /^(\d+)(\d+)(\d+)$/;
 	        if (!re_date.exec(str_datetime))
 				return errorTurn("날짜 형식이 잘못 되었습니다. 형식('YYYYMMDD')",str_target); 
 
@@ -146,6 +147,7 @@
 		function dt2dtstr (dt_datetime)
 		{
 			return(new String(""+dt_datetime.getFullYear()+"-"+(dt_datetime.getMonth()+1)+"-"+dt_datetime.getDate()+""));
+			//return(new String(""+dt_datetime.getFullYear()+(dt_datetime.getMonth()+1)+dt_datetime.getDate()+""));
 		}
 		
 		function tuning2dt (str_datetime,str_target)
@@ -179,7 +181,8 @@
 	        else mo = (dt_datetime.getMonth()+1).toString();
 	        if( dt_datetime.getDate().toString().length==1) dy = "0" + dt_datetime.getDate().toString();
 	        else dy = dt_datetime.getDate().toString();
-	        return(new String(""+dt_datetime.getFullYear()+"-"+mo+"-"+dy+"")); 
+	        return(new String(""+dt_datetime.getFullYear()+"-"+mo+"-"+dy+""));
+	        //return(new String(""+dt_datetime.getFullYear()+mo+dy+"")); 
 		}
 
 		function errorTurn(x,str_target)

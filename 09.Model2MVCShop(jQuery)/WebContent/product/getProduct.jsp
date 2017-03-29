@@ -19,6 +19,17 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <title>Insert title here</title> 
+<script type="text/javascript">
+$(function(){
+	$("button:contains('이전')").click(function(event) {
+		event.preventDefault();
+		history.back(1);
+	});
+	$("button:contains('구매')").click(function(){
+		$('form').attr('action','/purchase/addPurchaseView?prodNo=${product.prodNo}').submit();
+	})
+})
+</script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -93,10 +104,10 @@
 </table>
 </form>
 <c:if test='${param.menu!="soldout"}'>
-	<button class="btn btn-default" onclick="location.href='/purchase/addPurchaseView?prodNo=${product.prodNo}'">구매</button>
+	<button class="btn btn-default">구매</button>
 </c:if>
 
-<button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
+<button class="btn btn-default">이전</button>
 <table class="table">
 	<tr>
 		<td>사진</td>
@@ -119,6 +130,7 @@
 			</td>
 			<td>${review.regDate}</td>
 		</tr>
+		<c:if test="${review.answerTitle != null}">
 			<tr>
 				<td></td>
 				<td>┕></td>
@@ -129,6 +141,7 @@
 				</td>
 				<td></td>
 			</tr>
+		</c:if>
 	</c:forEach>
 </table>
 

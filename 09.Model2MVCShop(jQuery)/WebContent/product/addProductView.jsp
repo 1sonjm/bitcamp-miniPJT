@@ -23,7 +23,7 @@
 </script>
 
 <script type="text/javascript">
-<!--
+
 function fncAddProduct(){
 	//Form 유효성 검증
  	var name = document.detailForm.prodName.value;
@@ -55,7 +55,18 @@ function fncAddProduct(){
 function resetData(){
 	document.detailForm.reset();
 }
--->
+
+$(function(){
+	$($("button")[0]).on("click",function(){
+		fncAddProduct();
+	});
+	$($("button")[1]).on("click",function(){
+		$("form")[0].reset();
+	});
+	$("img[src='../images/ct_icon_date.gif']").on("click",function(){
+		show_calendar('document.detailForm.manuDate', $("img[src='../images/ct_icon_date.gif']").val());
+	});
+});
 </script>
 </head>
 
@@ -107,8 +118,7 @@ function resetData(){
 			<div class="form-group col-xs-2">
 				<div class="input-group">
 				<input type="text" class="form-control" name="manuDate" readonly="readonly" style="width: 150px;">
-					<div class="input-group-addon"><img src="../images/ct_icon_date.gif" width="15" height="15" 
-											onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/></div>
+					<div class="input-group-addon"><img src="../images/ct_icon_date.gif" width="15" height="15" /></div>
 				</div>
 			</div>
 		</td>
@@ -141,8 +151,8 @@ function resetData(){
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td>
-					<button class="btn btn-default" onclick="javascript:fncAddProduct();">등록</button>
-					<button class="btn btn-default" onclick="javascript:resetData();">취소</button>
+					<button class="btn btn-default">등록</button>
+					<button class="btn btn-default">취소</button>
 				</td>
 			</tr>
 		</table>

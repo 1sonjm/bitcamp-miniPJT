@@ -57,24 +57,44 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 <script type="text/javascript">
 function fncGetList(currentPage){
-	document.getElementById("currentPage").value = currentPage;
-	document.detailForm.submit();
+	$('#currentPage').val(currentPage);
+	$('form').submit();
 }
 function fncSorting(sortingTarget,isDESC){
-	document.getElementById("SortingTarget").value = sortingTarget
-	document.getElementById("SortingDESC").value = isDESC;
-	document.detailForm.submit();
+	$('#SortingTarget').val(sortingTarget);
+	$('#SortingDESC').val(isDESC);
+	$('form').submit();
 }
-function fncViewSoldItem(){
-	document.getElementById("currentPage").value = 1;
-	document.detailForm.submit();
+$(function(){
+	$('input[name="viewSoldItem"], button:contains("검색")').on('click',function(){
+		$('#currentPage').val(1);
+		$('form').submit();
+	});
+	$('tr.ct_list_pop').on('click',function(){
+		
+	});
+});
+function sendPage(Page){
+	$('form').attr('method','post').attr('action','/product/updateProduct?prodNo='+Page+'&menu=${param.menu}').submit();
 }
+
+$(function(){
+	$('#updateProduct').on('click',function(){
+		self.location ="/product/updateProductView?prodNo="+$(this).attr('sendValue');
+	});
+	$('#getProduct').on('click',function(){
+		self.location ="/product/getProduct?prodNo="+$(this).attr('sendValue')+"&menu=soldout";
+	});
+	$('tr.ct_list_pop td a:contains("배송하기")').on('click',function(){
+		self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).attr('sendValue');
+	});
+});
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 <div style="width:98%; margin-left:10px;">
-<form name="detailForm" action='/product/listProduct?&menu=${param.menu}' method="post">
+<form name="detailForm" action='/product/listProduct?&menu=${param.menu}' method="get">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
@@ -99,8 +119,7 @@ function fncViewSoldItem(){
 	<div class="form-group" id="keywordPlace">
 		<c:if test='${param.menu=="manage"}'>
 			<label for="default" class="btn btn-default">구매물품 보기
-				<input type="checkbox" id="default" class="badgebox" name="viewSoldItem"
-					onclick="fncGetList('1')" ${search.viewSoldItem?'checked':''}>
+				<input type="checkbox" id="default" class="badgebox" name="viewSoldItem" ${search.viewSoldItem?'checked':''}>
 				<span class="badge">&check;</span>
 			</label>
 		</c:if>
@@ -122,7 +141,7 @@ function fncViewSoldItem(){
 				value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
 		<!-- seekbar자료 : http://stackoverflow.com/questions/27060099/seekbar-with-range-of-two-values-min-and-max -->
 	</div>
-	<button class="btn btn-default" onclick="javascript:fncGetList('1');">검색</button>
+	<button class="btn btn-default">검색</button>
 </div>
 <p>전체 <kbd>${resultPage.totalCount}</kbd> 건수, 현재 <kbd>${search.currentPage}</kbd> 페이지</p><br/>
 <input type="hidden" id="SortingTarget" name="SortingTarget" 
@@ -165,17 +184,18 @@ function fncViewSoldItem(){
 			<c:if test='${param.menu=="manage"}'>
 				<td align="center">${i}</td>
 			</c:if>
-				<td align="left">
-					<c:if test='${product.prodStock!=0}'>
-						<a href='/product/getProduct?prodNo=${product.prodNo}&menu=${param.menu}'>
-						${product.prodName}</a>
-					</c:if>
-					<c:if test='${product.prodStock==0}'>
-						<a href='/product/getProduct?prodNo=${product.prodNo}&menu=soldout'>
+			<td align="left">
+				<c:if test='${product.prodStock!=0}'>
+					<span id="updateProduct" sendValue="${product.prodNo}">
 						${product.prodName}
-						</a>
-					</c:if>
-				</td>
+					</span>
+				</c:if>
+				<c:if test='${product.prodStock==0}'>
+					<span id="getProduct" sendValue="${product.prodNo}">
+						${product.prodName}
+					</span>
+				</c:if>
+			</td>
 			<td align="left">${product.price}</td>
 			<td align="left">${product.prodStock}</td>
 			<c:if test='${param.menu=="manage"}'>
@@ -184,7 +204,7 @@ function fncViewSoldItem(){
 			<td align="left">
 				${product.prodTranCode}
 				<c:if test='${param.menu=="manage" && product.prodTranCode=="구매완료"}'>
-					<a href="/product/updateTranCodeByProd?prodNo=${product.prodNo}">배송하기</a>
+					<a sendValue="${product.prodNo}">배송하기</a>
 				</c:if>
 			</td>
 		</tr>

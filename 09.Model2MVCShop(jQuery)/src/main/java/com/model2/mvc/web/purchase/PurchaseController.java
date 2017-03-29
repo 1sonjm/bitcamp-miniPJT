@@ -47,7 +47,7 @@ public class PurchaseController {
 		System.out.println(this.getClass());
 	}
 	
-	@RequestMapping(value="addPurchaseView",method=RequestMethod.GET)
+	@RequestMapping(value="addPurchaseView",method=RequestMethod.POST)
 	public ModelAndView addPurchaseView(HttpSession session
 										,@RequestParam("prodNo")int prodNo
 										) throws Exception{
@@ -117,8 +117,8 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="updateTranCodeByProdAction",method=RequestMethod.GET)
-	public ModelAndView updateTranCodeByProdAction(@ModelAttribute("product")Product product
+	@RequestMapping(value="updateTranCodeByProd",method=RequestMethod.GET)
+	public ModelAndView updateTranCodeByProd(@ModelAttribute("product")Product product
 													) throws Exception{
 		
 		Purchase purchase = new Purchase();
@@ -127,7 +127,7 @@ public class PurchaseController {
 		purchaseService.updateTranCode(purchase);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/purchase/listProduct?menu=manage");
+		modelAndView.setViewName("redirect:/product/listProduct?menu=manage");
 		return modelAndView;
 	}
 	

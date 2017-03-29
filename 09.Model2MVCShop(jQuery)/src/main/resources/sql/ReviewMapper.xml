@@ -43,7 +43,7 @@
 				,#{answerContent:VARCHAR},#{grade},SYSDATE)
 	</insert>
 	<update id="insertReviewUpdateStatus" parameterType="int">
-		UPDATE purchase SET create_review=1 WHERE tran_no = #{tranNo}
+		UPDATE transaction SET create_review=1 WHERE tran_no = #{tranNo}
 	</update>
 	
 	<select id="getReviewList" resultMap="reviewSelectMap" parameterType="int">
