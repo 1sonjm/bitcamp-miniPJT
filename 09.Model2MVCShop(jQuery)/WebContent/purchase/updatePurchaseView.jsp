@@ -20,7 +20,17 @@
 
 <title>구매정보 수정</title>
 
-<script type="text/javascript" src="../javascript/calendar.js">
+<script type="text/javascript" src="../javascript/calendar.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('button:contains("수정")').on('click',function(){
+		$('form').submit();
+	});
+	$('button:contains("취소")').on('click',function(event){
+		event.preventDefault();
+		history.back(1);
+	});
+});
 </script>
 
 </head>
@@ -112,37 +122,8 @@
 		</td>
 	</tr>
 </table>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
-	<tr>
-		<td width="53%"></td>
-		<td align="right">
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tr>
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-					<input type="submit" value="수정"/>
-				</td>
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-				</td>
-				<td width="30"></td>
-				<td width="17" height="23">
-					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-				</td>
-				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<a href="/purchase/listPurchase">취소</a>
-				</td>
-				<td width="14" height="23">
-					<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-				</td>
-			</tr>
-		</table>
-		</td>
-	</tr>
-</table>
+<button class="btn btn-default">수정</button>
+<button class="btn btn-default">취소</button>
 </form>
 
 </body>

@@ -16,6 +16,17 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(function(){
+	$('button:contains("수정")').on('click',function(){
+		self.location="/purchase/updatePurchaseView?tranNo="+${purchase.tranNo};
+	});
+	$('button:contains("취소")').on('click',function(event){
+		event.preventDefault();
+		history.back(1);
+	});
+});
+</script>
 <title>구매상세조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
@@ -96,8 +107,8 @@
 	</tr>
 </table>
 
-<button class="btn btn-default" onclick="location.href='/purchase/updatePurchaseView?tranNo=${purchase.tranNo}'">수정</button>
-<button class="btn btn-default" onclick="javascript:history.go(-1);">취소</button>
+<button class="btn btn-default">수정</button>
+<button class="btn btn-default">취소</button>
 
 </body>
 </html>

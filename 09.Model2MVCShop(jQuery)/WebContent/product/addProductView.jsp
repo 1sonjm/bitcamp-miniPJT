@@ -64,7 +64,8 @@ $(function(){
 		$("form")[0].reset();
 	});
 	$("img[src='../images/ct_icon_date.gif']").on("click",function(){
-		show_calendar('document.detailForm.manuDate', $("img[src='../images/ct_icon_date.gif']").val());
+		show_calendar('document.detailForm.manuDate', $("input[name='manuDate']").val());
+		$('input[name="manuDate"]').text().replace('-', '');
 	});
 });
 </script>

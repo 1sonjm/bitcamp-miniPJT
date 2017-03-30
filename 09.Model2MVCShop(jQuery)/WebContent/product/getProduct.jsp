@@ -103,7 +103,7 @@ $(function(){
 	</tr>
 </table>
 </form>
-<c:if test='${param.menu!="soldout"}'>
+<c:if test='${product.prodStock!=0}'>
 	<button class="btn btn-default">±¸¸Å</button>
 </c:if>
 

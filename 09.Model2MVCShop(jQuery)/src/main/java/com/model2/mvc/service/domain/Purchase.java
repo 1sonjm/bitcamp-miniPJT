@@ -90,9 +90,15 @@ public class Purchase {
 	public boolean isCreateReview() {
 		return createReview;
 	}
-
-	public void setCreateReview(boolean createReview) {
-		this.createReview = createReview;
+	public void setCreateReview(int createReview) {
+		switch (createReview) {
+		case 0:
+			this.createReview = false;
+			break;
+		case 1:
+			this.createReview = true;
+			break;
+		}
 	}
 
 	@Override

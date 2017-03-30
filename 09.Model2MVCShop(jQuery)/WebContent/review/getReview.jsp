@@ -17,7 +17,20 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-
+<script type="text/javascript">
+$(function(){
+	$('button.btn btn-default:contains("답변등록/수정")').on('click',function(){
+		self.location="/review/updateAnswerView/${review.reviewNo}";
+	});
+	$('button.btn btn-default:contains("후기수정")').on('click',function(){
+		self.location="/review/updateReviewView/${review.reviewNo}";
+	});
+	$('button.btn btn-default:contains("이전")').on('click',function(){
+		event.preventDefault();
+		history.back(1);
+	});
+});
+</script>
 <title>Insert title here</title> 
 </head>
 
@@ -69,12 +82,12 @@
 </table>
 </form>
 <c:if test='${user.role=="admin"}'>
-	<button class="btn btn-default" onclick="location.href='/review/updateAnswerView/${review.reviewNo}'">답변등록/수정</button>
+	<button class="btn btn-default">답변등록/수정</button>
 </c:if>
 <c:if test='${user.role=="user" && empty review.answerTitle}'>
-	<button class="btn btn-default" onclick="location.href='/review/updateReviewView/${review.reviewNo}'">수정</button>
+	<button class="btn btn-default">후기수정</button>
 </c:if>
-<button class="btn btn-default" onclick="javascript:history.go(-1)">이전</button>
+<button class="btn btn-default">이전</button>
 
 </body>
 </html>

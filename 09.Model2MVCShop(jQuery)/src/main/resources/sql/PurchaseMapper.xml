@@ -72,7 +72,7 @@
 	<select id="getPurchase" parameterType="int" resultMap="purchaseSelectMap">
 		SELECT t.tran_no, t.prod_no, t.buyer_id, t.payment_option, t.receiver_name, t.receiver_phone, t.dlvy_addr
 				, t.dlvy_request, t.tran_status_code, t.order_date, TO_CHAR(t.dlvy_date,'yyyymmdd') dlvy_date
-				,DECODE(t.create_review,1,'true','false'),p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date
+				,t.create_review,p.prod_name,p.prod_detail,p.manufacture_day,p.price,p.image_file,p.reg_date
 		FROM transaction t,product p WHERE p.prod_no = t.prod_no AND tran_no= #{tranNo}
 		ORDER BY tran_no DESC
 	</select>
@@ -80,7 +80,7 @@
 	<select  id="getPurchaseList" parameterType="map" resultMap="purchaseSelectMap">
 		SELECT *
 		FROM ( SELECT inner_table.* , ROWNUM AS row_seq
-			FROM ( SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name
+			FROM ( SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, create_review
 						, receiver_phone, dlvy_addr, dlvy_request, order_date, dlvy_date
 						,CASE WHEN tran_status_code ='0' THEN '구매완료'
 							WHEN tran_status_code ='1' THEN '배송중'

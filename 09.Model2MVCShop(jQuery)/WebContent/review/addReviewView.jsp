@@ -23,14 +23,14 @@
 </script>
 
 <script type="text/javascript">
-function fncUpdateReview(){
-	document.detailForm.action='/review/addReview/${purchase.tranNo}';
-	document.detailForm.submit();
-}
-
-function resetData(){
-	document.detailForm.reset();
-}
+$(function(){
+	$('button:contains("등록")').on('click',function(){
+		$('form').attr('action','/review/addReview/${purchase.tranNo}').submit();
+	});
+	$('button:contains("취소")').on('click',function(){
+		$('form').reset();//TODO 수정-왜 안되는거지
+	});
+});
 </script>
 </head>
 
@@ -61,10 +61,10 @@ function resetData(){
 		</td>
 	</tr>
 </table>
-
-<button class="btn btn-default" onclick="javascript:fncUpdateReview();">등록</button>
-<button class="btn btn-default" onclick="javascript:resetData();">취소</button>
-
 </form>
+
+<button class="btn btn-default">등록</button>
+<button class="btn btn-default">취소</button>
+
 </body>
 </html>

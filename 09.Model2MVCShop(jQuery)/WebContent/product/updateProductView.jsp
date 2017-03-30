@@ -37,13 +37,19 @@ function fncAddProduct(){
 	}
 }
 $(function(){
-	$("img[src='../images/ct_icon_date.gif']").on("click",function(){
-		show_calendar('document.detailForm.manuDate', $("img[src='../images/ct_icon_date.gif']").val());
-		$('input[name="manuDate"]').text().replace('-', '');
+	$("img[src='/images/ct_icon_red.gif']").on("click",function(){
+		var replaceDate = $("input[name='manuDate']").val().replace(/-/g, '');
+		$("input[name='manuDate']").val(replaceDate)
 	});
+	$("img[src='../images/ct_icon_date.gif']").on("click",function(){
+		var replaceDate = $("input[name='manuDate']").val().replace(/-/g, '');
+		$("input[name='manuDate']").val(replaceDate)
+		show_calendar('document.detailForm.manuDate', $("input[name='manuDate']").val());
+	});
+	
 	$('td.ct_btn01[background="/images/ct_btnbg02.gif"]:contains("¼öÁ¤")').on('click',function(){
-		fncAddProduct();
-		$('input[name="manuDate"]').text().replace('-', '');
+		var replaceDate = $("input[name='manuDate']").val().replace(/-/g, '');
+		$("input[name='manuDate']").val(replaceDate)
 		$('form').attr('action','/product/updateProduct').submit();
 	});
 	$($('td.ct_btn01[background="/images/ct_btnbg02.gif"]')[1]).click(function(event) {

@@ -25,11 +25,21 @@
 </script>
 
 <script type="text/javascript">
-<!--
 function fncAddPurchase() {
 	document.addPurchase.submit();
 }
--->
+$(function(){
+	$('img[src="../images/ct_icon_date.gif"]').on("click",function(){
+		show_calendar('document.addPurchase.dlvyDate', $('img[src="../images/ct_icon_date.gif"]').val());
+	});
+	$('td[background="/images/ct_btnbg02.gif"]:contains("구매")').on("click",function(){
+		$('form').submit();
+	});
+	$('td[background="/images/ct_btnbg02.gif"]:contains("취소")').on("click",function(event){
+		event.preventDefault();
+		history.back(1);
+	});
+});
 </script>
 </head>
 
@@ -126,7 +136,7 @@ function fncAddPurchase() {
 			구매자아이디 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${user.userId}</td>		
+		<td class="ct_write01">${user.userId}</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -195,8 +205,7 @@ function fncAddPurchase() {
 		<td width="200" class="ct_write01">
 			<input 	type="text" readonly="readonly" name="dlvyDate" class="ct_input_g" 
 							style="width: 100px; height: 19px" maxLength="20"/>
-			<img 	src="../images/ct_icon_date.gif" width="15" height="15"	
-						onclick="show_calendar('document.addPurchase.dlvyDate', document.addPurchase.dlvyDate.value)"/>
+			<img src="../images/ct_icon_date.gif" width="15" height="15"/>
 		</td>
 	</tr>
 	<tr>
@@ -214,7 +223,7 @@ function fncAddPurchase() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						<a href="javascript:fncAddPurchase();">구매</a>
+						<a>구매</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
@@ -224,7 +233,7 @@ function fncAddPurchase() {
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>
 					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-						<a href="javascript:history.go(-1)">취소</a>
+						<a>취소</a>
 					</td>
 					<td width="14" height="23">
 						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>

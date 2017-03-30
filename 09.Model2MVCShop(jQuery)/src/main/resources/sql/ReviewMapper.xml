@@ -20,9 +20,10 @@
 	</resultMap>
 	
 	<resultMap id="purchaseDomain" type="purchase">
-		<result property="tranNo"				column="tran_no"			jdbcType="INTEGER" />
-		<result property="tranCode"				column="tran_status_code"	jdbcType="CHAR" />
-		<result property="orderDate"			column="order_date"			jdbcType="DATE" />
+		<result property="tranNo"			column="tran_no"			jdbcType="INTEGER" />
+		<result property="tranCode"			column="tran_status_code"	jdbcType="CHAR" />
+		<result property="orderDate"		column="order_date"			jdbcType="DATE" />
+		<result property="createReview"		column="create_review"		jdbcType="DATE" />
 	</resultMap>
 	<resultMap id="productDomain" type="product">
 		<result property="prodNo" 		column="prod_no" 			jdbcType="INTEGER"/>
@@ -54,9 +55,9 @@
 		WHERE prod_no = #{prodNo}
 	</select>
 	<select id="getReview" resultMap="reviewSelectMap" parameterType="int">
-		SELECT r.review_no, r.tran_no, r.prod_no, r.buyer_id
-				,r.review_title,r.review_content,r.image_name,r.answer_title
-				,r.answer_content,r.grade,r.reg_date,p.prod_name,t.order_date
+		SELECT r.review_no, r.tran_no, r.prod_no, r.buyer_id,r.review_title
+				,r.review_content,r.image_name,r.answer_title,r.answer_content
+				,r.grade,r.reg_date,p.prod_name,t.order_date, t.create_review
 		FROM reviews r, product p, transaction t
 		WHERE r.prod_no = p.prod_no AND r.tran_no = t.tran_no AND r.review_no = #{reviewNo}
 	</select>

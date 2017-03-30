@@ -57,33 +57,44 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 <script type="text/javascript">
 function fncGetList(currentPage){
-	$('#currentPage').val(currentPage);
+	$("#currentPage").val(currentPage);
 	$('form').submit();
 }
-function fncSorting(sortingTarget,isDESC){
-	$('#SortingTarget').val(sortingTarget);
-	$('#SortingDESC').val(isDESC);
-	$('form').submit();
-}
+
 $(function(){
+	$('td.ct_list_b:contains("상품명") a:contains("↓")').on('click',function(){
+		$('#SortingTarget').val('prodName');
+		$('#SortingDESC').val('1');
+		$('form').submit();
+	});
+	$('td.ct_list_b:contains("상품명") a:contains("↑")').on('click',function(){
+		$('#SortingTarget').val('prodName');
+		$('#SortingDESC').val('0');
+		$('form').submit();
+	});
+	$('td.ct_list_b:contains("가격") a:contains("↓")').on('click',function(){
+		$('#SortingTarget').val('price');
+		$('#SortingDESC').val('1');
+		$('form').submit();
+	});
+	$('td.ct_list_b:contains("가격") a:contains("↑")').on('click',function(){
+		$('#SortingTarget').val('price');
+		$('#SortingDESC').val('0');
+		$('form').submit();
+	});
+	
+	
 	$('input[name="viewSoldItem"], button:contains("검색")').on('click',function(){
 		$('#currentPage').val(1);
 		$('form').submit();
 	});
-	$('tr.ct_list_pop').on('click',function(){
-		
-	});
-});
-function sendPage(Page){
-	$('form').attr('method','post').attr('action','/product/updateProduct?prodNo='+Page+'&menu=${param.menu}').submit();
-}
-
-$(function(){
-	$('#updateProduct').on('click',function(){
+	$('.ct_list_pop td:nth-child(2) .updateProduct').css("color" , "red");
+	$('.ct_list_pop td:nth-child(2) .updateProduct').on('click',function(){
 		self.location ="/product/updateProductView?prodNo="+$(this).attr('sendValue');
 	});
-	$('#getProduct').on('click',function(){
-		self.location ="/product/getProduct?prodNo="+$(this).attr('sendValue')+"&menu=soldout";
+	$('.ct_list_pop td:nth-child(2) .getProduct').css("color" , "red");
+	$('.ct_list_pop td:nth-child(2) .getProduct').on('click',function(){
+		self.location ="/product/getProduct?prodNo="+$(this).attr('sendValue');
 	});
 	$('tr.ct_list_pop td a:contains("배송하기")').on('click',function(){
 		self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).attr('sendValue');
@@ -94,7 +105,7 @@ $(function(){
 
 <body bgcolor="#ffffff" text="#000000">
 <div style="width:98%; margin-left:10px;">
-<form name="detailForm" action='/product/listProduct?&menu=${param.menu}' method="get">
+<form name="detailForm" action='/product/listProduct?&menu=${param.menu}' method="post">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
@@ -158,12 +169,12 @@ $(function(){
 				<td class="ct_list_b" width="50">사진</td>
 			</c:if>
 			<td class="ct_list_b" width="150">상품명
-				<a href="javascript:fncSorting('prodName','1')">↓</a>
-				<a href="javascript:fncSorting('prodName','0')">↑</a>
+				<a>↓</a>
+				<a>↑</a>
 			</td>
 			<td class="ct_list_b" width="150">가격
-				<a href="javascript:fncSorting('price','1')">↓</a>
-				<a href="javascript:fncSorting('price','0')">↑</a>
+				<a>↓</a>
+				<a>↑</a>
 			</td>
 			<td class="ct_list_b" width="150">재고</td>
 			<c:if test='${param.menu=="manage"}'>
@@ -172,6 +183,7 @@ $(function(){
 			<td class="ct_list_b">현재상태</td>
 		</tr>
 	</thead>
+	
 	<c:set var="i" value="0"/>
 	<c:forEach var="product" items="${list}" begin="0" step="1">
 		<tr class="ct_list_pop">
@@ -185,13 +197,13 @@ $(function(){
 				<td align="center">${i}</td>
 			</c:if>
 			<td align="left">
-				<c:if test='${product.prodStock!=0}'>
-					<span id="updateProduct" sendValue="${product.prodNo}">
+				<c:if test='${param.menu=="manage"}'>
+					<span class="updateProduct" sendValue="${product.prodNo}">
 						${product.prodName}
 					</span>
 				</c:if>
-				<c:if test='${product.prodStock==0}'>
-					<span id="getProduct" sendValue="${product.prodNo}">
+				<c:if test='${param.menu=="search"}'>
+					<span class="getProduct" sendValue="${product.prodNo}">
 						${product.prodName}
 					</span>
 				</c:if>

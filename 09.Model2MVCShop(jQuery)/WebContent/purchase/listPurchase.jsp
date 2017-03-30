@@ -23,10 +23,27 @@
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
 <script type="text/javascript">
-	function fncGetList(currentPage) {
-		document.getElementById("currentPage").value = currentPage;
-		document.detailForm.submit();
-	}
+function fncGetList(currentPage) {
+	$('#currentPage').val(currentPage);
+	$('form').submit();
+}
+$(function(){
+	$('.ct_list_pop td:nth-child(1) a').css('color','red').on('click',function(){
+		self.location="/purchase/getPurchase?tranNo="+$(this).attr('sendValue');
+	});
+	$('.ct_list_pop td:nth-child(2) a').css('color','red').on('click',function(){
+		self.location="/user/getUser?userId="+$(this).text().trim();
+	});
+	$('.ct_list_pop td:nth-child(6):contains("배송중")').css('color','blue').on('click',function(){
+		self.location="/purchase/updateTranCode?tranNo="+$(this).attr('sendValue');
+	});
+	$('.ct_list_pop td:nth-child(6):contains("구매완료")').css('color','blue').on('click',function(){
+		self.location="/purchase/updatePurchaseView?tranNo="+$(this).attr('sendValue');
+	});
+	$('.ct_list_pop td:nth-child(6):contains("배송완료")').css('color','blue').on('click',function(){
+		self.location="/review/addReviewView/"+$(this).attr('sendValue');
+	});
+});
 </script>
 </head>
 
@@ -67,32 +84,22 @@
 	<tr class="ct_list_pop">
 		<td align="center">
 			<c:set var="i" value="${i+1}"/>
-			<a href="/purchase/getPurchase?tranNo=${purchase.tranNo}">${i}</a>
+			<a sendValue="${purchase.tranNo}">${i}</a>
 		</td>
 		<td align="left">
-			<a href="/purchase/getUser?userId=${purchase.buyer.userId}">${purchase.buyer.userId}</a>
+			<a>${purchase.buyer.userId}</a>
 		</td>
 		<td align="left">${purchase.receiverName}</td>
 		<td align="left">${purchase.receiverPhone}</td>
 		<td align="left">현재 ${purchase.tranCode} 입니다.</td>
-		<td align="left">
-			<c:set var="tranCode" value="${purchase.tranCode}"/>
-			<c:if test='${tranCode=="배송중"}'>
-				<a href="/purchase/updateTranCode?tranNo=${purchase.tranNo}">배송확인</a>
-			</c:if>
-			<c:if test='${tranCode=="구매완료"}'>
-				<a href="/purchase/updatePurchaseView?tranNo=${purchase.tranNo}">배송정보 변경</a>
-			</c:if>
-			<c:if test='${tranCode=="배송완료"}'>
-				<a href="/review/addReviewView/${purchase.tranNo}">후기작성</a>
-			</c:if>
-				<a href="/review/addReviewView/${purchase.tranNo}">후기작성</a>
-		</td>
+		<c:if test="${purchase.createReview==false && purchase.tranCode!='배송완료'}">
+			<td align="left" sendValue="${purchase.tranNo}">
+				${purchase.tranCode}
+			</td>
+		</c:if>
 	</tr>
 	</c:forEach>
 </table>
-${purchase.buyer}
-${purchase.buyer.userId}
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 	<tr>
 		<td align="center">
