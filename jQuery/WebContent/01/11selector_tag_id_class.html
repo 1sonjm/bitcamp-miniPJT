@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<!-- 
+	■ css(Cascading Style Sheets) 작성 
+	■ static contents + style(Design) 뒤섞여 있다
+	■ html 과 style 를 분리하자
+ -->
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<style type="text/css">
+	span{
+		background-color: yellow ;
+		font-size: 10pt;
+	}
+.ab{
+background-color: green ; font-size: 20pt;
+}
+#a{
+background-color: red ; font-size: 30pt;
+}
+
+	</style>
+	<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	
+	$(function(){
+		//$('*').css('color','yellow');
+		//$('h1').css('color','red');
+		//$('h1,h2').css('color','red');
+		
+		var obj=$('h1');
+		obj.css('color','red');
+		
+		//var obj=$('h1,h2');
+		//obj=css('color','red');
+	});
+	
+	</script>
+</head>
+
+<body>
+	<h1>zxcvzxcv</h1>
+	<h2>asdfasdf</h2>
+
+</body>
+	
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<!--/////////////////////////////  변경된 부분 ////////////////////////
+		//==> ajaxUtil02.js 모츌처리추가
+		//==> 1. XMLHttpRequest 객체를 얻는 function :: createRequest()
+		//==> 2. open() / callback Method지정 / send()를 처리하는 function :: openSendRequest()
+		//==> 3. trim 기능을 갖는 function :: trim()
+		
+		//==> domUtil04.js 모츌처리추가 : DOM 조작 모둘화
+		///////////////////////////////////////////////////////////////////////////////	 -->
+	<script type="text/javascript" src="/Ajax/10common/ajaxUtil02.js"></script>
+	<script type="text/javascript" src="/Ajax/10common/domUtil04.js"></script>
+ 	<script type="text/javascript">
+ 		
+ 		/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 			[[아래의 각각의 html 비교]]
+ 			■ 04test-calcClient.html
+ 				==>  javascript + DOM + ajax 사용
+			■ 05test-calcClient-jQuery.html 
+				==> javascript + jQuery(javascript Framework) + ajax 사용
+			■ 06test-calcClient.html 
+				==> javascript + domUtil04.js (User Definition) + ajax 사용				
+ 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+ 	
+ 		//server로 Post 방식 request
+	 	function getSold(){
+					
+			//==>ajaxUtil02.js의 createReqeust()호출
+			createRequest();
+	 		//접속 URL 
+	 		var url = "../02ajaxBase/calcServerAjax.jsp"
+			
+			var queryString = null;
+			
+			//==>ajaxUtil02.js의 openSendRequest(httpURL, httpMETHOD, httpPARAM, callBackMethod) 호출
+			//==>:: open()/send()/callback() Method등 수행
+			//openSendRequest(url,"GET",queryString,updatePage);
+			openSendRequest(url,"POST",queryString,updatePage);
+	 	}
+	 	
+ 		
+	 	//CallBackFunction Definition
+	 	function updatePage(){
+	 		
+	 		//==> readyState = 4 인경우 실행
+	 		if ( request.readyState ==4) {
+	 			
+	 			//== status code = 200(정상적 요청처리) 경우
+	 			if(request.status == 200){
+	 				
+			 		//request대한 응답 responseTest받기 
+			 		var serverData = request.responseText;
+			 		
+			 		//==>공백제거 
+			 		serverData = trim(serverData);
+			 		
+			 		//Debug..
+			 		alert("server로 부터 받은 판매갯수 : "+serverData);
+			 		
+			 		//변경시킬 판매갯수 element GET 
+			 		var spanSoldElem = document.getElementById("sold");
+					//판매갯수변경
+					//==> domUtil04참조 : 04test-calcClient.html / 05test-calcClient-jQuery.html 비교
+					replaceText(spanSoldElem, serverData);
+			 		
+					
+					//총 매출금액 계산 및 변경하기 
+			 		//==> 판매단가 가져오기 
+			 		var spanPriceElem = document.getElementById("price");
+					var price = "";
+			 		//==> domUtil04.js 참조: 04test-client.html / 05test-calcClient-jQuery.html  비교
+					price = price + getText(spanPriceElem);
+			 		//==>매출 금액 계산 
+			 		var cash = serverData * price;
+				 	//변경시킬 매출금액  element 가저오기 
+			 		var spanCashElem = document.getElementById("cash");
+				 	//총 매출 금액 변경하기.
+					//==> domUtil04참조 : 04test-client.html / 05test-calcClient-jQuery.html  비교
+					replaceText(spanCashElem, cash);
+	
+	    		}else{
+					alert("에러 발생 : "+request.status);
+				}
+			}
+	 	}
+	</script>
+	
+</head>
+
+<body>
+
+	<h1> 판매 보고서</h1>
+
+		<table>
+			<tr>
+				<th>판매된 상품 갯수</th>
+				<td><span id="sold">100</span></td>
+			</tr>
+			<tr>
+				<th>상품 단가</th>
+				<td><span id="price">100</span>원</td>
+			</tr>
+		</table>
+		
+		<h2>총 매출금액  : <span id="cash">10,000원</span></h2>
+		
+		<form action="../02ajaxBase/calcServerNormal.jsp" method="POST">
+			<input type="submit" value="판매보고서 다시보기(기존방식)">
+		</form>
+		
+		<form>
+			<input type="button" value="판매보고서 다시보기(ajax적용)" onClick="javascript:getSold()">
+		</form>
+	
+	
+</body>
+
+</html>

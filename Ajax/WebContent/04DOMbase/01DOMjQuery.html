@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/Ajax/10common/logUtil03.js"></script>
+	<script type="text/javascript">
+	 
+		var count = 1;
+		
+		//Element Node(UI동적변경) 추가하는 Function
+		function appendNode(){
+			
+			$('body').append('<div>이순신'+ (count++) +'</div>');
+	
+			//==>log로 확인하기(필요시)
+			//log("추가된 tagName : "+newNode.tagName+" nodeName : "+newNode.nodeName);
+			//log("추가된 tag의 attribute value:  "+newNode.getAttribute("id") );
+		}
+		
+	</script>
+		 
+</head>
+
+<body>
+
+	<input type="button" value="추가" onclick="javascript:appendNode()"/>
+
+	<div id="append1">이순신1</div>
+	
+	<div id="console" style="border: 3px solid #F00" >
+		log 출력 :  <br/>
+	</div>
+	
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/Ajax/10common/logUtil03.js"></script>
+	 <script type="text/javascript">
+	 
+		var count = 1;
+		
+		$(function(){
+			$('input[value="추가"]').on('click',function(){
+				$('body').append('<div>이순신'+ (++count) +'</div><a>asdf</a>');
+			});
+			$($('input[type="button"]')[1]).on('click',function(){
+				$('body').append('<div>이순신'+ (++count) +'<input type="button" value="삭제" index="'+count+'"/></div>');
+			});
+			$('a').on('click',function(){
+				alert($(this).attr('index'));
+			});
+		});
+		
+	</script>
+</head>
+
+<body>
+	<input type="button" value="추가"/>
+	<input type="button" value="추가,삭제버튼같이 만들기"/>
+
+	<div id="append1">이순신1</div>
+	
+	<div id="console" style="border: 3px solid #F00" >
+		log 출력 :  <br/>
+	</div>
+	
+</body>
+
+</html>

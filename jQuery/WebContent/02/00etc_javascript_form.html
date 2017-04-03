@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<meta charset="EUC-KR">
+
+	<script type="text/javascript">
+	
+		function checkValue(formElem) {
+			
+			var elemArray = formElem.elements;
+			var value = "";
+			
+			for (var index = 0; index < elemArray.length; index++) {
+
+				if( elemArray[index].type == "text" ){
+					var temp = ( elemArray[index].value == "" ? "입력값 없음" : elemArray[index].value );
+					value += (index+1) +" : "+elemArray[index].name +" : "+ temp+"\n"
+				}
+				
+				if( elemArray[index].type == "checkbox" && elemArray[index].checked ){
+					value += (index+1) +" : "+elemArray[index].name +" : "+  elemArray[index].value+"\n"
+				}
+
+				if( elemArray[index].type == "radio" && elemArray[index].checked ){
+					value += (index+1) +" : "+elemArray[index].name +" : "+  elemArray[index].value+"\n"
+				}
+				alert(value);
+			}
+			
+			formElem.action='abc.do';
+			formElem.submit();
+			//==> 아래 또한 동일 한 실행문
+			//document.myForm.action='abc.do';
+			//document.myForm.submit();
+		}
+	</script>
+</head>
+
+<body>
+
+	<form method='post' name="myForm">
+	
+		이름<input type='text' name='name' value='이름입력'><br>
+		주소<input type='text' name='addr' ><br><p>
+
+		사용중인 소프트웨어 선택<br>
+		<input type='checkbox' name='sw' value='hwp' checked="checked">hwp<br>
+		<input type='checkbox' name='sw' value='MS/WORD' checked="checked">MS/WORD<br>
+		<input type='checkbox' name='sw' value='EXCEL'>EXCEL<br><p>
+
+		사용중인 OS 선택<br>
+		<input type='radio' name='os' value='win2000' checked="checked">win2000<br>
+		<input type='radio' name='os' value='linux'>리눅스<br><p>
+
+		사용중인 CPU 선택<br>
+		<input type='radio' name='cpu' value='i3'>i3<br>
+		<input type='radio' name='cpu' value='i5'>i5<br>
+		<input type='radio' name='cpu' value='i7' checked="checked">i7<br>
+
+		<input type="button"  onclick="javascript:checkValue(this.form)"  value='button전송'>
+		<input type="submit" value="submit전송">
+		<input type='reset' value='취소'>
+	
+	</form>
+	
+</body>
+
+</html>

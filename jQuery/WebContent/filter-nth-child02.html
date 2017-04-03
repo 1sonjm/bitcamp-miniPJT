@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script src="javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	
+	/*
+	■ tag Selector (선택자) 를 이용 다양한 사용법을 확인한다.
+ 	  - element Selector  :  $( ' element [ , element ] ' )
+ 	  - 자손 element selector  : $('element  [자손element] [ ,element  [자손element] ]')
+ 	  - 속성 element selector  : $('element[attr | attr=value]  [ , element[attr | attr=value]  ]')
+ 	  - 필터 selector(:사용한경우)	: $('element:expresion')
+	      
+ 	  	1. form  필터선택자
+ 	  		예> 	$('input:button')
+ 	  				$('input:checkbox')  등등....	
+ 	  				
+ 	  				$('input:selected') 
+ 	  				$('input:disabled')
+ 	  				$('input:enabled')
+ 	  				$('input:focus')
+ 	  				$('input:checked')
+ 	  				
+ 	  	2. 위치 필터 선택자       : $(element:위치정보)
+ 	  		예>	$('element:odd') 
+ 	  				$('element:even')
+ 	  				$('element:first')
+ 	  				$('element:last')
+ 	  				
+ 	  	3. 함수 필터 selector       : $(element:function)
+ 	  		예>	$('element:contains(문자열)') 
+ 	  				$('element:not(selector)') 
+ 	  				$('element:eq(index)')
+ 	  				$('element:gt(index)')
+ 	  				$('element:lt(index)')
+ 	  				$('element:lt(index)')
+ 	  	4.기타
+ 	  		예>$('element:empty') 등등...
+ 	  		
+ 	    [추가할 함수 필더]
+ 	  	$('element:nth-chid(index)')	
+ 	    ==> parent element 기준(?)으로....
+ 	    ==> index 는 1부터 [주의,주의,주의,주의.....]
+	*/
+    
+        $(document).ready(function(e) {
+            
+        	/* [Test 1] : 모든 td 
+	        	$("td").css("color" , "red");
+	        	alert( $("td").size()  );
+        	//*/
+        	
+        	
+        	/* [Test 2] : td 의 parent element 기준 : child elemet 3번째 
+	        	$("td:nth-child(3)").css("color" , "red");
+	        	 alert(  $("td:nth-child(3)") .size()  );
+        	//*/
+        	
+        	
+        	/* [Test 3] : tr 의 parent element 기준: child elemet 3번째 
+        	//==> [Test 2] 와의 차이점 이해
+	        	$("tr:nth-child(3)").css("color" , "red");
+	        	 alert(  $("tr:nth-child(3)") .size()  );
+        	//*/
+        	
+        	
+        	/* [Test 4]  : td 의 parent element 기준 : child elemet  2 X n = ?
+        	//==> index 는 1부터 /  n = 0 부터증가...
+	        	$("td:nth-child(2n)").css("color" , "red");
+	        	 alert(  $("td:nth-child(2n)") .size()  );
+        	//*/
+        	
+        	
+        	/* [Test 5]  : td 의 parent element 기준 : child elemet  2 X n + 1 = ?
+			//==> index 는 1부터 /  n = 0 부터증가...        			
+	        	$("td:nth-child(2n+1)").css("color" , "red");
+	        	 alert(  $("td:nth-child(2n)") .size()  );
+        	//*/
+        	
+        	
+        	/* [Test 6]  : td 의 parent element 기준 : child elemet  3 X n = ?
+			//==> index 는 1부터 /  n = 0 부터증가...
+	        	$("td:nth-child(3n)").css("color" , "red");
+	        	 alert(  $("td:nth-child(3n)") .size()  );
+    		//*/
+    		
+    		
+    		//* [Test 6]   : td 의 parent element 기준 : child elemet  3 X n + 2 = ?
+			//==> index 는 1부터 /  n = 0 부터증가...
+	        	$("td:nth-child(3n+2)").css("color" , "red");
+	        	 alert(  $("td:nth-child(3n+2)") .size()  );
+    		//*/
+            
+        });
+    </script>
+    
+</head>
+
+<body>
+
+    <table border="1">
+      
+      <tr><td>TD #11</td><td>TD #12</td><td>TD #13</td><td>TD #14</td><td>TD #15</td><td>TD #16</td><td>TD #17</td><td>TD #18</td></tr>
+      <tr><td>TD #21</td><td>TD #22</td><td>TD #23</td><td>TD #24</td><td>TD #25</td><td>TD #26</td><td>TD #27</td><td>TD #28</td></tr>
+      <tr><td>TD #31</td><td>TD #32</td><td>TD #33</td><td>TD #34</td><td>TD #35</td><td>TD #36</td><td>TD #37</td><td>TD #38</td></tr>
+      <tr><td>TD #41</td><td>TD #42</td><td>TD #43</td><td>TD #44</td><td>TD #45</td><td>TD #46</td><td>TD #47</td><td>TD #48</td></tr>
+      <tr><td>TD #51</td><td>TD #52</td><td>TD #53</td><td>TD #54</td><td>TD #55</td><td>TD #56</td><td>TD #57</td><td>TD #58</td></tr>
+      <tr><td>TD #61</td><td>TD #62</td><td>TD #63</td><td>TD #64</td><td>TD #65</td><td>TD #66</td><td>TD #67</td><td>TD #68</td></tr>
+      <tr><td>TD #71</td><td>TD #72</td><td>TD #73</td><td>TD #74</td><td>TD #75</td><td>TD #76</td><td>TD #77</td><td>TD #78</td></tr>
+      <tr><td>TD #81</td><td>TD #82</td><td>TD #83</td><td>TD #84</td><td>TD #85</td><td>TD #86</td><td>TD #87</td><td>TD #88</td></tr>
+      
+      <td>TD #11</td><td>TD #12</td><td>TD #13</td><td>TD #14</td><td>TD #15</td><td>TD #16</td><td>TD #17</td><td>TD #18</td>
+      <td>TD #21</td><td>TD #22</td><td>TD #23</td><td>TD #24</td><td>TD #25</td><td>TD #26</td><td>TD #27</td><td>TD #28</td>
+      <td>TD #31</td><td>TD #32</td><td>TD #33</td><td>TD #34</td><td>TD #35</td><td>TD #36</td><td>TD #37</td><td>TD #38</td>
+      <td>TD #41</td><td>TD #42</td><td>TD #43</td><td>TD #44</td><td>TD #45</td><td>TD #46</td><td>TD #47</td><td>TD #48</td>
+      <td>TD #51</td><td>TD #52</td><td>TD #53</td><td>TD #54</td><td>TD #55</td><td>TD #56</td><td>TD #57</td><td>TD #58</td>
+      <td>TD #61</td><td>TD #62</td><td>TD #63</td><td>TD #64</td><td>TD #65</td><td>TD #66</td><td>TD #67</td><td>TD #68</td>
+      <td>TD #71</td><td>TD #72</td><td>TD #73</td><td>TD #74</td><td>TD #75</td><td>TD #76</td><td>TD #77</td><td>TD #78</td>
+      <td>TD #81</td><td>TD #82</td><td>TD #83</td><td>TD #84</td><td>TD #85</td><td>TD #86</td><td>TD #87</td><td>TD #88</td>
+      
+    </table>
+    
+</body>
+
+</html>

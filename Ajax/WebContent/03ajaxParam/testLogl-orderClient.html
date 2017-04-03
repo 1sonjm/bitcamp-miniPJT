@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/Ajax/10common/ajaxUtil02.js"></script>
+	<script type="text/javascript" src="/Ajax/10common/logUtil03.js"></script>
+	<script type="text/javascript">
+		function getCustomerInfo(){
+			createRequest();
+			var name = $('#name').val();
+			var phone = $('#phone').val()
+			var url = "get-orderServer.jsp";
+			request.open("POST",url,true);
+			
+			request.onreadystatechange = updatePage;
+			
+			request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			var queryString = "name="+name+"&phone="+phone;
+			openSendRequest(url,"POST",queryString,updatePage);
+		}
+		
+		function updatePage(){
+	 		if ( request.readyState ==4) {
+	 			if(request.status == 200){
+			 		var serverData = request.responseText;
+			 		$('#address').val($.trim(serverData));
+			 		
+			 		var testInnerHtml = $('#testInnerHtml')
+			 		log("예1: "+testInnerHtml.innerHTML);
+			 		log("예2: "+testInnerHtml.innerText);
+			 		
+			 		$('#address').innerText = $.trim(serverData);
+	    		}else{
+					log("에러 발생 : "+request.status+"==>"+request.statusText);
+				}
+			}
+		}
+	</script>
+<title>Insert title here</title>
+</head>
+<body onload="document.forms[0].reset()">
+
+	<form>
+	
+		<p>이 &nbsp;&nbsp;&nbsp;&nbsp; 름  :  
+				<input type="text" size="14" name="name"  id ="name"/>
+		</p>
+		
+		<p>전화번호 :  
+				<input type="text" size="14" name="phone"  id="phone"/>
+		</p>
+	
+		<p>주 &nbsp;&nbsp;&nbsp;&nbsp; 소 : </p>  
+	
+		<p>
+			<textarea 	rows="3" cols="50" name="address" id="address" 
+								onclick="javascript:getCustomerInfo()" >이름을 입력후 :: 여기에click...</textarea>	
+		</p>
+		<p id="testInnerHtml">XXX<input type="submit" value="주문하기" id="submit"/>YYY</p>
+		
+	</form>
+	<div id="console">
+	
+	</div>
+	
+</body>
+</html>

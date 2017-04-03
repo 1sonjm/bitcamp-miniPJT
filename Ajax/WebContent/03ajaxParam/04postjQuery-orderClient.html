@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<!-- CDN(Content Delivery Network) 호스트 사용 -->
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/Ajax/10common/ajaxUtil02.js"></script>
+	<script type="text/javascript">
+		
+		//server로 Post 방식 request
+		function getCustomerInfo(){
+			
+			//==>ajaxUtil02.js의 createReqeust()호출
+			createRequest();
+			
+			/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			var name = document.getElementById("name").value;
+			var phone = document.getElementById("phone").value;
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+			var name = $("#name").val();
+			var phone = $("#phone").val();
+			var url ="post-orderServer.jsp";
+
+			var queryString = "name="+name+"&phone="+phone;
+	 		//Debug...
+	 		alert(queryString);
+			
+	 		//==>아래의 주석을 번갈아 GET/POST 확인
+			openSendRequest(url,"POST",queryString,updatePage);
+			//openSendRequest(url,"GET",queryString,updatePage);
+
+		}
+		
+		
+		//CallBackFunction Definition
+		function updatePage(){
+			
+			if(request.readyState == 4){
+			
+				if(request.status == 200){
+					
+					var serverData = request.responseText;
+					/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					var displayValue =  trim(serverData);
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+					var displayValue = $.trim(serverData);
+					
+					//Debug...
+					alert("Server에서 받은 내용 : \n"+displayValue);
+					
+					/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					//==> 예>> 출력을 확인하여 이해하면....
+					var testInnerHtml = document.getElementById("testInnerHtml");
+					alert("예1 :: _"+testInnerHtml.innerHTML+"_");
+					alert("예2 :: _"+testInnerHtml.innerText+"_");
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+					alert("예1 :: _"+$("#testInnerHtml").html()+"_");
+					alert("예2 :: _"+$("#testInnerHtml").text()+"_");
+					
+					/*////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					//==>위의 의미를 이해했다면 :: innerHTML , innerText 
+					document.getElementById("address").innerText = displayValue;
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+					$("#address").val(displayValue);
+		
+				}else{
+					alert("에러 발생 : "+request.status);
+				}
+			} 
+		}
+		
+		
+		//==> 추가된부분 : textarea click 및 onload  Event  처리 및  연결
+		$(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 $( "textarea" ).on("click" , function() {
+				 getCustomerInfo();
+			});
+			
+			 $("form")[0].reset();
+		});
+	
+	</script>
+		 
+</head>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<body onload="document.forms[0].reset()">
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<body>
+	
+	<form>
+	
+		<p>이 &nbsp;&nbsp;&nbsp;&nbsp; 름  :  
+				<input type="text" size="14" name="name"  id ="name"/>
+		</p>
+		
+		<p>전화번호 :  
+				<input type="text" size="14" name="phone"  id="phone"/>
+		</p>
+	
+		<p>주 &nbsp;&nbsp;&nbsp;&nbsp; 소 : </p>  
+	
+		<p>
+			<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			<textarea 	rows="3" cols="50" name="address" id="address" 
+								onclick="javascript:getCustomerInfo()" >이름을 입력후 :: 여기에click...</textarea>
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->	
+			<textarea 	rows="3" cols="50" name="address" id="address" >이름을 입력후 :: 여기에click...</textarea>
+		</p>
+				
+		<p id="testInnerHtml">XXX<input type="submit" value="주문하기" id="submit"/>YYY</p>
+		
+	</form>
+	
+</body>
+
+</html>

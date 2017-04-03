@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<!-- 
+	■ css(Cascading Style Sheets) 작성 
+	■ static contents + style(Design) 뒤섞여 있다
+	■ html 과 style 를 분리하자
+ -->
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function change(elem){
+			elem.style.color="red";
+		}
+		$(function(){
+			$('span').click(function(){
+				$(this).css('color','red');
+				$(this).css('background-color','green');
+				$(this).css('font-size','20pt');
+			})
+		});
+		
+		
+		window.onload = function(){
+			alert("1");
+		}
+		$(document).ready(function(){
+			alert("2");
+		});
+		
+		$(function(){
+			alert("3");
+		});
+		
+		</script>
+</head>
+
+<body>
+	<!--	
+		<div>  / <span>
+		: Block-Level Element 중 Div Element(DIVision marker)
+		: 블록처리하여 여러조각처리 디자인,관리 가능하게함.
+		: Div는 줄바꿈을 하고 Span은 줄바꿈이 없습니다. 
+	-->
+	<div onclick="javascript:change(this)">jQuery Framework</div>		
+	<span>javascript Framework</span>
+
+</body>
+	
+</html>

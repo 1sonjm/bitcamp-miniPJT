@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+</head>
+
+<body onload="document.forms[0].reset()">
+
+	<form method="post" action="01beforeAjax-orderServer.jsp" >
+	
+		<p>전 화 번 호 :  
+			<input type="text" size="14" name="phone"  />
+		</p>
+
+		<p>배 달 장 소 : </p>  
+		<p>
+			<textarea 	rows="4" cols="50" name="address" id="address"></textarea>	
+		</p>
+		
+		<p style="color: red;">기존회원은 전화번호 입력후주문버튼을누르세요...</p>
+		
+		<p><input type="submit" value="주문하기" id="submit"/></p>
+			
+	</form>
+
+</body>
+
+</html>

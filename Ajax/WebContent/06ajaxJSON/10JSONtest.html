@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+ 	<script type="text/javascript" src="/Ajax/10common/logUtil03.js"></script>
+	<script type="text/javascript">
+
+	 	var test01 ={ a:'a', b:'b', c:'c'};
+	 	var test02 =[ 'aa', 'bb', 'cc' ];
+		var test03 =	{
+				aaa:'aaa',
+				bbb:'bbb',
+				ccc: [ 'z','zz','zzz']
+	 	};	 	
+	 	
+		function dispalyLog(){
+			
+			alert("1. name=value접근");
+			log("1. test01.a : "+test01.a);
+			log("1. test01.c : "+test01.c);
+	
+			alert("2. array 접근");
+			log("2. test02[0] : "+test02[0]);
+			log("2. test02[1] : "+test02[1]);
+	
+			alert("3. name=value 와 array접근");
+			log("3. test03.aaa : "+test03.aaa);
+			log("3. test03.ccc[0] : "+test03.ccc[0]);
+			log("3. test03.ccc[2] : "+test03.ccc[2]);
+			
+			alert("test01 : \n" + test01);
+			alert("JSON.stringify(test01) : \n" + JSON.stringify(test01) );
+			
+			var text = JSON.stringify(test01);
+			alert("text : \n" + text)
+			
+			var jsonObj = JSON.parse(text);
+			alert("jsonObj : \n" + jsonObj)
+			alert("jsonObj.a : \n" + jsonObj.a)
+		}
+
+</script>
+
+</head>
+
+<body>
+		
+	<input type="button" value="JSON Data 접근" onClick="javascript:dispalyLog()">
+	
+	<div id="console" style="border: 3px solid #F00" >
+		log 출력 :  <br/>
+	</div>
+		
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script type="text/javascript">
+	
+		//request객체 선언
+	 	var request = null;
+		
+		//XMLHttpRequest객체 생성하는 function
+	 	function createRequest(){
+	 		try{
+				request = new XMLHttpRequest();
+				alert ("XMLHttpRequest() 로 request instancet생성완료");
+			}catch(trymicrosoft){
+	 			try{
+	 				request = new ActiveXObject("Msxml2.XMLHTTP");
+					alert ("ActiveXObject(Msxml2.XMLHTTP) 로 request instancet생성완료");
+	 			}catch(othermicrosoft){
+	 				try{
+	 					request =new ActiveXObject("Microsoft.XMLHTTP");
+						alert ("new ActiveXObject(Microsoft.XMLHTTP) 로 request instancet생성완료");
+	 				}catch(failed){
+	 					request = null;
+	 				}
+	 			}
+			}
+	 		if( request == null ){
+	 			alert ("request객체 생성시 error 발생함.");
+	 		}
+	 	}
+	 	
+	 	//server로  request+data 전송 fuction
+	 	function getSold(){
+
+	 		///XMLHttpRequest객체 생성 function 호출
+	 		createRequest();
+	 		
+	 		//접속 URL선언 
+	 		var url = "calcServerAjax.jsp"
+	 		
+	 		//연결초기화 : open( Method , URL , 비동기유무 )
+	 		request.open("GET",url,true);
+	
+	 		//send() 호출전 아래의 속성을 지정 : CallBackFunction 지정
+	 		request.onreadystatechange = updatePage;
+	
+	 		//request시  data전송 없음(Post방식일 경우 data전송함.. GET/POST 방식의 이해필요)
+			request.send(null);
+	 	}
+	 	
+	 	
+	 	//CallBackFunction Definition
+	 	function updatePage(){
+	 		
+	 		//==> readyState = 4 인경우 실행
+	 		if ( request.readyState ==4) {
+	 			
+	 			//== status code = 200(정상적 요청처리) 경우
+	 			if(request.status == 200){
+	 				
+			 		//request대한 응답 responseTest받기 
+			 		var serverData = request.responseText;
+			 		
+			 		//==>공백제거 
+			 		serverData = trim(serverData);
+			 		
+			 		//Debug..
+			 		alert("server로 부터 받은 판매갯수 : "+serverData);
+			 		
+			 		//변경시킬 판매갯수 element GET 
+			 		var spanSoldElem = document.getElementById("sold");
+	
+					//판매갯수변경
+					//==>spanSoldElem의 첫번째 자식노드 remove
+					spanSoldElem.removeChild(spanSoldElem.firstChild);
+					//==>변경시킬 판매갯수를 text를 textNode생성
+					var newNode01 = document.createTextNode(serverData);
+					//==> spanSoldElem에 차식노드추가  
+	    			spanSoldElem.appendChild(newNode01);
+		 		
+	
+			 		//총 매출금액 계산 및 변경
+			 		//==> 판매단가 가져오기 
+			 		var spanPriceElem = document.getElementById("price");
+			 		//==> spanPriceElem의 첫번째 자식노드 value가져오니(==> 100원) 
+			 		var price = spanPriceElem.firstChild.nodeValue;
+			 		//==>매출 금액 계산 
+			 		var cash = serverData * price;
+			 		//변경시킬 매출금액  element 가저오기 
+			 		var spanCashElem = document.getElementById("cash");
+					//총 매출 금액 변경하기.
+					//==>spanCashElem의 첫번째 자식노드 remove
+					spanCashElem.removeChild(spanCashElem.firstChild);
+					//==>변경시킬 판매갯수를 text를 textNode생성
+					var newNode02 = document.createTextNode(cash);
+					//==> spanSoldElem에 자식노드추가  
+	    			spanCashElem.appendChild(newNode02);
+					
+	    		}else{
+	    			//==> status code가 200이 아닌경우 message출력 
+		 			//==> statusText ::==> Cross Browser NG
+					alert("에러 발생 : "+request.status+"==>"+request.statusText);
+				}
+			}
+	 	} 
+	 	
+	 	//trim 정의 Function
+		function trim(str) {  
+			return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');  
+		}  
+	
+	</script>
+</head>
+
+<body>
+
+	<h1> 판매 보고서</h1>
+
+	<table>
+		<tr>
+			<th>판매된 상품 갯수</th>
+			<td><span id="sold">100</span></td>
+		</tr>
+		<tr>
+			<th>상품 단가</th>
+			<td><span id="price">100</span>원</td>
+		</tr>
+	</table>
+	
+	<h2>총 매출금액  : <span id="cash">100,00원</span></h2>
+	
+	<form  method="POST" action="calcServerNormal.jsp">
+		<input type="submit" value="판매보고서 다시보기(기존방식)">
+	</form>
+	
+	<form>
+		<input type="button" value="판매보고서 다시보기(ajax적용)"  onClick="javascript:getSold()">
+	</form>
+
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	
+	$(function(){
+		/*
+		var obj =$('p');
+		var value = "";
+		alert($('p').eql(1).html());
+		$('form').eq(1).css('color','red');
+		
+		var formArray = $('form').get();
+		//var formArray = $('form')
+		
+		alert($(formArray[0]).html());
+		*/
+		/*
+		$(formArray).each(function(index,elem){
+		//$($('form').get()).each(function{
+		//$($('form')).each(function{
+			value += (index+1) +":"+$(elem).html().tirm()+"\n";
+			alert(value);
+		});
+		*/
+		/*
+		var obj = $('form').get(0);
+		alert($(obj).html().trim());
+		alert($($('form').get(1)).html().trim());
+		*/
+		var index = $('form').index($('form[name=test01]'));
+		alert(index);
+		alert($('form').index($('form[name=test02]')));
+		alert($('form').index($('form[name=test03]')));
+		alert($('p').index($('p:contains("javascript")')));
+	});
+	</script>
+</head>
+
+<body>
+	<h1>zxcvzxcv</h1>
+	<h2>asdfasdf</h2>
+	
+	<form name="test01">
+		<p>asdf</p>
+	</form>
+	
+	<div>
+		<p>asfzx</p>
+	</div>
+	
+	<form name="test02">
+		<p>zxcvzxcv
+			<span>asdfsdf</span>
+		</p>
+	</form>
+
+</body>
+	
+</html>

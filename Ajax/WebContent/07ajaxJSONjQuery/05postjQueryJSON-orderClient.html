@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<!-- CDN(Content Delivery Network) 호스트 사용 -->
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/Ajax/10common/ajaxUtil02.js"></script>
+	<script type="text/javascript">
+		
+		function getCustomerInfo(){
+			createRequest();
+			
+			var name = $("#name").val();
+			var phone = $("#phone").val();
+			var url ="postJSON-orderServer.jsp";
+
+			var queryString = "name="+name+"&phone="+phone;
+	 		//alert(queryString);
+
+
+			openSendRequest(url,"POST",queryString,updatePage);
+			//openSendRequest(url,"GET",queryString,updatePage);
+
+		}
+		
+		
+		//CallBackFunction Definition
+		function updatePage(){
+			
+			if(request.readyState == 4){
+			
+				if(request.status == 200){
+										
+					var serverData = request.responseText;
+					alert("Server에서 받은 JSON내용 : \n"+serverData);
+					
+					var JSONData = $.parseJSON(serverData);
+					var displayValue = "이름:"+ JSONData.name +"\n"
+										+"전화:"+ JSONData.phone + "\n"
+										+"주소:"+ JSONData.address;
+					
+					$("#address").val(displayValue);
+		
+				}else{
+					alert("에러 발생 : "+request.status);
+				}
+			} 
+		}
+		
+		$(function() {
+			 $( "textarea" ).on("click" , function() {
+				 getCustomerInfo();
+			});
+			
+			 $("form")[0].reset();
+		});
+	
+	</script>
+		 
+</head>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<body onload="document.forms[0].reset()">
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<body>
+	
+	<form>
+	
+		<p>이 &nbsp;&nbsp;&nbsp;&nbsp; 름  :  
+				<input type="text" size="14" name="name"  id ="name"/>
+		</p>
+		
+		<p>전화번호 :  
+				<input type="text" size="14" name="phone"  id="phone"/>
+		</p>
+	
+		<p>주 &nbsp;&nbsp;&nbsp;&nbsp; 소 : </p>  
+	
+		<p>
+			<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			<textarea 	rows="3" cols="50" name="address" id="address" 
+								onclick="javascript:getCustomerInfo()" >이름을 입력후 :: 여기에click...</textarea>
+			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->	
+			<textarea 	rows="3" cols="50" name="address" id="address" >이름을 입력후 :: 여기에click...</textarea>
+		</p>
+				
+		<p id="testInnerHtml">XXX<input type="submit" value="주문하기" id="submit"/>YYY</p>
+		
+	</form>
+	
+</body>
+
+</html>

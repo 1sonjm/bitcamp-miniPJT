@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<!-- 
+	■ css(Cascading Style Sheets) 작성 
+	■ static contents + style(Design) 뒤섞여 있다
+	■ html 과 style 를 분리하자
+ -->
+<html>
+
+<head>
+	<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	
+	$(function(){
+		/*
+		var html = "<p>asdfasdf</p>";
+		$(html).appendTo("body");
+		alert($('body').html());
+
+		$('div').append('<p>asdfasdfxcvz</p>');
+		$('div p:last').css('color','red');
+		*/
+
+		/*
+		$('div').append($('h1'));
+		$('div h1').css('color','red');
+		
+		$('form').append($('h2'));
+		$('h2').css('color','red');
+		*/
+
+		$('form[name=test01]').empty();
+		$('div').remove();
+	});
+	</script>
+</head>
+
+<body>
+	<h1>zxcvzxcv</h1>
+	<h2>asdfasdf</h2>
+	
+	<form name="test01">
+		<p>asdf</p>
+	</form>
+	
+	<div>
+		<p>asfzx</p>
+	</div>
+	
+	<form name="test02">
+		<p>zxcvzxcv
+			<span>asdfsdf</span>
+		</p>
+	</form>
+
+</body>
+	
+</html>

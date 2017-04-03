@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<!-- 
+	■ css(Cascading Style Sheets) 작성 
+	■ static contents + style(Design) 뒤섞여 있다
+	■ html 과 style 를 분리하자
+ -->
+
+<html>
+
+<head>
+	</style>
+	<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		alert($('input:reset').val());
+		alert($('input:text').val());
+		
+		
+		alert($($('input:text')[0]).val());
+		alert($($('input:text')[1]).val());
+		($('inpup:text[name="addr"]').val());
+		
+		var textArray = $('input:text');
+		var textObj = $(textArray[0]);
+		alert(textObj.val());
+		alert($($("input:text")[1]).val());
+		
+	});
+	
+	$(function(){
+		$('input:text[name="name"]').click(function(){
+			$(this).val("aasdf");
+		})
+		$($("input:text")[1]).click(function(){
+			$(this).val("주솜ㄴㅇㄹ");
+		});
+	});
+	
+	</script>
+</head>
+
+<body>
+
+	<form method='post' name="myForm">
+	
+		이름<input type='text' name='name' value='이름입력'><br>
+		주소<input type='text' name='addr' ><br><p>
+
+		사용중인 소프트웨어 선택<br>
+		<input type='checkbox' name='sw' value='hwp' checked="checked">hwp<br>
+		<input type='checkbox' name='sw' value='MS/WORD' checked="checked">MS/WORD<br>
+		<input type='checkbox' name='sw' value='EXCEL'>EXCEL<br><p>
+
+		사용중인 OS 선택<br>
+		<input type='radio' name='os' value='win2000' checked="checked">win2000<br>
+		<input type='radio' name='os' value='linux'>리눅스<br><p>
+
+		사용중인 CPU 선택<br>
+		<input type='radio' name='cpu' value='i3'>i3<br>
+		<input type='radio' name='cpu' value='i5'>i5<br>
+		<input type='radio' name='cpu' value='i7' checked="checked">i7<br>
+
+		<input type="button"  value='button전송'>
+		<input type="submit" value="submit전송">
+		<input type='reset' value='취소'>
+	
+	</form>
+
+</body>
+	
+</html>

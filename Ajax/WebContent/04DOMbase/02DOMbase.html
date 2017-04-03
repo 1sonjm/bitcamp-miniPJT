@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script type="text/javascript" src="/Ajax/10common/logUtil03.js"></script>
+	 <script type="text/javascript">
+	 
+		var count = 1;
+
+		//Element Node(UI동적변경) 추가하는 Function
+		function appendNode(){
+			
+			//Node(Element) 생성
+			//==>JavaScript는 DOM의 Document 인터페이스에 해당하는 document객체제공.
+			var newNode = document.createElement("div");
+			count++;
+			newNode.setAttribute("id","append"+count);
+			var textNode = document.createTextNode("이순신"+count);
+			newNode.appendChild(textNode);
+	
+			//==>newNode(Element) 를 body tag마지막에 추가
+			var append1Node = document.getElementById("append1");
+			var append1NodeParent = append1Node.parentNode;
+			append1NodeParent.appendChild(newNode);
+	
+			//==>log로 확인하기(필요시)
+			//log("추가된 tagName : "+newNode.tagName+" nodeName : "+newNode.nodeName);
+			//log("추가된 tag의 attribute value:  "+newNode.getAttribute("id") );
+		}
+
+		//Element 추가하는 Function and innerHTML을 이용 삭제버튼 추가
+		function appendRemoveNode(){
+			//Node(Element) 생성
+			//==>JavaScript는 DOM의 Document 인터페이스 객체에 해당하는 document객체를 제공함.
+			var newNode = document.createElement("div");
+			count++;
+			newNode.setAttribute("id","append"+count);
+			//==>innerHTML을 사용해 보면...
+			newNode.innerHTML = "이순신"+count
+						+'<input type="button" value="삭제" onclick="javascript:removeEL('+count+')"/>';
+
+			//==>newEL element 를 body tag마지막에 추가
+			var append1Node = document.getElementById("append1");
+			var append1ParentNode = append1Node.parentNode;
+			append1ParentNode.appendChild(newNode);
+
+			//==>log로 확인하기(필요시)
+			//log("추가된 tagName : "+newNode.tagName+" nodeName : "+newNode.nodeName);
+			//log("추가된 tag의 attribute value:  "+newNode.getAttribute("id") );
+		}
+		
+		//Element 삭제 Function
+		function removeEL(idIndex){
+			var removeEL = document.getElementById("append"+idIndex);
+			if( removeEL != null){
+				removeEL.parentNode.removeChild(removeEL);
+				alert("삭제완료됨....");
+			}
+		}			
+		
+	</script>
+</head>
+
+<body>
+	<input type="button" value="추가" onclick="javascript:appendNode()"/>
+	<input type="button" value="추가,삭제버튼같이 만들기" onclick="javascript:appendRemoveNode()"/>
+
+	<div id="append1">이순신1</div>
+	
+	<div id="console" style="border: 3px solid #F00" >
+		log 출력 :  <br/>
+	</div>
+	
+</body>
+
+</html>

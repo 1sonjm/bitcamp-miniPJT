@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+ 	<script type="text/javascript" src="/Ajax/10common/ajaxUtil02.js"></script>
+ 	<script type="text/javascript" src="/Ajax/10common/logUtil03.js"></script>
+	<script type="text/javascript">
+	 	
+		function dispalyLog(){
+			createRequest();
+			
+			//var url = "JSON-server-string.jsp";
+			var url = "JSON-server-object.jsp";
+			
+			var queryString = null;
+			openSendRequest(url,"GET",queryString,updatePage);
+		}
+		
+		function updatePage(){
+			if(request.readyState==4){
+				if(request.status==200){
+					var serverData = request.responseText;
+					alert("jsonData:"+serverData);
+					
+					//eval - 융통성있게 대응해줌 "에 대해서
+					//var JSONData = eval("("+serverData+")");
+					var JSONData = JSON.parse(serverData);
+					
+					alert("jsonData:"+JSONData);
+					
+					log("3.JSONData.aaa :"+JSONData.aaa);
+					log("3.JSONData.ccc[0] :"+JSONData.ccc[0]);
+					log("3.JSONData.ccc[2] :"+JSONData.ccc[2]);
+				}else{
+					alert("에러발생");
+				}
+			}
+		}
+
+</script>
+
+</head>
+
+<body>
+		
+	<input type="button" value="JSON Data 접근" onClick="javascript:dispalyLog()">
+	
+	<div id="console" style="border: 3px solid #F00" >
+		log 출력 :  <br/>
+	</div>
+		
+</body>
+
+</html>

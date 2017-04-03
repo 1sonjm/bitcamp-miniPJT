@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	
+	<script type="text/javascript">
+	
+		//=======================================================//
+		// XMLHttpRequest Object GET
+		var request = null;
+			try{
+				request = new XMLHttpRequest();
+				//Debug..
+				//alert ("XMLHttpRequest() 로 request instancet생성완료");
+			}catch(trymicrosoft){
+				try{
+					request = new ActiveXObject("Msxml2.XMLHTTP");
+					//Debug..
+					//alert ("ActiveXObject(Msxml2.XMLHTTP) 로 request instancet생성완료");
+				}catch(othermicrosoft){
+					try{
+						request =new ActiveXObject("Microsoft.XMLHTTP");
+						//Debug..
+						//alert ("new ActiveXObject(Microsoft.XMLHTTP) 로 request instancet생성완료");
+					}catch(failed){
+						request = null;
+					}
+				}
+			}
+			
+			if( request == null ){
+				alert ("request객체 생성시 error 발생함.");
+			}
+		
+	
+		//phone 번호를 server로 GET 방식 전송 function    
+		function getCustomerInfo(){
+			var phone = document.getElementById("phone").value;
+			var url ="02afterAjax-orderServer.jsp?phone="+phone;
+			//Debug..
+			//alert(url);
+			
+			//request GET 방식 , 해당url , 비동기로 연결할 것을 결정 : 연결초기화
+			request.open("GET",url,true);
+
+	 		//updatePage()호출 지정(Call Back function 지정)			
+			request.onreadystatechange =  updatePage;
+	 		
+	 		//request : GET
+			request.send(null);
+		}
+		
+		//Call Back Method 
+		function updatePage(){
+			
+			if(request.readyState == 4){
+				//상태코드 200확인
+				if(request.status == 200){
+					var value = request.responseText;
+					// 공백문자제거 
+					var customerAddress =  trim(value);
+					
+					//Debug..
+					alert("Server에서 받은 내용 : \n"+customerAddress);
+					
+					//server 에서 전송받은 주소 html에 적용
+					document.getElementById("address").value = "\n"+customerAddress;
+				}else{
+					alert("에러 발생 : "+request.status);
+				}
+			} 
+		}
+		
+		//trim 정의 Function
+		function trim(str) {  
+			return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');  
+		}  
+		
+	</script>
+	
+</head>
+
+<body onload="document.forms[0].reset()">
+
+	<form >
+		
+		<p>전 화 번 호 :  
+				<input type="text" size="14" name="phone"  id="phone" onchange="javascript:getCustomerInfo()"/>
+		</p>
+	
+		<p>배 달 장 소 : </p>  
+	
+		<p>
+			<textarea 	rows="4" cols="50" name="address" id="address" ></textarea>	
+		</p>
+
+		<p style="color: red">기존회원은 전화번호 입력후 마우스를 :: 여기에click...</p>
+				
+		<p><input type="submit" value="주문하기" id="submit"/></p>
+	</form>
+	
+</body>
+
+</html>
+
+<!--
+ User Definition javascript  : trim() 공백제거 
+ 
+function trim(value) {
+ return value.replace(/^\s+|\s+$/g,"");
+}
+
+function ltrim(value) {
+ return value.replace(/^\s+/,"");
+}
+
+function rtrim(value) {
+ return value.replace(/\s+$/,"");
+} 
+
+- javascript 공백제거를 하는 trim() function 미제공
+- 정규표현식을 사용하여 공백을 제거한다.
+
+정규표현식
+^ - 처음시작(beginning of line)
+\s - 공백(whitespace character)
+$ - 끝라인(end of line)
+
+function trim(str) {  
+    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');  
+}  
+String.prototype.trim = function() {  
+    return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');  
+}  
+-->

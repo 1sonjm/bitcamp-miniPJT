@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<!-- 
+	■ static contents / dynamic contents 분리
+	    ==> Decoupling script
+	■ <body> tag 에 onload 속성 사용
+	■ javascript 에서 DOM(Document Object Model:문서객체모델)사용
+		==> 단순해 보이지 않는다.
+ -->
+<html>
+	
+<head>
+	<meta charset="EUC-KR">
+	
+	<script type="text/javascript">
+	
+		function init() {
+			
+			// DOM 이용 모든<td>element Object 를 Array 로 GET 
+			var tdElemArray = document.getElementsByTagName("td");
+			
+			for (var index = 0 ;  index < tdElemArray.length ; index++) {
+				
+				//==> Debug...
+				alert("index : "+index);
+				
+				//==> Array 에서 각각의  <td> element Object GET
+				//==> 아래의 두 실행문 동일의미
+				var tdElem = tdElemArray.item(index);
+				//var tdElem = tdElemArray[index]
+				
+				
+				if(index != 3){
+					
+					//==> <td> element Object 에 onclick EVENT 발생시 처리할 function 등록
+					//==> :: Event 처리 CallBackFunction를  Event Listener 등록   
+					//==> ### java syntax : Anonymous Inner Class 와 비교이해###					
+					tdElem.onclick = function() {
+						this.style.display  = "none";
+					}
+					
+				}else{
+					
+					//==> <td> element Object 에 onclick EVENT 발생시 처리할 function 등록
+					//==> :: Event 처리 CallBackFunction를  Event Listener 등록   
+					//==> ### java syntax : Anonymous Inner Class 와 비교이해###
+					tdElem.onclick = function() {
+						self.location = "02onlyJavaScript.html";
+						//self.location = "01onlyJavaScript.html";
+					}
+					
+				}
+			}
+		}
+		
+	</script>		
+	
+</head>
+
+<!-- 	■onload : element 의 load 또는 image 또는 외부 모든 resource 들이 load 완료시점 
+		■onload 시 javascript init() function CALL   -->
+<body onload="javascript:init()">
+	
+	<table>
+		<tr>
+			<td>1. 글릭해 보세요.</td>
+		</tr>
+		
+		<tr>
+			<td>2. 글릭해 보세요.</td>
+		</tr>
+		
+		<tr>
+			<td>3. 글릭해 보세요.</td>
+		</tr>
+		<tr>
+			<td>초기화면 :: 다시 Request.... </td>
+		</tr>
+	</table>
+
+</body>
+	
+</html>

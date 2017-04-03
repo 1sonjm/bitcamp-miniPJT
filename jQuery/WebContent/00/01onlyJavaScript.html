@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<!-- 
+	■ 일반적 javascript / html 작성 
+		==> Coupling Script
+	■ static contents + dynamic contents 가 뒤섞여 있다
+	■ html 과 javascript 분리하자
+ -->
+<html>
+	
+<head>
+	<meta charset="EUC-KR">
+
+	<script type="text/javascript">
+
+		function goAway(elem) {
+			elem.style.display  = "none";
+		}
+		
+		function reRequest() {
+			self.location = "01onlyJavaScript.html"
+		}
+		
+	</script>		
+	
+</head>
+
+<body>
+
+	<table>
+		<tr>
+			<td onclick="javascript:goAway(this)">1. 글릭해 보세요.</td>
+		</tr>
+		
+		<tr>
+			<td onclick="javascript:goAway(this)">2. 글릭해 보세요.</td>
+		</tr>
+		
+		<tr>
+			<td onclick="javascript:goAway(this)">3. 글릭해 보세요.</td>
+		</tr>
+		
+		<tr>
+			<td onclick="javascript:reRequest()">초기화면 :: 다시 Request.... </td>
+		</tr>
+	</table>
+
+</body>
+	
+</html>

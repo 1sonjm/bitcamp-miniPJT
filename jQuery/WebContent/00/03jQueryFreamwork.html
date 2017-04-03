@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<!-- 
+	■ static contents / dynamic contents 분리
+	    ==> Decoupling script
+	■ <body> tag 에 onload 속성 사용
+	■ javascript 에서 DOM(Document Object Model:문서객체모델)사용
+		==> 단순해 보이지 않는다.
+ -->
+<html>
+	
+<head>
+	<meta charset="EUC-KR">
+	
+	<script src="../javascript/jquery-2.1.4.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("td").click(function(){
+				$(this).hide();
+			})
+			
+			$("td:last").click(function(){
+				self.location = "03jQueryFreamwork.html";
+			})
+		})
+		
+	</script>
+	
+</head>
+
+<body>
+	
+	<table>
+		<tr>
+			<td>1. 글릭해 보세요.</td>
+		</tr>
+		
+		<tr>
+			<td>2. 글릭해 보세요.</td>
+		</tr>
+		
+		<tr>
+			<td>3. 글릭해 보세요.</td>
+		</tr>
+		<tr>
+			<td>초기화면 :: 다시 Request.... </td>
+		</tr>
+	</table>
+
+</body>
+	
+</html>
