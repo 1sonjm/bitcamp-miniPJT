@@ -1,22 +1,46 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
-
+<%@ page contentType="text/html; charset=euc-kr" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-		◀ 이전
-</c:if>
-<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-		<a href="javascript:fncGetUserList('${ resultPage.currentPage-1}')">◀ 이전</a>
-</c:if>
 
-<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-	<a href="javascript:fncGetUserList('${ i }');">${ i }</a>
-</c:forEach>
+<%----------------------------------------------------------------%>
+<c:set var="start" value="${resultPage.currentPage-2}"/>
+<c:if test="${start<1}">
+	<c:set var="start" value="1"/>
+</c:if>
+<c:set var="end" value="${start+4}"/>
+<c:if test="${end>resultPage.maxPage}">
+	<c:set var="end" value="${resultPage.maxPage}"/>
+</c:if>
+<%----------------------------------------------------------------%>
 
-<c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-		이후 ▶
-</c:if>
-<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
-		<a href="javascript:fncGetUserList('${resultPage.endUnitPage+1}')">이후 ▶</a>
-</c:if>
+
+
+<div class="btn-group btn-group-sm">
+	<%----------------------------------------------------------------%>
+	<c:if test="${resultPage.currentPage > 1 }">
+		<button type="button" class="btn btn-default" 
+			onclick="javascript:fncGetList('${(resultPage.currentPage-5)<1?1:resultPage.currentPage-5}');">◀</button>
+	</c:if>
+	<c:if test="${resultPage.currentPage <= 1 }">
+		<button type="button" class="btn btn-default disabled">◁</button>
+	</c:if>
+	<%----------------------------------------------------------------%>
+	<c:forEach var="i" begin="${start}" end="${end}" step="1">
+		<c:if test="${resultPage.currentPage!=i}">
+			<button type="button" class="btn btn-default" 
+				onclick="javascript:fncGetList('${i}');">${i}</button>
+		</c:if>
+		<c:if test="${resultPage.currentPage==i}">
+			<button type="button" class="btn btn-info">${i}</button>
+		</c:if>
+	</c:forEach>
+	<%----------------------------------------------------------------%>
+	<c:if test="${resultPage.currentPage < resultPage.maxPage}">
+		<button type="button" class="btn btn-default" 
+			onclick="javascript:fncGetList('${(resultPage.currentPage+5)>resultPage.maxPage ? resultPage.maxPage : resultPage.currentPage+5 }')">▶</button>
+	</c:if>
+	<c:if test="${resultPage.currentPage >= resultPage.maxPage}">
+		<button type="button" class="btn btn-default disabled">▷</button>
+	</c:if>
+	<%----------------------------------------------------------------%>
+</div>
