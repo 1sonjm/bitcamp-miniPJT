@@ -18,6 +18,12 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 <style type="text/css">
 /* Hiding the checkbox, but allowing it to be focused */
 .badgebox
@@ -100,12 +106,31 @@ $(function(){
 		self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).attr('sendValue');
 	});
 });
+
+$( function() {
+    $( document ).tooltip({
+      items: "img, [data-geo], [title]",
+      content: function() {
+        var element = $( this );
+        if ( element.is( "[data-geo]" ) ) {
+          var text = element.text();
+          return "<img class='map' src='/images/uploadFiles/AHlbAAAAug1vsgAA.jpg'>";
+        }
+        if ( element.is( "[title]" ) ) {
+          return element.attr( "title" );
+        }
+        if ( element.is( "img" ) ) {
+          return element.attr( "alt" );
+        }
+      }
+    });
+  } );
 </script>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
 <div style="width:98%; margin-left:10px;">
-<form name="detailForm" action='/product/listProduct?&menu=${param.menu}' method="post">
+<form name="detailForm" action='/product/listProduct?menu=${param.menu}' method="post">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
 		<td width="15" height="37">
@@ -189,6 +214,9 @@ $(function(){
 		<tr class="ct_list_pop">
 			<c:if test='${param.menu=="search"}'>
 				<td class="ct_line02">
+					<a href="http://en.wikipedia.org/wiki/File:Wien_Stefansdom_DSC02656.JPG">
+						<img src="/images/uploadFiles/${product.fileName}" width="100"alt="St. Stephen&apos;s Cathedral" class="ui-corner-all">
+					</a>
 					<img alt="»çÁø" src="/images/uploadFiles/${product.fileName}" width="100"/>
 				</td>
 			</c:if>

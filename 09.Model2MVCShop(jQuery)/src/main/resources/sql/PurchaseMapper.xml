@@ -80,21 +80,23 @@
 	<select  id="getPurchaseList" parameterType="map" resultMap="purchaseSelectMap">
 		SELECT *
 		FROM ( SELECT inner_table.* , ROWNUM AS row_seq
-			FROM ( SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, create_review
+			FROM ( SELECT DISTINCT tran_no, prod_no, buyer_id, payment_option, receiver_name, create_review
 						, receiver_phone, dlvy_addr, dlvy_request, order_date, dlvy_date
 						,CASE WHEN tran_status_code ='0' THEN '구매완료'
 							WHEN tran_status_code ='1' THEN '배송중'
 							WHEN tran_status_code ='2' THEN '배송완료'
 							ELSE 'DBnull' END AS tran_status_code
-				FROM transaction WHERE buyer_id = #{buyerId}
+				FROM transaction <if test="buyerId!=null">WHERE buyer_id = #{buyerId}</if>
 				ORDER BY tran_no DESC) inner_table
 			WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	</select>
 	<select  id="getTotalCount" parameterType="map"  resultType="int">
 		SELECT COUNT(*)
-		FROM( SELECT tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr
-					, dlvy_request, NVL(tran_status_code,'3') tran_status_code, order_date, dlvy_date
-			FROM transaction WHERE buyer_id= #{buyerId}) countTable
+		FROM( SELECT tran_no FROM transaction WHERE buyer_id= #{buyerId}) countTable
+	</select>
+	<select  id="getTotalCountAll" parameterType="map"  resultType="int">
+		SELECT COUNT(*)
+		FROM( SELECT tran_no FROM transaction) countTable
 	</select>
 </mapper>

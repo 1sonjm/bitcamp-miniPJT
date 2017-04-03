@@ -19,18 +19,25 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
+<script type="text/javascript" src="../javascript/calendar.js"></script>
 
 <script type="text/javascript">
 function fncUpdateReviewAnswer(){
-	document.detailForm.action='/review/updateAnswer/${review.reviewNo}';
+	document.detailForm.action=;
 	document.detailForm.submit();
 }
 
 function resetData(){
 	document.detailForm.reset();
 }
+$(function(){
+	$('button:contains("등록")').on('click',function(){
+		$('form').attr('action','/review/updateAnswer/${review.reviewNo}').submit();
+	});
+	$('button:contains("취소")').on('click',function(){
+		$('form')[0].reset();
+	});
+});
 </script>
 </head>
 

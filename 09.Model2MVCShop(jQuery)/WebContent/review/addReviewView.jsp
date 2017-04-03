@@ -28,7 +28,7 @@ $(function(){
 		$('form').attr('action','/review/addReview/${purchase.tranNo}').submit();
 	});
 	$('button:contains("취소")').on('click',function(){
-		$('form').reset();//TODO 수정-왜 안되는거지
+		$('form')[0].reset();
 	});
 });
 </script>

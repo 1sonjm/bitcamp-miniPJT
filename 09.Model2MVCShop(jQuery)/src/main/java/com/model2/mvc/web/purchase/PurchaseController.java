@@ -63,10 +63,12 @@ public class PurchaseController {
 	@RequestMapping(value="addPurchase",method=RequestMethod.POST)
 	public ModelAndView addPurchase(HttpSession session
 									,@ModelAttribute("purchase")Purchase purchase
-									,@RequestParam("prodNo")int prodNo
+									/*,@RequestParam("purchaseProd.prodNo")int prodNo*/
 									) throws Exception{
 		
-		purchase.setPurchaseProd(productService.getProduct(prodNo));
+		//OGNL로써 @ModelAttribute가 접근하여 purchase객체 안의 product객체 안의 prodNo로 접근할수 있게된다.
+		//purchase.setPurchaseProd(productService.getProduct(prodNo));
+		//purchase.setPurchaseProd(productService.getProduct(purchase.getPurchaseProd().getProdNo()));
 		purchase.setBuyer((User)session.getAttribute("user"));
 		purchaseService.addPurchase(purchase);
 		
@@ -131,18 +133,26 @@ public class PurchaseController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="updateTranCode",method=RequestMethod.GET)
+	@RequestMapping(value="updateTranCode/{role}",method=RequestMethod.GET)
 	public ModelAndView updateTranCode(@ModelAttribute("purchase")Purchase purchase
+										,@PathVariable String role
 										) throws Exception{
-		
-		purchase.setTranCode("2");
+		String view = null;
+		if(role.equals("admin")){
+			purchase.setTranCode("1");
+			view = "redirect:/purchase/listSales";
+		}else{
+			purchase.setTranCode("2");
+			view = "redirect:/purchase/listPurchase";
+		}
 		purchaseService.updateTranCode(purchase);
 		
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:/purchase/listPurchase");
+		
+		modelAndView.setViewName(view);
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value="listPurchase")
 	public ModelAndView listPurchase(@ModelAttribute("search")Search search
 									,HttpSession session
@@ -164,6 +174,30 @@ public class PurchaseController {
 		modelAndView.addObject("search",search);
 		
 		modelAndView.setViewName("forward:/purchase/listPurchase.jsp");
+		return modelAndView;
+	}
+
+	@RequestMapping(value="listSales")
+	public ModelAndView listSales(@ModelAttribute("search")Search search
+									,HttpSession session
+									) throws Exception{
+		
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		User user = (User)session.getAttribute("user");
+		Map<String, Object> map = purchaseService.getSalesList(search);
+		Page resultPage = new Page(search.getCurrentPage()
+				, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("list",map.get("list"));
+		modelAndView.addObject("resultPage",resultPage);
+		modelAndView.addObject("search",search);
+		
+		modelAndView.setViewName("forward:/purchase/listSales.jsp");
 		return modelAndView;
 	}
 }

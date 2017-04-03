@@ -55,6 +55,9 @@
 		 	$( ".Depth03:contains('구매이력조회')").on("click" , function() {
 		 		$(window.parent.frames["rightFrame"].document.location).attr("href","/purchase/listPurchase");
 			});
+		 	$( ".Depth03:contains('구매물품조회')").on("click" , function() {
+		 		$(window.parent.frames["rightFrame"].document.location).attr("href","/purchase/listSales");
+			});
 		 	$( ".Depth03:contains('최근 본 상품')").on("click" , function() {
 		 		history();
 			});
@@ -140,6 +143,13 @@
 			<tr>
 				<td class="Depth03">
 					<a>구매이력조회</a>
+				</td>
+			</tr>
+			</c:if>
+			<c:if test="${user.role == 'admin'}">
+			<tr>
+				<td class="Depth03">
+					<a>구매물품조회</a>
 				</td>
 			</tr>
 			</c:if>

@@ -79,7 +79,9 @@ $(function(){
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="105">${product.prodNo}
-					<input type="hidden" name="prodNo" value="${product.prodNo}" /></td>
+					<input type="hidden" name="purchaseProd.prodNo" value="${product.prodNo}" /></td>
+					<!-- OGNL로써 @ModelAttribute가 접근하여 purchase객체 안의 product객체 안의 prodNo로 접근할수 있게된다. 
+						purchase.setPurchaseProd().setProdNo() 처럼 접근됨-->
 				</tr>
 			</table>
 		</td>

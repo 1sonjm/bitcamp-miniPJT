@@ -51,5 +51,14 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> getSalesList(Search search) throws Exception{
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", purchaseDao.getSalesList(search));
+		map.put("totalCount", new Integer(purchaseDao.getTotalCount()));
+		
+		return map;
+	}
+
 }
 
