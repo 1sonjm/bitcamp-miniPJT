@@ -57,16 +57,6 @@ public class ProductController {
 		
 		MultipartFile uploadfile = product.getUploadFile();
 		if (uploadfile != null) {
-			/*  if이 없어서 그런가?
-			FileOutputStream fos;
-
-			byte fileData[] = product.getUploadfile().getBytes();
-			fos = new FileOutputStream(session.getServletContext().getRealPath("/") + "images\\uploadFiles\\" + product.getFileName());
-			fos.write(fileData);
-
-			fos.close();
-			*/
-			//이런식으로 파일명을 안받아서그런가?
 			String fileName = uploadfile.getOriginalFilename();
 			product.setFileName(fileName);
 
@@ -107,6 +97,7 @@ public class ProductController {
 								,Model model
 								) throws Exception{
 		model.addAttribute("product",productService.getProduct(prodNo));
+		System.out.println("productreturn 값:" + productService.getProduct(prodNo));
 	}
 	
 	@RequestMapping(value="updateProductView",method=RequestMethod.GET)

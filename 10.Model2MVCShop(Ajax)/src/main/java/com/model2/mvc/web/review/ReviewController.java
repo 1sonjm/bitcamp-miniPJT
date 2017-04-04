@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.domain.Review;
@@ -43,6 +44,13 @@ public class ReviewController {
 		model.addAttribute("review",reviewService.getReview(reviewNo));
 		
 		return "forward:/review/getReview.jsp";
+	}
+	@RequestMapping(value="getJsonReview/{reviewNo}")
+	public void getJsonReview(@PathVariable int reviewNo
+							,Model model) throws Exception{
+		
+		System.out.println("getJsonReview, reviewNo:"+reviewNo);
+		model.addAttribute("review",reviewService.getReview(reviewNo));
 	}
 	
 	@RequestMapping(value="addReviewView/{tranNo}")

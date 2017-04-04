@@ -108,7 +108,41 @@ $(function(){
 </c:if>
 
 <button class="btn btn-default">이전</button>
-<table class="table">
+
+<script type="text/javascript">
+$(function(){
+	// 저 tr만 타겟팅 잘해줌된다
+	$("tr[id^=review]").on("click" , function() {
+	//$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+		//var userId = $(this).text().trim();
+		var reviewNoID = $(this).attr('id');
+		//alert(reviewNoID.substring(6));
+		$.ajax("/review/getJsonReview/"+reviewNoID.substring(6),{
+			//url : "/review/getJsonReview/"+userId ,
+			method : "GET" ,
+			dataType : "json" ,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData , status) {
+				//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+				
+				var displayValue = "<td></td><td>내용</td><td calspan='2'>"
+									+JSONData.review.reviewContent+"</td></tr>"
+				//alert(displayValue);
+				//$("h3").remove();
+				$( "#"+reviewNoID ).html(displayValue);
+				//$( "#"+userId+"" ).html(displayValue);
+			}
+		});
+	});
+});
+
+</script>
+
+<c:if test="${!empty reviewList}">
+<table class="table listReview">
 	<tr>
 		<td>사진</td>
 		<td>구매자ID</td>
@@ -130,7 +164,12 @@ $(function(){
 			</td>
 			<td>${review.regDate}</td>
 		</tr>
-		<c:if test="${review.answerTitle != null}">
+		<tr id="review${review.reviewNo}">
+			<td colspan="4">
+				<p>내용확인</p>
+			</td>
+		</tr>
+		<c:if test="${!empty review.answerTitle}">
 			<tr>
 				<td></td>
 				<td>┕></td>
@@ -144,6 +183,7 @@ $(function(){
 		</c:if>
 	</c:forEach>
 </table>
+</c:if>
 
 </body>
 </html>

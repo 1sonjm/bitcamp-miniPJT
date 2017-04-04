@@ -108,24 +108,89 @@ $(function(){
 });
 
 $( function() {
-    $( document ).tooltip({
-      items: "img, [data-geo], [title]",
-      content: function() {
-        var element = $( this );
-        if ( element.is( "[data-geo]" ) ) {
-          var text = element.text();
-          return "<img class='map' src='/images/uploadFiles/AHlbAAAAug1vsgAA.jpg'>";
-        }
-        if ( element.is( "[title]" ) ) {
-          return element.attr( "title" );
-        }
-        if ( element.is( "img" ) ) {
-          return element.attr( "alt" );
-        }
-      }
-    });
-  } );
+	$( "#serchMenu" ).accordion({
+		collapsible: true,
+		active: false
+	});
+});
+
+$( function(){
+	$( document ).tooltip({
+		items: "[prodImg]",
+		content: function() {
+			if ($(this).is("[prodImg]") ) {
+				return "<img class='popupImg' src='/images/uploadFiles/"+$(this).attr('prodImg')+"'>";
+			}
+		}
+	});
+});
+/* 
+$(function(){
+	$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
+		var userId = $(this).text().trim();
+		$.ajax("/user/getJsonUser/"+userId,{
+			method : "GET" ,
+			dataType : "json" ,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData , status) {
+				alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+				
+				var displayValue = "<h3>"
+									+" : "+JSONData.user.userId+"<br/>"
+									+" : "+JSONData.user.userName+"<br/>"
+									+" : "+JSONData.user.email+"<br/>"
+									+" : "+JSONData.user.role+"<br/>"
+									+" : "+JSONData.user.regDate+"<br/>"
+									+"</h3>";
+				$("h3").remove();
+				$( "#"+userId+"" ).html(displayValue);
+			}
+		});
+	});
+});
+ */
+$(function(){
+	$( ".ct_list_pop td:nth-child(1)" ).on("dblclick" , function() {
+		var prodNo = $(this).parent().attr('sendValue');
+		alert(prodNo);
+		$.ajax("/product/getJsonProduct/"+prodNo,{
+			method : "GET" ,
+			dataType : "json" ,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData , status) {
+				//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
+				
+				var displayValue = "<h3>"
+									+"제품코드 : "+JSONData.product.prodNo+"<br/>"
+									+"제품정보 : "+JSONData.product.prodDetail+"<br/>"
+									+"가격 : "+JSONData.product.price+"<br/>"
+									+"재고량 : "+JSONData.product.prodStock+"<br/>"
+									+"등록일 : "+JSONData.product.regDate+"<br/>"
+									+"</h3>";
+				$(this).parent().find('h3').remove();
+				$( "#"+prodNo ).html(displayValue);
+			}
+		});
+	});
+});
 </script>
+<style>
+	.popupImg{
+		width: 350px;
+	}
+	.listProdImg{
+		width: 100px;
+	}
+	.ui-tooltip {
+		max-width: 400px;
+	}
+</style>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
@@ -150,35 +215,40 @@ $( function() {
 		</td>
 	</tr>
 </table><br/>
-
-<div class="form-inline pull-right">
-	<div class="form-group" id="keywordPlace">
-		<c:if test='${param.menu=="manage"}'>
-			<label for="default" class="btn btn-default">구매물품 보기
-				<input type="checkbox" id="default" class="badgebox" name="viewSoldItem" ${search.viewSoldItem?'checked':''}>
-				<span class="badge">&check;</span>
-			</label>
-		</c:if>
-		<select name="searchCondition" class="form-control">
-			<c:if test='${param.menu=="manage"}'>
-				<option value="0" ${search.searchCondition=="0" ? "selected" : ""}>상품번호</option>
-			</c:if>
-			<option value="1" ${search.searchCondition=="1" ? "selected" : ""}>상품명</option>
-			<option value="2" ${search.searchCondition=="2" ? "selected" : ""}>상품가격</option>
-		</select>
-		<input type="text" class="form-control" name="searchKeyword" placeholder="검색어" value="${search.searchKeyword}">
-	</div>&nbsp;&nbsp;&nbsp;&nbsp;
-	<div class="form-group" id="chkValue">
-		<label for="searchValueLow">가격비교</label>
-		<input type="text" class="form-control" name="searchValueLow" style="width: 100px;"
-				value="${empty search.searchValueLow?'0':search.searchValueLow}">
-		<label for="searchValueHigh">~</label>
-		<input type="text" class="form-control" name="searchValueHigh" style="width: 100px;"
-				value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
-		<!-- seekbar자료 : http://stackoverflow.com/questions/27060099/seekbar-with-range-of-two-values-min-and-max -->
+<div id="serchMenu">
+	<h3>물품 검색</h3>
+	<div>
+		<div class="form-inline pull-right">
+			<div class="form-group" id="keywordPlace">
+				<c:if test='${param.menu=="manage"}'>
+					<label for="default" class="btn btn-default">구매물품 보기
+						<input type="checkbox" id="default" class="badgebox" name="viewSoldItem" ${search.viewSoldItem?'checked':''}>
+						<span class="badge">&check;</span>
+					</label>
+				</c:if>
+				<select name="searchCondition" class="form-control">
+					<c:if test='${param.menu=="manage"}'>
+						<option value="0" ${search.searchCondition=="0" ? "selected" : ""}>상품번호</option>
+					</c:if>
+					<option value="1" ${search.searchCondition=="1" ? "selected" : ""}>상품명</option>
+					<option value="2" ${search.searchCondition=="2" ? "selected" : ""}>상품가격</option>
+				</select>
+				<input type="text" class="form-control" name="searchKeyword" placeholder="검색어" value="${search.searchKeyword}">
+			</div>&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="form-group" id="chkValue">
+				<label for="searchValueLow">가격비교</label>
+				<input type="text" class="form-control" name="searchValueLow" style="width: 100px;"
+						value="${empty search.searchValueLow?'0':search.searchValueLow}">
+				<label for="searchValueHigh">~</label>
+				<input type="text" class="form-control" name="searchValueHigh" style="width: 100px;"
+						value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
+				<!-- seekbar자료 : http://stackoverflow.com/questions/27060099/seekbar-with-range-of-two-values-min-and-max -->
+			</div>
+			<button class="btn btn-default">검색</button>
+		</div>
 	</div>
-	<button class="btn btn-default">검색</button>
 </div>
+
 <p>전체 <kbd>${resultPage.totalCount}</kbd> 건수, 현재 <kbd>${search.currentPage}</kbd> 페이지</p><br/>
 <input type="hidden" id="SortingTarget" name="SortingTarget" 
 		value="${empty search.sortingTarget?'':search.sortingTarget}">
@@ -187,9 +257,7 @@ $( function() {
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<c:if test='${param.menu=="manage"}'>
-				<td class="ct_list_b" width="100">No</td>
-			</c:if>
+			<td class="ct_list_b" width="100">No</td>
 			<c:if test='${param.menu=="search"}'>
 				<td class="ct_list_b" width="50">사진</td>
 			</c:if>
@@ -211,18 +279,14 @@ $( function() {
 	
 	<c:set var="i" value="0"/>
 	<c:forEach var="product" items="${list}" begin="0" step="1">
-		<tr class="ct_list_pop">
+		<tr class="ct_list_pop" sendValue="${product.prodNo}">
+			<c:set var="i" value="${i+1}"/>
+			<td align="center">${i}</td>
 			<c:if test='${param.menu=="search"}'>
 				<td class="ct_line02">
-					<a href="http://en.wikipedia.org/wiki/File:Wien_Stefansdom_DSC02656.JPG">
-						<img src="/images/uploadFiles/${product.fileName}" width="100"alt="St. Stephen&apos;s Cathedral" class="ui-corner-all">
-					</a>
-					<img alt="사진" src="/images/uploadFiles/${product.fileName}" width="100"/>
+					<img name="${product.fileName}" src="/images/uploadFiles/${product.fileName}" alt="St. Stephen" 
+						class="ui-corner-all listProdImg" prodImg="${product.fileName}">
 				</td>
-			</c:if>
-			<c:set var="i" value="${i+1}"/>
-			<c:if test='${param.menu=="manage"}'>
-				<td align="center">${i}</td>
 			</c:if>
 			<td align="left">
 				<c:if test='${param.menu=="manage"}'>
@@ -247,6 +311,9 @@ $( function() {
 					<a sendValue="${product.prodNo}">배송하기</a>
 				</c:if>
 			</td>
+		</tr>
+		<tr>
+			<td id="${product.prodNo}" colspan="10" bgcolor="D6D7D6" height="1"></td>
 		</tr>
 	</c:forEach>
 </table>

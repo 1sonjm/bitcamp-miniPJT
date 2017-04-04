@@ -58,12 +58,12 @@
 
 								//Debug...
 								//alert(status);
-								alert("JSONData : \n"+JSONData);
+								/* alert("JSONData : \n"+JSONData);
 								alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
 								alert("JSONData.user : \n"+JSONData.user);
 								alert("JSON.stringify(jsonUser) : \n"+JSON.stringify(JSONData.user));
 								alert( JSONData.user != null );
-								alert("JSONData.user.userId : \n"+JSONData.user.userId);
+								alert("JSONData.user.userId : \n"+JSONData.user.userId); */
 								
 								if( JSONData.user != null ){
 									//[¹æ¹ý1]

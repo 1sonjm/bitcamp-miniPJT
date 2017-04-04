@@ -59,23 +59,22 @@
 
 									//Debug...
 									//alert(status);
-									//Debug...
-									alert("JSONData : \n"+JSONData);
+									//Debug..
+									///alert("JSONData : \n"+JSONData);
 									alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
 									
 									var displayValue = "<h3>"
-																+"아이디 : "+JSONData.user.userId+"<br/>"
-																+"이  름 : "+JSONData.user.userName+"<br/>"
-																+"이메일 : "+JSONData.user.email+"<br/>"
-																+"ROLE : "+JSONData.user.role+"<br/>"
-																+"등록일 : "+JSONData.user.regDate+"<br/>"
-																+"</h3>";
-									//Debug...									
+														+"아이디 : "+JSONData.user.userId+"<br/>"
+														+"이  름 : "+JSONData.user.userName+"<br/>"
+														+"이메일 : "+JSONData.user.email+"<br/>"
+														+"ROLE : "+JSONData.user.role+"<br/>"
+														+"등록일 : "+JSONData.user.regDate+"<br/>"
+														+"</h3>";
 									//alert(displayValue);
 									$("h3").remove();
 									$( "#"+userId+"" ).html(displayValue);
 								}
-						});
+					});
 						////////////////////////////////////////////////////////////////////////////////////////////
 					
 			});
@@ -88,7 +87,7 @@
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
 		});	
 		
-	</script>		
+	</script>
 	
 </head>
 
@@ -157,7 +156,7 @@
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">회원명</td>
 		<td class="ct_line02"></td>
-		<td class="ct_list_b">이메일</td>		
+		<td class="ct_list_b">이메일</td>
 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
