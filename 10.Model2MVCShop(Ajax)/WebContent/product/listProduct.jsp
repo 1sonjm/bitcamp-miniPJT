@@ -94,16 +94,14 @@ $(function(){
 		$('#currentPage').val(1);
 		$('form').submit();
 	});
-	$('.ct_list_pop td:nth-child(2) .updateProduct').css("color" , "red");
-	$('.ct_list_pop td:nth-child(2) .updateProduct').on('click',function(){
+	$('.ct_list_pop td:nth-child(3) .updateProduct').css("color" , "red").on('click',function(){
 		self.location ="/product/updateProductView?prodNo="+$(this).attr('sendValue');
 	});
-	$('.ct_list_pop td:nth-child(2) .getProduct').css("color" , "red");
-	$('.ct_list_pop td:nth-child(2) .getProduct').on('click',function(){
+	$('.ct_list_pop td:nth-child(3) .getProduct').css("color" , "red").on('click',function(){
 		self.location ="/product/getProduct?prodNo="+$(this).attr('sendValue');
 	});
 	$('tr.ct_list_pop td a:contains("배송하기")').on('click',function(){
-		self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).attr('sendValue');
+		self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).parent().attr('sendValue');
 	});
 });
 
@@ -124,59 +122,77 @@ $( function(){
 		}
 	});
 });
-/* 
-$(function(){
-	$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
-		var userId = $(this).text().trim();
-		$.ajax("/user/getJsonUser/"+userId,{
-			method : "GET" ,
-			dataType : "json" ,
+//autocomplte 동적 생성
+$( function() {
+	var searchKeywordItems = [];
+	$(document).ready(function(){
+		getListProduct();
+	});
+	$('select[name="searchCondition"]').change(function(){
+		getListProduct()
+	})
+	
+	function getListProduct(){
+		$.ajax("/product/getJsonListProduct",{
+			method:"GET",
+			dataType:"json",
 			headers : {
 				"Accept" : "application/json",
 				"Content-Type" : "application/json"
 			},
-			success : function(JSONData , status) {
-				alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-				
-				var displayValue = "<h3>"
-									+" : "+JSONData.user.userId+"<br/>"
-									+" : "+JSONData.user.userName+"<br/>"
-									+" : "+JSONData.user.email+"<br/>"
-									+" : "+JSONData.user.role+"<br/>"
-									+" : "+JSONData.user.regDate+"<br/>"
-									+"</h3>";
-				$("h3").remove();
-				$( "#"+userId+"" ).html(displayValue);
+			data:{
+				searchCondition:$('input[name="searchCondition"]').val(),
+				searchKeyword:$('input[name="searchKeyword"]').val(),
+				searchValueLow:$('input[name="searchValueLow"]').val(),
+				searchValueHigh:$('input[name="searchValueHigh"]').val()
+			},
+			success: function(JSONData){
+				for(var i=0;i<JSONData.productList.length;i++){
+					searchKeywordItems.push(JSONData.productList[i].prodName);
+				}
 			}
 		});
+	}
+	$( 'input[name="searchKeyword"]' ).autocomplete({
+		source: searchKeywordItems
 	});
 });
- */
+
+//제품 정보 보기
 $(function(){
 	$( ".ct_list_pop td:nth-child(1)" ).on("dblclick" , function() {
 		var prodNo = $(this).parent().attr('sendValue');
-		alert(prodNo);
+		//alert(prodNo);
 		$.ajax("/product/getJsonProduct/"+prodNo,{
 			method : "GET" ,
 			dataType : "json" ,
-			headers : {
+			/* headers : {
 				"Accept" : "application/json",
 				"Content-Type" : "application/json"
-			},
+			}, */
 			success : function(JSONData , status) {
 				//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
 				
-				var displayValue = "<h3>"
-									+"제품코드 : "+JSONData.product.prodNo+"<br/>"
-									+"제품정보 : "+JSONData.product.prodDetail+"<br/>"
-									+"가격 : "+JSONData.product.price+"<br/>"
-									+"재고량 : "+JSONData.product.prodStock+"<br/>"
-									+"등록일 : "+JSONData.product.regDate+"<br/>"
-									+"</h3>";
-				$(this).parent().find('h3').remove();
+				var displayValue = '<div class="productContent">'
+										+'<div class="col-sm-6 col-md-4">'
+											+'<div class="thumbnail">'
+												+'<img src="/images/uploadFiles/'+JSONData.product.fileName+'">'
+												+'<div class="caption">'
+													+'<h3>'+JSONData.product.prodName+'</h3>'
+													+'<p>'+JSONData.product.prodDetail+'<br/>등록일:'+JSONData.product.regDate+'</p>'
+													+'<p><a id="buyProduct" class="btn btn-primary" role="button" sendValue="'+JSONData.product.prodNo+'">구매</a></p>'
+												+'</div>'
+											+'</div>'
+										+'</div>'
+									'</div>'
+				$('div.productContent').remove();
 				$( "#"+prodNo ).html(displayValue);
 			}
 		});
+	});
+	$(document).on('click', '#buyProduct', function(){
+		alert("/product/updateProductView?prodNo="+$(this).attr('sendValue'));
+		self.location ="/product/updateProductView?prodNo="+$('#buyProduct').attr('sendValue');
 	});
 });
 </script>
@@ -194,6 +210,8 @@ $(function(){
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
+
+
 <div style="width:98%; margin-left:10px;">
 <form name="detailForm" action='/product/listProduct?menu=${param.menu}' method="post">
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">

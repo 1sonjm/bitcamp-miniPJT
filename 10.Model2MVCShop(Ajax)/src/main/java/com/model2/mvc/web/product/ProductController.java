@@ -1,7 +1,6 @@
 package com.model2.mvc.web.product;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,7 +76,6 @@ public class ProductController {
 							) throws Exception{
 		Product product = productService.getProduct(prodNo);
 		model.addAttribute("product",product);
-		
 		Map<Integer,String> viewListMap = new HashMap<Integer,String>();
 		if(session.getAttribute("viewListMap") != null){
 			viewListMap = (HashMap<Integer,String>)session.getAttribute("viewListMap");
@@ -135,5 +133,10 @@ public class ProductController {
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("search",search);
 		return "forward:/product/listProduct.jsp";
+	}
+	@RequestMapping(value="getJsonListProduct")
+	public void getJsonlistProduct(@ModelAttribute("search")Search search
+									,Model model) throws Exception{
+		model.addAttribute("productList",productService.getProductListAll(search));
 	}
 }

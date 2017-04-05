@@ -111,7 +111,6 @@ $(function(){
 
 <script type="text/javascript">
 $(function(){
-	// 저 tr만 타겟팅 잘해줌된다
 	$("tr[id^=review]").on("click" , function() {
 	//$( ".ct_list_pop td:nth-child(3)" ).on("click" , function() {
 		//var userId = $(this).text().trim();
@@ -137,6 +136,34 @@ $(function(){
 			}
 		});
 	});
+	
+	var reviewNo = 0;
+	$('button[id^=answer]').click(function(){
+		reviewNo = $(this).attr('id').substring(6);
+		var answerForm = '<div name="answerForm">'
+										+'답변 제목<input type="text" class="form-control" name="answerTitle"><br/>'
+										+'답변내용<br/><textarea name="answerContent" rows="4" cols="50"></textarea>'
+										+'<button class="btn btn-default" name="answerApply">작성</button></div>';
+		$(this).parent().html(answerForm);
+	});
+	$(document).on('click','button[name=answerApply]',function(){
+		$.ajax("/review/updateAnswer/"+reviewNo
+					+"?answerTitle="+$('input[name="answerTitle"]').val()
+					+"&answerContent="+$('textarea[name="answerContent"]').val(),{
+					method:"POST",
+					dataType:"json",
+					headers: {
+						"Accept" : "application/json"
+					},
+					/* data:{
+						answerTitle:$('input[name="answerTitle"]').val(),
+						answerContent:$('textarea[name="answerContent"]').val()
+					}, */
+					success: function(JSONData){
+						$('div[name=answerForm]').remove();
+					}
+		});
+	});
 });
 
 </script>
@@ -148,6 +175,7 @@ $(function(){
 		<td>구매자ID</td>
 		<td>제목</td>
 		<td>등록일자</td>
+		<td></td>
 	</tr>
 	<c:forEach var="review" items="${reviewList}" begin="0" step="1">
 		<tr>
@@ -163,9 +191,14 @@ $(function(){
 				</a>
 			</td>
 			<td>${review.regDate}</td>
+			<td>
+			<c:if test="${empty review.answerTitle && user.role=='admin'}">
+				<button class="btn btn-default" id="answer${review.reviewNo}">답변등록</button>
+			</c:if>
+			</td>
 		</tr>
 		<tr id="review${review.reviewNo}">
-			<td colspan="4">
+			<td colspan="5">
 				<p>내용확인</p>
 			</td>
 		</tr>

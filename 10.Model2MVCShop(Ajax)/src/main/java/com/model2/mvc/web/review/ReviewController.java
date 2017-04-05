@@ -92,16 +92,15 @@ public class ReviewController {
 	
 	@RequestMapping(value="updateAnswerView/{reviewNo}")
 	public String updateAnswerView(@PathVariable int reviewNo
-									,@ModelAttribute("review")Review review
-									,Model model) throws Exception{
+											,@ModelAttribute("review")Review review
+											,Model model) throws Exception{
 		
 		model.addAttribute("review",reviewService.getReview(reviewNo));
 		return "forward:/review/updateAnswerView.jsp";
 	}
 	@RequestMapping(value="updateAnswer/{reviewNo}")
 	public String updateAnswer(@PathVariable int reviewNo
-								,@ModelAttribute("review")Review review) throws Exception{
-
+										,@ModelAttribute("review")Review review) throws Exception{
 		reviewService.updateAnswer(review);
 		return "redirect:/review/getReview/"+reviewNo;
 	}

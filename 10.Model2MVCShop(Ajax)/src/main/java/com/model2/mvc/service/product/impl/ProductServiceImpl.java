@@ -1,6 +1,8 @@
 package com.model2.mvc.service.product.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,8 @@ public class ProductServiceImpl implements ProductService {
 		
 		return map;
 	}
-
+	@Override
+	public List<Product> getProductListAll(Search search) throws Exception {
+		return productDao.getProductListAll(search);
+	}
 }
