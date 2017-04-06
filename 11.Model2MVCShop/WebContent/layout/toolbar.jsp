@@ -52,7 +52,7 @@
 	               <c:if test="${sessionScope.user.role == 'admin'}">
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >판매상품관리</span>
+		                         <span >상품관리</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
@@ -71,10 +71,12 @@
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
-	                         <li><a href="#">상 품 검 색</a></li>
-	                         
-	                         <c:if test="${sessionScope.user.role == 'user'}">
+	                         <li><a href="#">상품검색</a></li>
+	                         <c:if test="${ !empty user && user.role == 'user'}">
 	                           <li><a href="#">구매이력조회</a></li>
+	                         </c:if>
+	                         <c:if test="${sessionScope.user.role == 'admin'}">
+	                           <li><a href="#">구매물품조회</a></li>
 	                         </c:if>
 	                         
 	                         <li><a href="#">최근본상품</a></li>
@@ -99,29 +101,59 @@
    	
    	
    	<script type="text/javascript">
+	 $(function() {
 	
 		//============= logout Event  처리 =============	
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('로그아웃')").on("click" , function() {
-				$(self.location).attr("href","/user/logout");
-				//self.location = "/user/logout"
-			}); 
-		 });
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("a:contains('로그아웃')").on("click" , function() {
+			$(self.location).attr("href","/user/logout");
+			//self.location = "/user/logout"
+		}); 
 		
 		//============= 회원정보조회 Event  처리 =============	
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('회원정보조회')").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/user/listUser"
-			}); 
-		 });
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("a:contains('회원정보조회')").on("click" , function() {
+			//$(self.location).attr("href","/user/logout");
+			self.location = "/user/listUser"
+		}); 
 		
-		//=============  개인정보조회회 Event  처리 =============	
+	 	//=============  개인정보조회회 Event  처리 =============	
 	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
-		
+
+	 	//=============  판매상품등록 Event  처리 =============	
+	 	$( "a:contains('판매상품등록')" ).on("click" , function() {
+			$(self.location).attr("href","/product/addProductView.jsp");
+		});
+
+	 	//=============  판매상품관리 Event  처리 =============	
+	 	$( "a:contains('판매상품관리')" ).on("click" , function() {
+			$(self.location).attr("href","/product/listProduct?menu=manage");
+		});
+	 	
+	 	//=============  상 품 검 색 Event  처리 =============	
+		$( "a:contains('상품검색')" ).on("click" , function() {
+			$(self.location).attr("href","/product/listProduct?menu=search")
+		});
+	 	
+	 	//=============  구매이력조회 Event  처리 =============	
+		$( "a:contains('구매이력조회')").on("click" , function() {
+			$(self.location).attr("href","/purchase/listPurchase")
+		});
+	 	
+	 	//=============  구매물품조회 Event  처리 =============	
+		$( "a:contains('구매물품조회')").on("click" , function() {
+			$(self.location).attr("href","/purchase/listSales")
+		});
+	 	
+	 	//=============  최근 본 상품 Event  처리 =============	
+		$( "a:contains('최근 본 상품')").on("click" , function() {
+			window.open("/history.jsp",
+					"popWin",
+					"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+			//dialog로 바꾸자 jquery ui 것도 괜찮지 움직여지니
+		});
+	});
 	</script>  
