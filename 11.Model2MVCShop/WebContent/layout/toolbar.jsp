@@ -6,154 +6,118 @@
 
 
 <!-- ToolBar Start /////////////////////////////////////-->
-<div class="navbar  navbar-inverse navbar-fixed-top">
-	
-	<div class="container">
-	       
-		<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
-		
-		<!-- toolBar Button Start //////////////////////// -->
-		<div class="navbar-header">
-		    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		    </button>
+		<div class="navbar navbar-inverse">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">
+					<span><img alt="Brand" src="/images/layer/1491480052_home.png" width="20px"></span>
+					Model2MVCShop
+				</a>
+			</div>
+			<div class="navbar-collapse collapse navbar-inverse-collapse">
+				<form class="navbar-form navbar-left">
+						<input type="text" class="form-control col-lg-8" placeholder="Search">
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<c:if test="${user.role=='user'}">
+						<li><a href="#">ListPurchase</a></li>
+					</c:if>
+					<c:if test="${user.role=='admin'}">
+						<li><a href="#">ListSalse</a></li>
+					</c:if>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Product<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">AddProductView</a></li>
+							<li><a href="#">History</a></li>
+							<li class="divider"></li>
+							<li><a href="#">ListProduct</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">GetUser</a></li>
+							<li class="divider"></li>
+							<li><a href="#">ListUser</a></li>
+						</ul>
+					</li>
+					<c:if test="${user!=null}">
+						<li><a href="#">Log Out</a></li>
+					</c:if>
+					<c:if test="${user==null}">
+						<li><a href="#">Log In</a></li>
+					</c:if>
+				</ul>
+			</div>
 		</div>
-		<!-- toolBar Button End //////////////////////// -->
-		
-	    <!--  dropdown hover Start -->
-		<div 	class="collapse navbar-collapse" id="target" 
-	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
-	         
-	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
-	             <ul class="nav navbar-nav">
-	             
-	              <!--  회원관리 DrowDown -->
-	              <li class="dropdown">
-	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >회원관리</span>
-	                         <span class="caret"></span>
-	                     </a>
-	                     <ul class="dropdown-menu">
-	                         <li><a href="#">개인정보조회</a></li>
-	                         
-	                         <c:if test="${sessionScope.user.role == 'admin'}">
-	                         	<li><a href="#">회원정보조회</a></li>
-	                         </c:if>
-	                         
-	                         <li class="divider"></li>
-	                         <li><a href="#">etc...</a></li>
-	                     </ul>
-	                 </li>
-	                 
-	              <!-- 판매상품관리 DrowDown  -->
-	               <c:if test="${sessionScope.user.role == 'admin'}">
-		              <li class="dropdown">
-		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >상품관리</span>
-		                         <span class="caret"></span>
-		                     </a>
-		                     <ul class="dropdown-menu">
-		                         <li><a href="#">판매상품등록</a></li>
-		                         <li><a href="#">판매상품관리</a></li>
-		                         <li class="divider"></li>
-		                         <li><a href="#">etc..</a></li>
-		                     </ul>
-		                </li>
-	                 </c:if>
-	                 
-	              <!-- 구매관리 DrowDown -->
-	              <li class="dropdown">
-	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >상품구매</span>
-	                         <span class="caret"></span>
-	                     </a>
-	                     <ul class="dropdown-menu">
-	                         <li><a href="#">상품검색</a></li>
-	                         <c:if test="${ !empty user && user.role == 'user'}">
-	                           <li><a href="#">구매이력조회</a></li>
-	                         </c:if>
-	                         <c:if test="${sessionScope.user.role == 'admin'}">
-	                           <li><a href="#">구매물품조회</a></li>
-	                         </c:if>
-	                         
-	                         <li><a href="#">최근본상품</a></li>
-	                         <li class="divider"></li>
-	                         <li><a href="#">etc..</a></li>
-	                     </ul>
-	                 </li>
-	                 
-	                 <li><a href="#">etc...</a></li>
-	             </ul>
-	             
-	             <ul class="nav navbar-nav navbar-right">
-	                <li><a href="#">로그아웃</a></li>
-	            </ul>
-		</div>
-		<!-- dropdown hover END -->	       
-	    
-	</div>
-</div>
 		<!-- ToolBar End /////////////////////////////////////-->
- 	
-   	
-   	
-   	<script type="text/javascript">
-	 $(function() {
-	
-		//============= logout Event  처리 =============	
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	 	$("a:contains('로그아웃')").on("click" , function() {
-			$(self.location).attr("href","/user/logout");
-			//self.location = "/user/logout"
+
+<script type="text/javascript">
+	$(function() {
+
+		//============= logon Event  처리 =============	
+	 	$("a:contains('Log In')").on("click" , function() {
+			$(self.location).attr("href","/user/loginView.jsp");
 		}); 
 		
-		//============= 회원정보조회 Event  처리 =============	
+		//============= logout Event  처리 =============	
+	 	$("a:contains('Log Out')").on("click" , function() {
+			$(self.location).attr("href","/user/logout");
+		}); 
+		
+		//============= ListUser Event  처리 =============	
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	 	$("a:contains('회원정보조회')").on("click" , function() {
+	 	$("a:contains('ListUser')").on("click" , function() {
 			//$(self.location).attr("href","/user/logout");
 			self.location = "/user/listUser"
 		}); 
 		
-	 	//=============  개인정보조회회 Event  처리 =============	
-	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
+	 	//=============  GetUser Event  처리 =============	
+	 	$( "a:contains('GetUser')" ).on("click" , function() {
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
 
-	 	//=============  판매상품등록 Event  처리 =============	
-	 	$( "a:contains('판매상품등록')" ).on("click" , function() {
+	 	//=============  AddProductView Event  처리 =============	
+	 	$( "a:contains('AddProductView')" ).on("click" , function() {
 			$(self.location).attr("href","/product/addProductView.jsp");
 		});
 
-	 	//=============  판매상품관리 Event  처리 =============	
-	 	$( "a:contains('판매상품관리')" ).on("click" , function() {
-			$(self.location).attr("href","/product/listProduct?menu=manage");
+	 	//=============  ListProduct Event  처리 =============	
+	 	$( "a:contains('ListProduct')" ).on("click" , function() {
+	 		if("${user.role=='admin'}"){
+	 			$(self.location).attr("href","/product/listProduct?menu=manage");	
+	 		}else{
+	 			$(self.location).attr("href","/product/listProduct?menu=search");
+	 		}
 		});
 	 	
-	 	//=============  상 품 검 색 Event  처리 =============	
-		$( "a:contains('상품검색')" ).on("click" , function() {
-			$(self.location).attr("href","/product/listProduct?menu=search")
-		});
-	 	
-	 	//=============  구매이력조회 Event  처리 =============	
-		$( "a:contains('구매이력조회')").on("click" , function() {
+	 	//=============  ListPurchase Event  처리 =============	
+		$( "a:contains('ListPurchase')").on("click" , function() {
 			$(self.location).attr("href","/purchase/listPurchase")
 		});
 	 	
-	 	//=============  구매물품조회 Event  처리 =============	
-		$( "a:contains('구매물품조회')").on("click" , function() {
+	 	//=============  ListSalse Event  처리 =============	
+		$( "a:contains('ListSalse')").on("click" , function() {
 			$(self.location).attr("href","/purchase/listSales")
 		});
 	 	
-	 	//=============  최근 본 상품 Event  처리 =============	
-		$( "a:contains('최근 본 상품')").on("click" , function() {
+	 	//=============  History Event  처리 =============	
+		$( "a:contains('History')").on("click" , function() {
 			window.open("/history.jsp",
 					"popWin",
 					"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 			//dialog로 바꾸자 jquery ui 것도 괜찮지 움직여지니
 		});
+	 	
+	 	//=============  ListSalse Event  처리 =============	
+		$( ".navbar-header:contains('Model2MVCShop')").on("click" , function() {
+			$(self.location).attr("href","/index.jsp")
+		});
 	});
-	</script>  
+</script>

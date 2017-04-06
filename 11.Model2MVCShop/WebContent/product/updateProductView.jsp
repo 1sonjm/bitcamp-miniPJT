@@ -14,9 +14,12 @@
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!--  ///////////////////////// Font ////////////////////////// -->
+<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+<link rel="stylesheet" href="/css/theme.min.css" >
+<link rel="stylesheet" href="/css/custom-theme.css" >
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
@@ -33,9 +36,6 @@
 
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-		body {
-			padding-top : 50px;
-		}
 	</style>
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">

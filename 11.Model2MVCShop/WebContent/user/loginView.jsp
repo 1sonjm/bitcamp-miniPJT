@@ -12,9 +12,12 @@
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
+	<!--  ///////////////////////// Font ////////////////////////// -->
+	<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<link rel="stylesheet" href="/css/theme.min.css" >
+	<link rel="stylesheet" href="/css/custom-theme.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
@@ -69,14 +72,9 @@
 </head>
 
 <body>
-
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->	
+	<jsp:include page="/layout/toolbar.jsp" />
+	<!-- ToolBar End   /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -128,6 +126,9 @@
  	</div>
  	<!--  화면구성 div end /////////////////////////////////////-->
 
+	<!-- footer Start /////////////////////////////////////-->
+	<jsp:include page="/layout/footer.jsp" />
+	<!-- footer end   /////////////////////////////////////-->
 </body>
 
 </html>
