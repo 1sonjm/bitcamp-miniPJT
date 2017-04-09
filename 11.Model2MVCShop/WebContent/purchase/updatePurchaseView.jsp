@@ -1,128 +1,145 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
+
+<!--	///////////////////////// JSTL	////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
+
+
+<meta charset="EUC-KR">
+<!-- 참조 : http://getbootstrap.com/css/	 참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!--  ///////////////////////// Font ////////////////////////// -->
-<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+<!--	///////////////////////// Font ////////////////////////// -->
+<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<!--	///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet" href="/css/theme.min.css" >
 <link rel="stylesheet" href="/css/custom-theme.css" >
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+
 <!-- Bootstrap Dropdown Hover CSS -->
 <link href="/css/animate.min.css" rel="stylesheet">
 <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	$('button:contains("수정")').on('click',function(){
-		$('form').submit();
-	});
-	$('button:contains("취소")').on('click',function(event){
-		event.preventDefault();
-		history.back(1);
-	});
-});
-</script>
 
+<!-- jQuery UI CSS-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- jQuery UI JS-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!--	///////////////////////// CSS ////////////////////////// -->
+<style>
+</style>
+<!--	///////////////////////// JavaScript ////////////////////////// -->
+<script type="text/javascript">
+	$(function(){
+		$('input[name="dlvyDate"]').datepicker({
+			dateFormat: "yymmdd",
+			minDate: 0
+		});
+		$('button:contains("수정")').on('click',function(){
+			$('form').attr('method','post').attr('action','/purchase/updatePurchase?tranNo=${purchase.tranNo}').submit();
+		});
+		$('button:contains("취소")').on('click',function(event){
+			event.preventDefault();
+			history.back(1);
+		});
+	});
+</script>
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
+<body>
 
-<form name="updatePurchase" method="post" action='/purchase/updatePurchase?tranNo=${purchase.tranNo}'>
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/layout/toolbar.jsp" />
+<!-- ToolBar End /////////////////////////////////////-->
+	
+<!--	화면구성 div Start /////////////////////////////////////-->
 
-<table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
-	<tr>
-		<td width="15" height="37">
-			<img src="/images/ct_ttl_img01.gif"  width="15" height="37"/>
-		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">구매정보수정</td>
-					<td width="20%" align="right">&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
-		</td>
-	</tr>
-</table>
+<div class="container">
 
-<table width="600" border="0" cellspacing="0" cellpadding="0"	align="center" style="margin-top: 13px;">
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">구매자아이디</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">${purchase.buyer.userId}</td>
-		<input type="hidden" name="buyerId" value='${purchase.buyer.userId}'>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">구매방법</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<select 	name="paymentOption" 	class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20">
-				<option value="1" ${purchase.paymentOption=="1"?"selected":""}>현금구매</option>
-				<option value="2" ${purchase.paymentOption=="2"?"selected":""}>신용구매</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">구매자이름</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="receiverName" 	class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="${purchase.receiverName}" />
-		</td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">구매자 연락처</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="receiverPhone" class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="${purchase.receiverPhone}" />
-		</td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">구매자주소</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="dlvyAddr" class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="${purchase.dlvyAddr}" />
-		</td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">구매요청사항</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="dlvyRequest" 	class="ct_input_g" style="width: 100px; height: 19px" 
-							maxLength="20" value="${purchase.dlvyRequest}" />
-		</td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">배송희망일자</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td width="200" class="ct_write01">
-			<input type="text" readonly="readonly" name="dlvyDate" class="ct_input_g" value="${purchase.dlvyDate}" 
-						style="width: 100px; height: 19px" maxLength="20"/>
-				<img 	src="../images/ct_icon_date.gif" width="15" height="15"	
-							onclick="show_calendar('document.updatePurchase.dlvyDate', document.updatePurchase.dlvyDate.value)"/>
-		</td>
-	</tr>
-</table>
-<button class="btn btn-default">수정</button>
-<button class="btn btn-default">취소</button>
-</form>
+	<div class="page-header text-center">
+		<h3 class=" text-info">주문 수정</h3>
+	</div>
+
+	<!-- form Start /////////////////////////////////////-->
+	<form class="form-horizontal">
+		<input type="hidden" name="prodNo" value="${product.prodNo}"/>
+		
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-3 control-label">구매자아이디</label>
+			<div class="col-sm-4">
+				<input 	type="text" class="form-control" name="buyerId" value='${purchase.buyer.userId}'>
+			</div>
+		</div>
+	
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-3 control-label">구매방법 </label>
+			<div class="col-sm-4">
+				<select name="paymentOption" class="form-control">
+					<option value="1" ${purchase.paymentOption=="1"?"selected":""}>현금구매</option>
+					<option value="2" ${purchase.paymentOption=="2"?"selected":""}>신용구매</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-3 control-label">구매자이름</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" name="receiverName" value="${purchase.receiverName}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-3 control-label">수령인 연락처</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" name="price" maxlength="5" value="${purchase.receiverPhone}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-3 control-label">수령인 주소</label>
+			<div class="col-sm-4">
+				<input	type="text" class="form-control" name="fileName" value="${purchase.dlvyAddr}"/>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-3 control-label">구매요청사항</label>
+			<div class="col-sm-4">
+				<input	type="text" class="form-control" name="fileName" value="${purchase.dlvyRequest}"/>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-offset-1 col-sm-3 control-label">배송희망일자</label>
+			<div class="col-sm-4">
+				<input	type="text" readonly class="form-control" name="dlvyDate" value="${purchase.dlvyDate}" />
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-offset-4	col-sm-4 text-center">
+				<button class="btn btn-default">수정</button>
+				<button class="btn btn-default">취소</button>
+			</div>
+		</div>
+	</form>
+	<!-- form End /////////////////////////////////////-->
+</div>
+<!--	화면구성 div end /////////////////////////////////////-->
+	
+<!-- Footer Start /////////////////////////////////////-->
+<jsp:include page="/layout/footer.jsp" />
+<!-- Footer End /////////////////////////////////////-->
 
 </body>
+
 </html>

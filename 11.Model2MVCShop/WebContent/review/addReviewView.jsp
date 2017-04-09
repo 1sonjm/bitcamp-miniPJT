@@ -1,23 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-<head><!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<html lang="ko">
+	
+<head>
+<meta charset="EUC-KR">
+	
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<title>상품등록</title>
+<!--  ///////////////////////// Font ////////////////////////// -->
+<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
+<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<link rel="stylesheet" href="/css/theme.min.css" >
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+
+
+<!-- Bootstrap Dropdown Hover CSS -->
+<link href="/css/animate.min.css" rel="stylesheet">
+<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<!-- Bootstrap Dropdown Hover JS -->
+<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+
+
+<!-- jQuery UI CSS-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- jQuery UI JS-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Bootstrap custom Theme-->
+<link rel="stylesheet" href="/css/custom-theme.css" >
 
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
@@ -34,8 +54,14 @@ $(function(){
 </script>
 </head>
 
-<body bgcolor="#ffffff" text="#000000">
+<body>
 
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/layout/toolbar.jsp" />
+<!-- ToolBar End   /////////////////////////////////////-->
+
+<!--  화면구성 div Start /////////////////////////////////////-->
+<div class="container">
 <form name="detailForm" method="post">
 <table class="table">
 	<tr>
@@ -46,7 +72,7 @@ $(function(){
 	<tr>
 		<td>${purchase.purchaseProd.prodName}</td>
 		<td>${user.userId}</td>
-		<td><input type="text" size="3" maxlength="1" name="grade"/></td>
+		<td><input type="text" class="form-control" size="3" maxlength="1" name="grade"/></td>
 	</tr>
 	<tr>
 		<td>제목</td>
@@ -57,7 +83,7 @@ $(function(){
 	<tr>
 		<td>내용</td>
 		<td colspan="2">
-			<textarea name="reviewContent" rows="4" cols="50"></textarea>
+			<textarea name="reviewContent" class="form-control" rows="4" cols="50"></textarea>
 		</td>
 	</tr>
 </table>
@@ -65,6 +91,11 @@ $(function(){
 
 <button class="btn btn-default">등록</button>
 <button class="btn btn-default">취소</button>
+</div>
+<!--  화면구성 div End /////////////////////////////////////-->
 
+<!-- Footer Start /////////////////////////////////////-->
+<jsp:include page="/layout/footer.jsp" />
+<!-- Footer End /////////////////////////////////////-->
 </body>
 </html>

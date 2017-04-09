@@ -12,11 +12,14 @@
 <head>
 	<meta charset="EUC-KR">
 	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Font ////////////////////////// -->
-	<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="/css/theme.min.css" >
@@ -32,20 +35,20 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip 사용 CSS-->
+   <!-- jQuery UI CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip 사용 JS-->
+  <!-- jQuery UI JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	</style>
 
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
-		function fncGetUserList(currentPage) {
+		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
 			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
 		}
@@ -128,7 +131,6 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
 		<div class="page-header text-info">
 	       <h3>회원목록조회</h3>
 	    </div>
@@ -194,7 +196,7 @@
 			  <td align="left">${user.userName}</td>
 			  <td align="left">${user.email}</td>
 			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${user.userId}"></i>
+			  	<i class="glyphicon glyphicon-info-sign" id="${user.userId}"></i>
 			  	<input type="hidden" value="${user.userId}">
 			  </td>
 			</tr>
@@ -205,14 +207,19 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  
- 	</div>
+ 	
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	
  	<!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
+	</div>
 	
+	
+<!-- Footer Start /////////////////////////////////////-->
+<jsp:include page="/layout/footer.jsp" />
+<!-- Footer End /////////////////////////////////////-->
 </body>
 
 </html>

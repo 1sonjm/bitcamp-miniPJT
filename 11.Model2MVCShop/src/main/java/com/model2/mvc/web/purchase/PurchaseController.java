@@ -93,7 +93,7 @@ public class PurchaseController {
 	public void getJsonPurchase(@PathVariable int tranNo
 								,Model model
 								) throws Exception{
-		System.out.println("???");
+		
 		model.addAttribute("purchase",purchaseService.getPurchase(tranNo));
 	}
 

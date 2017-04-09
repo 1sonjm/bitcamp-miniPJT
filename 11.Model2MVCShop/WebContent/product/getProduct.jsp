@@ -9,13 +9,12 @@
 
 <head>
 
-
 <meta charset="EUC-KR">
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Font ////////////////////////// -->
-<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet" href="/css/theme.min.css" >
@@ -47,7 +46,7 @@
 			history.back(1);
 		});
 		$("button:contains('구매')").click(function(){
-			$('form').attr('action','/purchase/addPurchaseView?prodNo=${product.prodNo}').submit();
+			$('form').attr('method','post').attr('action','/purchase/addPurchaseView?prodNo=${product.prodNo}').submit();
 		})
 	})
 	</script>
@@ -58,8 +57,8 @@
 	<!-- ToolBar End   /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
+
 	<div class="container">
-	
 		<div class="page-header">
 			<h3 class=" text-info">상품상세조회</h3>
 		</div>
@@ -115,14 +114,14 @@
 		
 		<div class="row">
 				<div class="col-xs-4 col-md-2 "><strong>등록일자</strong></div>
-			<div class="col-xs-8 col-md-4">${user.regDate}</div>
+			<div class="col-xs-8 col-md-4">${product.regDate}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
 				<div class="col-md-12 text-center">
-					<c:if test='${product.prodStock!=0}'>
+					<c:if test='${product.prodStock!=0 || !empty user}'>
 						<button class="btn btn-default">구매</button>	
 					</c:if>
 					
@@ -132,9 +131,6 @@
 		
 		<br/>
 		
- 	</div>
- 	<!--  화면구성 div end   /////////////////////////////////////-->
-	
 	<!--  후기목록 div Start /////////////////////////////////////-->
 	
 	<script type="text/javascript">
@@ -194,59 +190,61 @@
 		});
 	});
 	</script>
-	
-	
-	<c:if test="${!empty reviewList}">
-	<table class="table listReview">
-		<tr>
-			<td>사진</td>
-			<td>구매자ID</td>
-			<td>제목</td>
-			<td>등록일자</td>
-			<td></td>
-		</tr>
-		<c:forEach var="review" items="${reviewList}" begin="0" step="1">
+		<c:if test="${!empty reviewList}">
+		<table class="table listReview">
 			<tr>
-				<td>
-					<c:if test="${review.imageName} != null">
-						<img src="" width="50">
-					</c:if>
-				</td>
-				<td>${review.buyer.userId}</td>
-				<td>
-					<a href="/review/getReview/${review.reviewNo}">
-						${review.reviewTitle}
-					</a>
-				</td>
-				<td>${review.regDate}</td>
-				<td>
-				<c:if test="${empty review.answerTitle && user.role=='admin'}">
-					<button class="btn btn-default" id="answer${review.reviewNo}">답변등록</button>
-				</c:if>
-				</td>
+				<td>사진</td>
+				<td>구매자ID</td>
+				<td>제목</td>
+				<td>등록일자</td>
+				<td></td>
 			</tr>
-			<tr id="review${review.reviewNo}">
-				<td colspan="5">
-					<p>내용확인</p>
-				</td>
-			</tr>
-			<c:if test="${!empty review.answerTitle}">
+			<c:forEach var="review" items="${reviewList}" begin="0" step="1">
 				<tr>
-					<td></td>
-					<td>┕></td>
+					<td>
+						<c:if test="${review.imageName} != null">
+							<img src="" width="50">
+						</c:if>
+					</td>
+					<td>${review.buyer.userId}</td>
 					<td>
 						<a href="/review/getReview/${review.reviewNo}">
-							${review.answerTitle}
+							${review.reviewTitle}
 						</a>
 					</td>
-					<td></td>
+					<td>${review.regDate}</td>
+					<td>
+					<c:if test="${empty review.answerTitle && user.role=='admin'}">
+						<button class="btn btn-default" id="answer${review.reviewNo}">답변등록</button>
+					</c:if>
+					</td>
 				</tr>
-			</c:if>
-		</c:forEach>
-	</table>
-	</c:if>
-	<!--  후기목록 div end   /////////////////////////////////////-->
-
+				<tr id="review${review.reviewNo}">
+					<td colspan="5">
+						<p>내용확인</p>
+					</td>
+				</tr>
+				<c:if test="${!empty review.answerTitle}">
+					<tr>
+						<td></td>
+						<td>┕></td>
+						<td>
+							<a href="/review/getReview/${review.reviewNo}">
+								${review.answerTitle}
+							</a>
+						</td>
+						<td></td>
+					</tr>
+				</c:if>
+			</c:forEach>
+		</table>
+		</c:if>
+		<!--  후기목록 div end   /////////////////////////////////////-->
+	</div>
+<!--  화면구성 div end   /////////////////////////////////////-->
+<!-- Footer Start /////////////////////////////////////-->
+<jsp:include page="/layout/footer.jsp" />
+<!-- Footer End /////////////////////////////////////-->
 </body>
 
 </html>

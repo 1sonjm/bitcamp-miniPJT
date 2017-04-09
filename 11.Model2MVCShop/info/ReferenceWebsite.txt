@@ -1,0 +1,13 @@
+bootstrap custom css -> http://bootstrap-live-customizer.com/
+
+디자인 예시 -> http://thymetheme.pl/choco/v203/store-dark.html
+
+bootstrap dropdown hover(animations : pluse) -> http://kybarg.github.io/bootstrap-dropdown-hover/ 
+
+color combination -> http://paletton.com/
+
+bootstrap templet -> https://startbootstrap.com/template-
+
+font template -> https://fonts.google.com/
+
+웹사이트 custom 탬플릿 -> http://editor.wix.com

@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Font ////////////////////////// -->
-	<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="/css/theme.min.css" >
@@ -39,8 +39,8 @@
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("button").on("click" , function() {
-				var id=$("input:text").val();
-				var pw=$("input:password").val();
+				var id=$("#userId").val();
+				var pw=$("#password").val();
 				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
@@ -77,6 +77,7 @@
 	<!-- ToolBar End   /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
+
 	<div class="container">
 		<!--  row Start /////////////////////////////////////-->
 		<div class="row">
@@ -90,19 +91,19 @@
 		 	 	<br/><br/>
 				
 				<div class="jumbotron">	 	 	
-		 	 		<h1 class="text-center">로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h1>
+		 	 		<h1 class="text-center">Log In</h1>
 
 			        <form class="form-horizontal">
 		  
 					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">아 이 디</label>
+					    <label for="userId" class="col-sm-4 control-label">I D</label>
 					    <div class="col-sm-6">
 					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" >
 					    </div>
 					  </div>
 					  
 					  <div class="form-group">
-					    <label for="password" class="col-sm-4 control-label">패 스 워 드</label>
+					    <label for="password" class="col-sm-4 control-label">PassWord</label>
 					    <div class="col-sm-6">
 					      <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
 					    </div>
@@ -126,9 +127,9 @@
  	</div>
  	<!--  화면구성 div end /////////////////////////////////////-->
 
-	<!-- footer Start /////////////////////////////////////-->
+	<!-- Footer Start /////////////////////////////////////-->
 	<jsp:include page="/layout/footer.jsp" />
-	<!-- footer end   /////////////////////////////////////-->
+	<!-- Footer end   /////////////////////////////////////-->
 </body>
 
 </html>

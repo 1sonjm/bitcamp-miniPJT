@@ -1,8 +1,6 @@
 
 body{
-	background-color: #171311;
-	color: #FFFCF4;
-	font-family: 'Advent Pro', sans-serif;
+	font-family: 'Oxygen', sans-serif;
 }
 body h1{
 	color: #FFF3CF;
@@ -11,11 +9,16 @@ body h1{
 
 }
 
+b{
+	color: #A57356;
+	font-size: 20px;
+}
+
 /* CUSTOM THE BUTTON COLOR : btn-copper*/
 .btn-copper { 
-  color: #ffffff; 
-  background-color: #9E785F; 
-  border-color: #947F6C; 
+	color: #ffffff; 
+	background-color: #9E785F; 
+	border-color: #947F6C; 
 } 
  
 .btn-copper:hover, 
@@ -23,15 +26,15 @@ body h1{
 .btn-copper:active, 
 .btn-copper.active, 
 .open .dropdown-toggle.btn-copper { 
-  color: #ffffff; 
-  background-color: #587868; 
-  border-color: #947F6C; 
+	color: #ffffff; 
+	background-color: #587868; 
+	border-color: #947F6C; 
 } 
  
 .btn-copper:active, 
 .btn-copper.active, 
 .open .dropdown-toggle.btn-copper { 
-  background-image: none; 
+	background-image: none; 
 } 
  
 .btn-copper.disabled, 
@@ -49,13 +52,13 @@ fieldset[disabled] .btn-copper:active,
 .btn-copper.disabled.active, 
 .btn-copper[disabled].active, 
 fieldset[disabled] .btn-copper.active { 
-  background-color: #9E785F; 
-  border-color: #947F6C; 
+	background-color: #9E785F; 
+	border-color: #947F6C; 
 } 
  
 .btn-copper .badge { 
-  color: #9E785F; 
-  background-color: #ffffff; 
+	color: #9E785F; 
+	background-color: #ffffff; 
 }
 
 .navbar{
@@ -66,8 +69,8 @@ fieldset[disabled] .btn-copper.active {
 
 /* Carousel base class */
 .carousel {
-  height: 750px;
-  margin-bottom: 60px;
+	height: 750px;
+	margin-bottom: 60px;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
@@ -87,22 +90,27 @@ fieldset[disabled] .btn-copper.active {
 	min-width: 100%;
 	height: 750px;
 }
-
+.carousel-control {
+position: absolute;
+top: 0%;
+z-index: 5;
+display: inline-block;
+}
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
 /* Center align the text within the three columns below the carousel */
 .marketing .col-lg-4 {
-  margin-bottom: 20px;
-  text-align: center;
+	margin-bottom: 20px;
+	text-align: center;
 }
 .marketing h2 {
-  font-weight: normal;
+	font-weight: normal;
 }
 .marketing .col-lg-4 p {
-  margin-right: 10px;
-  margin-left: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 
 
@@ -110,14 +118,14 @@ fieldset[disabled] .btn-copper.active {
 ------------------------- */
 
 .featurette-divider {
-  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+	margin: 80px 0; /* Space out the Bootstrap <hr> more */
 }
 
 /* Thin out the marketing headings */
 .featurette-heading {
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -1px;
+	font-weight: 300;
+	line-height: 1;
+	letter-spacing: -1px;
 }
 
 
@@ -125,45 +133,45 @@ fieldset[disabled] .btn-copper.active {
 -------------------------------------------------- */
 
 @media (min-width: 768px) {
-  /* Navbar positioning foo */
-  .navbar-wrapper {
-    margin-top: 20px;
-  }
-  .navbar-wrapper .container {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  .navbar-wrapper .navbar {
-    padding-right: 0;
-    padding-left: 0;
-  }
+	/* Navbar positioning foo */
+	.navbar-wrapper {
+		margin-top: 20px;
+	}
+	.navbar-wrapper .container {
+		padding-right: 15px;
+		padding-left: 15px;
+	}
+	.navbar-wrapper .navbar {
+		padding-right: 0;
+		padding-left: 0;
+	}
 
-  /* The navbar becomes detached from the top, so we round the corners */
-  .navbar-wrapper .navbar {
-    border-radius: 4px;
-  }
-  /* Bump up size of carousel content */
-  .carousel-caption h1 {
-    font-size: 40px;
-    line-height: 1.4;
+	/* The navbar becomes detached from the top, so we round the corners */
+	.navbar-wrapper .navbar {
+		border-radius: 4px;
+	}
+	/* Bump up size of carousel content */
+	.carousel-caption h1 {
+		font-size: 48px;
+		line-height: 1.4;
 		font-family: 'Syncopate', sans-serif;
-  }
-  .carousel-caption p {
-    margin-bottom: 20px;
-    font-size: 21px;
-    line-height: 1.4;
-  }
+	}
+	.carousel-caption p {
+		margin-bottom: 20px;
+		font-size: 19px;
+		line-height: 1.4;
+	}
 
-  .featurette-heading {
-    font-size: 20px;
+	.featurette-heading {
+		font-size: 20px;
 		font-family: 'Syncopate', sans-serif;
-  }
+	}
 }
 
 @media (min-width: 992px) {
-  .featurette-heading {
-    margin-top: 100px;
-  }
+	.featurette-heading {
+		margin-top: 100px;
+	}
 }
 
 /*---------------imageContentBox-------------------- */
@@ -176,7 +184,7 @@ fieldset[disabled] .btn-copper.active {
 	}
 	.imageCover{
 		background-color: rgba(17,13,11,0.7);
-	  display: flex;
+		display: flex;
 	}
 	.imageContent{
 		padding:0px;
@@ -184,8 +192,8 @@ fieldset[disabled] .btn-copper.active {
 		height: 400px;
 		text-align: center;
 		justify-content: center;
-	  align-items: center;
-	  display: flex;
+		align-items: center;
+		display: flex;
 	}
 	.imageContent h1{
 		font-size: 50px;
@@ -194,3 +202,7 @@ fieldset[disabled] .btn-copper.active {
 		padding:10px;
 		font-size:20px;
 	}
+	
+/*---------------footer-------------------- */
+footer{
+}

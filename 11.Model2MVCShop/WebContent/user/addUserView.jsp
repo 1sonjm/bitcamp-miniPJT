@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 <!--  ///////////////////////// Font ////////////////////////// -->
-<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet" href="/css/theme.min.css" >
@@ -170,8 +170,8 @@
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
+
 	<div class="container">
-	
 		<h1 class="bg-primary text-center">회 원 가 입</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
@@ -267,6 +267,10 @@
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
+	
+<!-- Footer Start /////////////////////////////////////-->
+<jsp:include page="/layout/footer.jsp" />
+<!-- Footer End /////////////////////////////////////-->
 </body>
 
 </html>

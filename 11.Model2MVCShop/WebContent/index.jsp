@@ -6,9 +6,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- ///////////////////////////// 로그인시 Forward  /////////////////////////////////////// -->
+<%-- 
  <c:if test="${ ! empty user }">
  	<jsp:forward page="main.jsp"/>
  </c:if>
+  --%>
  <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 
@@ -23,7 +25,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 <!--  ///////////////////////// Font ////////////////////////// -->
-<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="/css/theme.min.css" >

@@ -9,13 +9,13 @@
 <head>
 <meta charset="EUC-KR">
 	
-<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+<!-- 참조 : http://getbootstrap.com/css/	 참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!--  ///////////////////////// Font ////////////////////////// -->
-<link href="https://fonts.googleapis.com/css?family=Advent+Pro|Syncopate" rel="stylesheet">
+<!--	///////////////////////// Font ////////////////////////// -->
+<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<!--	///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet" href="/css/theme.min.css" >
 <link rel="stylesheet" href="/css/custom-theme.css" >
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -45,11 +45,11 @@
 	}
 </style>
 
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<!--	///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 	function fncGetList(currentPage) {
 		$("#currentPage").val(currentPage);
-		$("form").submit();
+		$('form').attr('method','post').attr('action','/product/listProduct?menu=${param.menu}').submit();
 	}
 	
 	$(function(){
@@ -75,7 +75,7 @@
 		});
 		
 		
-		$('input[name="viewSoldItem"], button:contains("검색")').on('click',function(){
+		$('input[name="viewSoldItem"], button.btn-info:contains("검색")').on('click',function(){
 			$('#currentPage').val(1);
 			$('form').submit();
 		});
@@ -186,65 +186,67 @@
 <body>
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
-	<!-- ToolBar End   /////////////////////////////////////-->
+	<!-- ToolBar End	 /////////////////////////////////////-->
 
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+<!--	화면구성 div Start /////////////////////////////////////-->
+
+<div class="container">
+	<div class="page-header text-info">
+		 <h3>물품목록조회</h3>
+	</div>
 	
-		<div class="page-header text-info">
-	       <h3>물품목록조회</h3>
-	    </div>
-	    <form name="detailForm" action="/product/listProduct?menu=${param.menu}" method="post" >
-	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-			<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
-			<input type="hidden" id="SortingTarget" name="SortingTarget" value="${empty search.sortingTarget?'':search.sortingTarget}">
-			<input type="hidden" id="SortingDESC" name="SortingDESC" value="${search.sortingDESC}">
-			<div class="row">
-				<div class="col-md-4 text-left">
-					<p class="text-primary">
-					전체 <kbd>${resultPage.totalCount}</kbd> 건수, 현재 <kbd>${search.currentPage}</kbd> 페이지
-					</p>
-				</div>
-				<div class="col-md-8 text-right">
-					<div id="serchMenu">
-						<h3>물품 검색</h3>
-						<div>
-							<div class="form-inline pull-right">
-								<div class="form-group" id="keywordPlace">
-									<c:if test='${param.menu=="manage"}'>
-										<label for="default" class="btn btn-default">구매물품 보기
-											<input type="checkbox" id="default" class="badgebox" name="viewSoldItem" ${search.viewSoldItem?'checked':''}>
-										</label>
-									</c:if>
-									<select name="searchCondition" class="form-control">
-										<c:if test='${param.menu=="manage"}'>
-											<option value="0" ${search.searchCondition=="0" ? "selected" : ""}>상품번호</option>
-										</c:if>
-										<option value="1" ${search.searchCondition=="1" ? "selected" : ""}>상품명</option>
-										<option value="2" ${search.searchCondition=="2" ? "selected" : ""}>상품가격</option>
-									</select>
-									<input type="text" class="form-control" name="searchKeyword" placeholder="검색어" value="${search.searchKeyword}">
-								</div>&nbsp;&nbsp;&nbsp;&nbsp;
-								<div class="form-group" id="chkValue">
-									<label for="searchValueLow">가격비교</label>
-									<input type="text" class="form-control" name="searchValueLow" style="width: 100px;"
-											value="${empty search.searchValueLow?'0':search.searchValueLow}">
-									<label for="searchValueHigh">~</label>
-									<input type="text" class="form-control" name="searchValueHigh" style="width: 100px;"
-											value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
-									<!-- seekbar자료 : http://stackoverflow.com/questions/27060099/seekbar-with-range-of-two-values-min-and-max -->
-								</div>
-								<button class="btn btn-default">검색</button>
-							</div>
+	<form>
+	
+		<!-- 검색 Start /////////////////////////////////////-->
+		<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
+		<input type="hidden" id="SortingTarget" name="SortingTarget" value="${empty search.sortingTarget?'':search.sortingTarget}">
+		<input type="hidden" id="SortingDESC" name="SortingDESC" value="${search.sortingDESC}">
+		<div class="row">
+			<div class="col-md-4 text-left">
+				<p class="text-primary">
+				전체 <kbd>${resultPage.totalCount}</kbd> 건수, 현재 <kbd>${search.currentPage}</kbd> 페이지
+				</p>
+			</div>
+			<div class="col-md-8 text-right">
+				<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#searchFrame">조건 검색</button>
+				<div id="searchFrame" class="collapse">
+					<div class="card card-block">
+					<div class="form-inline pull-right">
+						<div class="form-group" id="keywordPlace">
+							<c:if test='${param.menu=="manage"}'>
+								<label for="default" class="btn btn-default">구매물품 보기
+									<input type="checkbox" id="default" class="badgebox" name="viewSoldItem" ${search.viewSoldItem?'checked':''}>
+								</label>
+							</c:if>
+							<select name="searchCondition" class="form-control">
+								<c:if test='${param.menu=="manage"}'>
+									<option value="0" ${search.searchCondition=="0" ? "selected" : ""}>상품번호</option>
+								</c:if>
+								<option value="1" ${search.searchCondition=="1" ? "selected" : ""}>상품명</option>
+								<option value="2" ${search.searchCondition=="2" ? "selected" : ""}>상품가격</option>
+							</select>
+							<input type="text" class="form-control" name="searchKeyword" placeholder="검색어" value="${search.searchKeyword}">
+						</div>&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="form-group" id="chkValue">
+							<label for="searchValueLow">가격비교</label>
+							<input type="text" class="form-control" name="searchValueLow" style="width: 100px;"
+									value="${empty search.searchValueLow?'0':search.searchValueLow}">
+							<label for="searchValueHigh">~</label>
+							<input type="text" class="form-control" name="searchValueHigh" style="width: 100px;"
+									value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
+							<!-- seekbar자료 : http://stackoverflow.com/questions/27060099/seekbar-with-range-of-two-values-min-and-max -->
 						</div>
+						<button class="btn btn-default">검색</button>
 					</div>
 				</div>
+				</div>
 			</div>
-			</form>
-			<!-- table 위쪽 검색 end /////////////////////////////////////-->
+		</div>
+		</form>
+		<!--	검색 end /////////////////////////////////////-->
 		
 		
-	<!--  table Start /////////////////////////////////////-->
+	<!--	table Start /////////////////////////////////////-->
 	<table class="table table-hover table-striped" >
 		<thead>
 		<tr>
@@ -308,16 +310,19 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	<!--  table End /////////////////////////////////////-->
-	
-	</div>
-	<!--  화면구성 div End /////////////////////////////////////-->
+	<!--	table End /////////////////////////////////////-->
 	
 	
 	<!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator.jsp"/>
 	<!-- PageNavigation End... -->
-	
+</div>
+
+<!--	화면구성 div End /////////////////////////////////////-->
+
+<!-- Footer Start /////////////////////////////////////-->
+<jsp:include page="/layout/footer.jsp" />
+<!-- Footer End /////////////////////////////////////-->
 </body>
 
 </html>
