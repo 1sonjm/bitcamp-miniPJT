@@ -41,12 +41,11 @@
 	
 	<select  id="getProductListAll" parameterType="map" resultMap="productSelectMap">
 		SELECT DISTINCT p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day
-										, p.price, p.image_file, p.reg_date, p.prod_stock
-										,CASE MAX(t.tran_status_code)
-											WHEN '0' THEN '구매완료'
-											WHEN '1' THEN '배송중'
-											WHEN '2' THEN '배송완료'
-											ELSE '판매중' END AS tran_status_code
+			, p.price, p.image_file, p.reg_date, p.prod_stock
+			,CASE WHEN t.tran_status_code ='0' THEN '구매완료'
+				WHEN t.tran_status_code ='1' THEN '배송중'
+				WHEN t.tran_status_code ='2' THEN '배송완료'
+				ELSE '판매중' END AS tran_status_code
 		FROM product p, transaction t
 		WHERE p.prod_no = t.prod_no(+)
 		<if test="searchCondition != null">
@@ -66,9 +65,6 @@
 			AND t.tran_status_code = '0'
 		</if>
 		
-		GROUP BY p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day
-					, p.price, p.image_file, p.reg_date, p.prod_stock
-					
 		ORDER BY 
 		<if test="sortingTarget != null">
 			<choose>
@@ -85,14 +81,13 @@
 		SELECT *
 		FROM ( SELECT inner_table.* , ROWNUM AS row_seq
 			FROM ( SELECT DISTINCT p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day
-										, p.price, p.image_file, p.reg_date, p.prod_stock
-										,CASE MAX(t.tran_status_code)
-											WHEN '0' THEN '구매완료'
-											WHEN '1' THEN '배송중'
-											WHEN '2' THEN '배송완료'
-											ELSE '판매중' END AS tran_status_code
-						FROM product p, transaction t
-						WHERE p.prod_no = t.prod_no(+)
+				, p.price, p.image_file, p.reg_date, p.prod_stock
+				,CASE WHEN t.tran_status_code ='0' THEN '구매완료'
+					WHEN t.tran_status_code ='1' THEN '배송중'
+					WHEN t.tran_status_code ='2' THEN '배송완료'
+					ELSE '판매중' END AS tran_status_code
+				FROM product p, transaction t
+				WHERE p.prod_no = t.prod_no(+)
 				<if test="searchCondition != null">
 					<choose>
 						<when test="searchCondition == 0 and searchKeyword !=''">AND p.prod_no = #{searchKeyword}</when>
@@ -109,9 +104,7 @@
 				<if test="viewSoldItem">
 					AND t.tran_status_code = '0'
 				</if>
-				GROUP BY p.prod_no, p.prod_name, p.prod_detail, p.manufacture_day
-					, p.price, p.image_file, p.reg_date, p.prod_stock
-					
+				
 				ORDER BY 
 				<if test="sortingTarget != null">
 					<choose>

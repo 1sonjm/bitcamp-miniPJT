@@ -5,65 +5,11 @@ body{
 body h1{
 	color: #FFF3CF;
 }
-.btn-default{
-
-}
-
 b{
 	color: #A57356;
 	font-size: 20px;
 }
 
-/* CUSTOM THE BUTTON COLOR : btn-copper*/
-.btn-copper { 
-	color: #ffffff; 
-	background-color: #9E785F; 
-	border-color: #947F6C; 
-} 
- 
-.btn-copper:hover, 
-.btn-copper:focus, 
-.btn-copper:active, 
-.btn-copper.active, 
-.open .dropdown-toggle.btn-copper { 
-	color: #ffffff; 
-	background-color: #587868; 
-	border-color: #947F6C; 
-} 
- 
-.btn-copper:active, 
-.btn-copper.active, 
-.open .dropdown-toggle.btn-copper { 
-	background-image: none; 
-} 
- 
-.btn-copper.disabled, 
-.btn-copper[disabled], 
-fieldset[disabled] .btn-copper, 
-.btn-copper.disabled:hover, 
-.btn-copper[disabled]:hover, 
-fieldset[disabled] .btn-copper:hover, 
-.btn-copper.disabled:focus, 
-.btn-copper[disabled]:focus, 
-fieldset[disabled] .btn-copper:focus, 
-.btn-copper.disabled:active, 
-.btn-copper[disabled]:active, 
-fieldset[disabled] .btn-copper:active, 
-.btn-copper.disabled.active, 
-.btn-copper[disabled].active, 
-fieldset[disabled] .btn-copper.active { 
-	background-color: #9E785F; 
-	border-color: #947F6C; 
-} 
- 
-.btn-copper .badge { 
-	color: #9E785F; 
-	background-color: #ffffff; 
-}
-
-.navbar{
-	margin-bottom: 0px;
-}
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 

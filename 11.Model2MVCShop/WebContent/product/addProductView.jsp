@@ -129,7 +129,7 @@
 			<div class="form-group">
 				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
 				<div class="col-sm-4">
-					<div class="input-group" style="z-index: -1;">
+					<div class="input-group">
 						<input type="text" class="form-control" name="price" maxlength="5">
 						<div class="input-group-addon">원</div>
 					</div>
@@ -139,7 +139,7 @@
 			<div class="form-group">
 				<label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 				<div class="col-sm-4">
-					<input	type="file" class="form-control" name="fileName"/>
+					<input type="file" class="form-control" name="fileName" multiple accept="image/jpg,image/jpeg,image/png">
 				</div>
 			</div>
 			

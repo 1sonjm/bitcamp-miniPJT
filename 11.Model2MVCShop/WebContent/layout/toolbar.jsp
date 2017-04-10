@@ -4,6 +4,31 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!--  ///////////////////////// JavaScript ////////////////////////// -->
+<script type="text/javascript">
+//autocomplte 동적 생성
+$( function() {
+	var searchProductItems = [];
+	$(document).ready(function(){
+		$.ajax("/product/getJsonListProduct",{
+			method:"GET",
+			dataType:"json",
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success: function(JSONData){
+				for(var i=0;i<JSONData.productList.length;i++){
+					searchProductItems.push(JSONData.productList[i].prodName);
+				}
+			}
+		});
+	});
+	$( 'input[name="searchKeyword"]' ).autocomplete({
+		source: searchProductItems
+	});
+});
+</script>
 
 <!-- ToolBar Start /////////////////////////////////////-->
 <nav>
@@ -20,8 +45,8 @@
 			</a>
 		</div>
 		<div class="navbar-collapse collapse navbar-inverse-collapse">
-			<form class="navbar-form navbar-left">
-					<input type="text" class="form-control col-lg-8" placeholder="Search">
+			<form class="navbar-form navbar-left" action="/product/listProduct?menu=search&searchOption=1" method="post">
+					<input type="text" class="form-control col-lg-8" placeholder="ProductName" name="searchKeyword">
 			</form>
 			<ul class="nav navbar-nav navbar-right">
 				<c:if test="${user.role=='user'}">

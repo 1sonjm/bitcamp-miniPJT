@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
 
 <!--	///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/theme.min.css" >
 <link rel="stylesheet" href="/css/custom-theme.css" >
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -49,26 +50,26 @@
 <script type="text/javascript">
 	function fncGetList(currentPage) {
 		$("#currentPage").val(currentPage);
-		$('form').attr('method','post').attr('action','/product/listProduct?menu=${param.menu}').submit();
+		$('form').submit();
 	}
 	
 	$(function(){
-		$('.table.table-hover.table-striped:contains("상품명") a:contains("↓")').on('click',function(){
+		$('.glyphicon.glyphicon-sort-by-alphabet-alt').on('click',function(){
 			$('#SortingTarget').val('prodName');
 			$('#SortingDESC').val('1');
 			$('form').submit();
 		});
-		$('.table.table-hover.table-striped:contains("상품명") a:contains("↑")').on('click',function(){
+		$('.glyphicon.glyphicon-sort-by-alphabet').on('click',function(){
 			$('#SortingTarget').val('prodName');
 			$('#SortingDESC').val('0');
 			$('form').submit();
 		});
-		$('.table.table-hover.table-striped:contains("가격") a:contains("↓")').on('click',function(){
+		$('.glyphicon.glyphicon-sort-by-order-alt').on('click',function(){
 			$('#SortingTarget').val('price');
 			$('#SortingDESC').val('1');
 			$('form').submit();
 		});
-		$('.table.table-hover.table-striped:contains("가격") a:contains("↑")').on('click',function(){
+		$('.glyphicon.glyphicon-sort-by-order').on('click',function(){
 			$('#SortingTarget').val('price');
 			$('#SortingDESC').val('0');
 			$('form').submit();
@@ -79,10 +80,10 @@
 			$('#currentPage').val(1);
 			$('form').submit();
 		});
-		$('.prodItem .updateProduct').css("color" , "red").on('click',function(){
+		$('.prodItem .updateProduct').on('click',function(){
 			self.location ="/product/updateProductView?prodNo="+$(this).attr('sendValue');
 		});
-		$('.prodItem .getProduct').css("color" , "red").on('click',function(){
+		$('.prodItem .getProduct').on('click',function(){
 			self.location ="/product/getProduct?prodNo="+$(this).attr('sendValue');
 		});
 		$('.prodItem a[sendValue]:contains("배송하기")').on('click',function(){
@@ -96,7 +97,7 @@
 			active: false
 		});
 	});
-	/*
+	
 	$( function(){
 		$( document ).tooltip({
 			items: "[prodImg]",
@@ -107,7 +108,7 @@
 			}
 		});
 	});
-	*/
+	
 	//autocomplte 동적 생성
 	$( function() {
 		var searchKeywordItems = [];
@@ -146,8 +147,8 @@
 	
 	//제품 정보 보기
 	$(function(){
-		$( ".prodItem td:nth-child(1)" ).on("dblclick" , function() {
-			var prodNo = $(this).parent().attr('sendValue');
+		$( ".glyphicon.glyphicon-info-sign" ).on("click" , function() {
+			var prodNo = $(this).parents('tr').attr('sendValue');
 			//alert(prodNo);
 			$.ajax("/product/getJsonProduct/"+prodNo,{
 				method : "GET" ,
@@ -158,26 +159,21 @@
 				}, */
 				success : function(JSONData , status) {
 					//alert( "JSON.stringify(JSONData) : \n"+JSON.stringify(JSONData) );
-					
-					var displayValue = '<div class="productContent">'
-											+'<div class="col-sm-6 col-md-4">'
-												+'<div class="thumbnail">'
-													+'<img src="/images/uploadFiles/'+JSONData.product.fileName+'">'
-													+'<div class="caption">'
-														+'<h3>'+JSONData.product.prodName+'</h3>'
-														+'<p>'+JSONData.product.prodDetail+'<br/>등록일:'+JSONData.product.regDate+'</p>'
-														+'<p><a id="buyProduct" class="btn btn-primary" role="button" sendValue="'+JSONData.product.prodNo+'">구매</a></p>'
-													+'</div>'
-												+'</div>'
-											+'</div>'
-										'</div>'
-					$('div.productContent').remove();
-					$( "#"+prodNo ).html(displayValue);
+					$( '.modal-title' ).html(JSONData.product.prodName);
+					$( '.modal-body' ).html(
+						'<img width="250px" src="/images/uploadFiles/'+JSONData.product.fileName+'">'
+						+'<div class="caption">'
+							+'<p>'+JSONData.product.prodDetail+'<br/>등록일:'+JSONData.product.regDate+'</p>'
+						+'</div>'
+					);
+					$( '.modal-footer' ).html(
+						'<a id="buyProduct" class="btn btn-primary" role="button" sendValue="'+JSONData.product.prodNo+'">구매</a>'
+						+'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
+					);
 				}
 			});
 		});
 		$(document).on('click', '#buyProduct', function(){
-			alert("/product/updateProductView?prodNo="+$(this).attr('sendValue'));
 			self.location ="/product/updateProductView?prodNo="+$('#buyProduct').attr('sendValue');
 		});
 	});
@@ -195,7 +191,7 @@
 		 <h3>물품목록조회</h3>
 	</div>
 	
-	<form>
+	<form method="post" action="/product/listProduct?menu=${param.menu}">
 	
 		<!-- 검색 Start /////////////////////////////////////-->
 		<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
@@ -220,7 +216,7 @@
 							</c:if>
 							<select name="searchCondition" class="form-control">
 								<c:if test='${param.menu=="manage"}'>
-									<option value="0" ${search.searchCondition=="0" ? "selected" : ""}>상품번호</option>
+									<option value="0" ${search.sortingTarget=="0" ? "selected" : ""}>상품번호</option>
 								</c:if>
 								<option value="1" ${search.searchCondition=="1" ? "selected" : ""}>상품명</option>
 								<option value="2" ${search.searchCondition=="2" ? "selected" : ""}>상품가격</option>
@@ -255,18 +251,27 @@
 				<td>사진</td>
 			</c:if>
 			<td>상품명
-				<a>↓</a>
-				<a>↑</a>
+				<c:if test="${search.sortingDESC}">
+					<span class="glyphicon glyphicon-sort-by-alphabet" aria-hidden="true"></span>
+				</c:if>
+				<c:if test="${!search.sortingDESC}">
+					<span class="glyphicon glyphicon-sort-by-alphabet-alt" aria-hidden="true"></span>
+				</c:if>
 			</td>
 			<td>가격
-				<a>↓</a>
-				<a>↑</a>
+				<c:if test="${search.sortingDESC}">
+					<span class="glyphicon glyphicon-sort-by-order" aria-hidden="true"></span>
+				</c:if>
+				<c:if test="${!search.sortingDESC}">
+					<span class="glyphicon glyphicon-sort-by-order-alt" aria-hidden="true"></span>
+				</c:if>
 			</td>
 			<td>재고</td>
 			<c:if test='${param.menu=="manage"}'>
 				<td>등록일</td>
 			</c:if>
 			<td>현재상태</td>
+			<td>간략 정보보기</td>
 		</tr>
 	</thead>
 		<tbody>
@@ -305,12 +310,35 @@
 						<a sendValue="${product.prodNo}">배송하기</a>
 					</c:if>
 				</td>
-				<td id="${product.prodNo}" colspan="10" height="1"></td>
+				<td><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+				</td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
 	<!--	table End /////////////////////////////////////-->
+	
+	
+	<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-sm">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Modal Header</h4>
+			</div>
+			<div class="modal-body">
+				
+			</div>
+			<div class="modal-footer">
+			
+			</div>
+		</div>
+
+	</div>
+</div>
 	
 	
 	<!-- PageNavigation Start... -->

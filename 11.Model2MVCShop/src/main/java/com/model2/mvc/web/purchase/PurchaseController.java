@@ -93,7 +93,7 @@ public class PurchaseController {
 	public void getJsonPurchase(@PathVariable int tranNo
 								,Model model
 								) throws Exception{
-		
+		System.out.println("???");
 		model.addAttribute("purchase",purchaseService.getPurchase(tranNo));
 	}
 
@@ -179,6 +179,7 @@ public class PurchaseController {
 
 	@RequestMapping(value="listSales")
 	public ModelAndView listSales(@ModelAttribute("search")Search search
+									,HttpSession session
 									) throws Exception{
 		
 		if(search.getCurrentPage()==0){
@@ -186,6 +187,7 @@ public class PurchaseController {
 		}
 		search.setPageSize(pageSize);
 		
+		User user = (User)session.getAttribute("user");
 		Map<String, Object> map = purchaseService.getSalesList(search);
 		Page resultPage = new Page(search.getCurrentPage()
 				, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);

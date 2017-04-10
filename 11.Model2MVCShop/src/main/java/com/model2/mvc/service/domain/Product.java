@@ -2,6 +2,7 @@ package com.model2.mvc.service.domain;
 
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.web.multipart.MultipartFile;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
