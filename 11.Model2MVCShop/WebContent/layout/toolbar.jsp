@@ -1,8 +1,9 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
@@ -27,6 +28,12 @@ $( function() {
 	$( 'input[name="searchKeyword"]' ).autocomplete({
 		source: searchProductItems
 	});
+	$('input[name="searchKeyword"]').keydown(function (key) {
+				if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+					$('form').attr('action','/product/listProduct?menu=search&searchCondition=1').attr('method','post').submit();
+				}
+		});
+
 });
 </script>
 
@@ -45,7 +52,7 @@ $( function() {
 			</a>
 		</div>
 		<div class="navbar-collapse collapse navbar-inverse-collapse">
-			<form class="navbar-form navbar-left" action="/product/listProduct?menu=search&searchOption=1" method="post">
+			<form class="navbar-form navbar-left">
 					<input type="text" class="form-control col-lg-8" placeholder="ProductName" name="searchKeyword">
 			</form>
 			<ul class="nav navbar-nav navbar-right">

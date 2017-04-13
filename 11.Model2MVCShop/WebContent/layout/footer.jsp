@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,7 +20,7 @@
                 </ul>
             </div>
           	<div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footer-body">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#footer-body" type="button">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>

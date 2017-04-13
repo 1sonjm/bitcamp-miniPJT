@@ -36,32 +36,45 @@
 <!-- jQuery UI JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- rateYo! Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+<!-- rateYo! Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+
 <!-- Bootstrap custom Theme-->
 <link rel="stylesheet" href="/css/custom-theme.css" >
 
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
-
 <script type="text/javascript">
 $(function(){
-	$('button:contains("등록")').on('click',function(){
-		$('form').attr('action','/review/addReview/${purchase.tranNo}').submit();
+	$('button:contains("등록")').on('click',function(){		
+		//$('form').attr('action','/review/addReview/${purchase.tranNo}').submit();
 	});
 	$('button:contains("취소")').on('click',function(){
 		$('form')[0].reset();
+	});
+});
+
+//rateYo!
+$(function () {
+	$("#rateYo").rateYo({
+		rating: 3,
+		starWidth: "40px",
+		fullStar: true,
+		onSet: function (rating, rateYoInstance) {
+			$('input[name="grade"]').val(rating);
+		}
 	});
 });
 </script>
 </head>
 
 <body>
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/layout/toolbar.jsp" />
 <!-- ToolBar End   /////////////////////////////////////-->
-
 <!--  화면구성 div Start /////////////////////////////////////-->
 <div class="container">
+
 <form name="detailForm" method="post">
 <table class="table">
 	<tr>
@@ -72,7 +85,10 @@ $(function(){
 	<tr>
 		<td>${purchase.purchaseProd.prodName}</td>
 		<td>${user.userId}</td>
-		<td><input type="text" class="form-control" size="3" maxlength="1" name="grade"/></td>
+		<td>
+			<div id="rateYo"></div>
+			<input type="hidden" name="grade"/>
+		</td>
 	</tr>
 	<tr>
 		<td>제목</td>
@@ -89,8 +105,8 @@ $(function(){
 </table>
 </form>
 
-<button class="btn btn-default">등록</button>
-<button class="btn btn-default">취소</button>
+<button type="button" class="btn btn-default">등록</button>
+<button type="button" class="btn btn-default">취소</button>
 </div>
 <!--  화면구성 div End /////////////////////////////////////-->
 

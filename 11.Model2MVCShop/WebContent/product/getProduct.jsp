@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -121,11 +120,11 @@
 		
 		<div class="row">
 				<div class="col-md-12 text-center">
-					<c:if test='${product.prodStock!=0 || !empty user}'>
-						<button class="btn btn-default">구매</button>	
+					<c:if test="${product.prodStock!=0 || user.role=='user'}">
+						<button class="btn btn-default" type="button">구매</button>	
 					</c:if>
 					
-					<button class="btn btn-default">이전</button>
+					<button class="btn btn-default" type="button">이전</button>
 				</div>
 		</div>
 		
@@ -167,7 +166,7 @@
 			var answerForm = '<div name="answerForm">'
 											+'답변 제목<input type="text" class="form-control" name="answerTitle"><br/>'
 											+'답변내용<br/><textarea name="answerContent" rows="4" cols="50"></textarea>'
-											+'<button class="btn btn-default" name="answerApply">작성</button></div>';
+											+'<button class="btn btn-default" name="answerApply" type="button">작성</button></div>';
 			$(this).parent().html(answerForm);
 		});
 		$(document).on('click','button[name=answerApply]',function(){
@@ -215,7 +214,7 @@
 					<td>${review.regDate}</td>
 					<td>
 					<c:if test="${empty review.answerTitle && user.role=='admin'}">
-						<button class="btn btn-default" id="answer${review.reviewNo}">답변등록</button>
+						<button type="button" class="btn btn-default" id="answer${review.reviewNo}">답변등록</button>
 					</c:if>
 					</td>
 				</tr>

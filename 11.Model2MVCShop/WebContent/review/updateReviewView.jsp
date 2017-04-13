@@ -36,6 +36,11 @@
 <!-- jQuery UI JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- rateYo! Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+<!-- rateYo! Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+
 <!-- Bootstrap custom Theme-->
 <link rel="stylesheet" href="/css/custom-theme.css" >
 
@@ -48,6 +53,18 @@ $(function(){
 	});
 	$('button:contains("취소")').on('click',function(){
 		$('form')[0].reset();
+	});
+});
+
+//rateYo!
+$(function () {
+	$("#rateYo").rateYo({
+		rating: "${review.grade}",
+		starWidth: "40px",
+		fullStar: true,
+		onSet: function (rating, rateYoInstance) {
+			$('input[name="grade"]').val(rating);
+		}
 	});
 });
 </script>
@@ -72,7 +89,10 @@ $(function(){
 	<tr>
 		<td>${review.purchaseItem.prodName}</td>
 		<td>${review.buyer.userId}</td>
-		<td><input type="text" size="3" maxlength="1" name="grade" class="form-control" value="${review.grade}"/></td>
+		<td>
+			<div id="rateYo"></div>
+			<input type="hidden" name="grade"/>
+		</td>
 		<td>${review.regDate}</td>
 	</tr>
 	<tr>
@@ -89,8 +109,8 @@ $(function(){
 	</tr>
 </table>
 
-<button class="btn btn-default">등록</button>
-<button class="btn btn-default">취소</button>
+<button type="button" class="btn btn-default">등록</button>
+<button type="button" class="btn btn-default">취소</button>
 
 </form>
 

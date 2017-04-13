@@ -50,9 +50,6 @@ public class ProductController {
 	public String addProduct(@ModelAttribute("product")Product product
 							,HttpSession session
 							) throws Exception{
-		product.setManuDate(product.getManuDate().replace("-", ""));
-		
-		
 		
 		MultipartFile uploadfile = product.getUploadFile();
 		if (uploadfile != null) {
@@ -62,7 +59,8 @@ public class ProductController {
 			File file = new File(session.getServletContext().getRealPath("/")
 								+"images/uploadFiles/" + fileName);
 			uploadfile.transferTo(file);
-		}
+		}		
+		System.out.println("#"+product);
 		
 		productService.addProduct(product);
 		
@@ -117,6 +115,7 @@ public class ProductController {
 	public String listProduct(@ModelAttribute("search")Search search
 							,@RequestParam(value="viewSoldItem", defaultValue="off")String viewSoldItem
 							,Model model)throws Exception{
+
 		if(viewSoldItem.equals("on")){
 			search.setViewSoldItem(true);
 		}

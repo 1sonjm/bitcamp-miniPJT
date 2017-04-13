@@ -36,9 +36,15 @@
 <!-- jQuery UI JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- rateYo! Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+<!-- rateYo! Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
+
 <!-- Bootstrap custom Theme-->
 <link rel="stylesheet" href="/css/custom-theme.css" >
 
+<script type="text/javascript" src="/javascript/starRating.js"></script>
 <script type="text/javascript">
 $(function(){
 	$('button:contains("답변등록/수정")').on('click',function(){
@@ -52,11 +58,19 @@ $(function(){
 		history.back(1);
 	});
 });
+
+//rateYo!
+$(function () {
+	$('#rateYo').rateYo({
+		rating: "${review.grade}",
+		starWidth: "40px",
+		readOnly: true
+	});
+});
 </script>
 <title>Insert title here</title> 
 </head>
 <body>
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/layout/toolbar.jsp" />
 <!-- ToolBar End   /////////////////////////////////////-->
@@ -76,7 +90,7 @@ $(function(){
 	<div class="row">
 		<div class="col-xs-2 col-md-3">${review.purchaseItem.prodName}</div>
 		<div class="col-xs-2 col-md-3">${review.buyer.userId}</div>
-		<div class="col-xs-2 col-md-3">${review.grade}</div>
+		<div class="col-xs-2 col-md-3"><div id="rateYo"></div></div>
 		<div class="col-xs-2 col-md-3">${review.regDate}</div>
 	</div>
 	<hr/>
@@ -110,12 +124,12 @@ $(function(){
 	<div class="form-group">
 		<div class="col-sm-offset-4	col-sm-4 text-center">
 			<c:if test='${user.role=="admin"}'>
-				<button class="btn btn-default">답변등록/수정</button>
+				<button type="button" class="btn btn-default">답변등록/수정</button>
 			</c:if>
 			<c:if test='${user.role=="user" && empty review.answerTitle}'>
-				<button class="btn btn-default">후기수정</button>
+				<button type="button" class="btn btn-default">후기수정</button>
 			</c:if>
-			<button class="btn btn-default">이전</button>
+			<button type="button" class="btn btn-default">이전</button>
 		</div>
 	</div>
 

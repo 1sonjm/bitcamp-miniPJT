@@ -1,5 +1,4 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -34,6 +33,11 @@
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- jQEditRangeSlider 사용 import-->
+<link rel="stylesheet" href="/css/jQRangeSlider-classic.css" type="text/css" />
+<script src="/javascript/jQEditRangeSlider-min.js"></script>
+<script src="/javascript/jquery.mousewheel.min.js"></script>
+	
 <style>
 	.popupImg{
 		width: 350px;
@@ -76,10 +80,6 @@
 		});
 		
 		
-		$('input[name="viewSoldItem"], button.btn-info:contains("검색")').on('click',function(){
-			$('#currentPage').val(1);
-			$('form').submit();
-		});
 		$('.prodItem .updateProduct').on('click',function(){
 			self.location ="/product/updateProductView?prodNo="+$(this).attr('sendValue');
 		});
@@ -109,41 +109,7 @@
 		});
 	});
 	
-	//autocomplte 동적 생성
-	$( function() {
-		var searchKeywordItems = [];
-		$(document).ready(function(){
-			getListProduct();
-		});
-		$('select[name="searchCondition"]').change(function(){
-			getListProduct()
-		})
-		
-		function getListProduct(){
-			$.ajax("/product/getJsonListProduct",{
-				method:"GET",
-				dataType:"json",
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				data:{
-					searchCondition:$('input[name="searchCondition"]').val(),
-					searchKeyword:$('input[name="searchKeyword"]').val(),
-					searchValueLow:$('input[name="searchValueLow"]').val(),
-					searchValueHigh:$('input[name="searchValueHigh"]').val()
-				},
-				success: function(JSONData){
-					for(var i=0;i<JSONData.productList.length;i++){
-						searchKeywordItems.push(JSONData.productList[i].prodName);
-					}
-				}
-			});
-		}
-		$( 'input[name="searchKeyword"]' ).autocomplete({
-			source: searchKeywordItems
-		});
-	});
+	
 	
 	//제품 정보 보기
 	$(function(){
@@ -167,14 +133,14 @@
 						+'</div>'
 					);
 					$( '.modal-footer' ).html(
-						'<a id="buyProduct" class="btn btn-primary" role="button" sendValue="'+JSONData.product.prodNo+'">구매</a>'
+						'<a id="productInfo" class="btn btn-primary" role="button" sendValue="'+JSONData.product.prodNo+'">상세정보</a>'
 						+'<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>'
 					);
 				}
 			});
 		});
-		$(document).on('click', '#buyProduct', function(){
-			self.location ="/product/updateProductView?prodNo="+$('#buyProduct').attr('sendValue');
+		$(document).on('click', '#productInfo', function(){
+			self.location ="/product/getProduct?prodNo="+$('#productInfo').attr('sendValue');
 		});
 	});
 </script>
@@ -184,14 +150,15 @@
 	<jsp:include page="/layout/toolbar.jsp" />
 	<!-- ToolBar End	 /////////////////////////////////////-->
 
-<!--	화면구성 div Start /////////////////////////////////////-->
 
+<!--	화면구성 div Start /////////////////////////////////////-->
 <div class="container">
 	<div class="page-header text-info">
 		 <h3>물품목록조회</h3>
 	</div>
 	
 	<form method="post" action="/product/listProduct?menu=${param.menu}">
+							
 	
 		<!-- 검색 Start /////////////////////////////////////-->
 		<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
@@ -204,7 +171,8 @@
 				</p>
 			</div>
 			<div class="col-md-8 text-right">
-				<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#searchFrame">조건 검색</button>
+				<div>1000원 단위로 입력<div id="slider"></div></div>
+				<button type="button" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#searchFrame">조건 검색</button>
 				<div id="searchFrame" class="collapse">
 					<div class="card card-block">
 					<div class="form-inline pull-right">
@@ -224,15 +192,10 @@
 							<input type="text" class="form-control" name="searchKeyword" placeholder="검색어" value="${search.searchKeyword}">
 						</div>&nbsp;&nbsp;&nbsp;&nbsp;
 						<div class="form-group" id="chkValue">
-							<label for="searchValueLow">가격비교</label>
-							<input type="text" class="form-control" name="searchValueLow" style="width: 100px;"
-									value="${empty search.searchValueLow?'0':search.searchValueLow}">
-							<label for="searchValueHigh">~</label>
-							<input type="text" class="form-control" name="searchValueHigh" style="width: 100px;"
-									value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
-							<!-- seekbar자료 : http://stackoverflow.com/questions/27060099/seekbar-with-range-of-two-values-min-and-max -->
+							<input type="text" name="searchValueLow" value="${empty search.searchValueLow?'0':search.searchValueLow}">
+							<input type="text" name="searchValueHigh" value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
 						</div>
-						<button class="btn btn-default">검색</button>
+						<button type="button" class="btn btn-default">검색</button>
 					</div>
 				</div>
 				</div>
@@ -240,7 +203,65 @@
 		</div>
 		</form>
 		<!--	검색 end /////////////////////////////////////-->
-		
+		<!-- 슬라이드 setting js -->
+		<script type="text/javascript">
+			//autocomplte 동적 생성
+			$( function() {
+				var searchKeywordItems = [];
+				$(document).ready(function(){
+					getListProduct();
+				});
+				$('select[name="searchCondition"]').change(function(){
+					getListProduct()
+				})
+				
+				function getListProduct(){
+					$.ajax("/product/getJsonListProduct",{
+						method:"GET",
+						dataType:"json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success: function(JSONData){
+
+							var maxProdPrice = 0;
+							for(var i=0;i<JSONData.productList.length;i++){
+								searchKeywordItems.push(JSONData.productList[i].prodName);
+								var targetValue = JSONData.productList[i].price;
+								if(targetValue>maxProdPrice){
+									maxProdPrice = targetValue;
+								}
+							}
+
+							var minVal = "${empty search.searchValueLow?'0':search.searchValueLow}";
+							var maxVal = "${empty search.searchValueHigh?'0':search.searchValueHigh}";
+							$("#slider").editRangeSlider({
+								bounds:{min: 0, max: maxProdPrice},//제품별 가격 최대치 뽑아넣어주면 동적이지
+								defaultValues:{min: minVal, max: maxVal},
+								wheelMode: "zoom",
+								wheelSpeed: 30,
+								step: 1000,
+							});
+						}
+					});
+				}
+				$( 'input[name="searchKeyword"]' ).autocomplete({
+					source: searchKeywordItems
+				});
+			});
+			
+			$('.btn.btn-default:contains("검색")').on('click',function(){
+				var dateValues = $('#slider').editRangeSlider('values');
+				var min = dateValues.min.toString();
+				var max = dateValues.max.toString();
+				$('input[name="searchValueLow"]').val( min );
+				$('input[name="searchValueHigh"]').val( max );
+				$('#currentPage').val(1);
+				$('form').submit();
+			});
+			
+		</script>
 		
 	<!--	table Start /////////////////////////////////////-->
 	<table class="table table-hover table-striped" >
@@ -282,7 +303,7 @@
 			<tr class="prodItem" sendValue="${product.prodNo}">
 				<td align="center">${i}</td>
 				<c:if test='${param.menu=="search"}'>
-					<td>
+					<td class="soldout-overlay">
 						<img name="${product.fileName}" src="/images/uploadFiles/${product.fileName}"
 							class="ui-corner-all listProdImg" prodImg="${product.fileName}">
 					</td>
@@ -317,7 +338,6 @@
 		</tbody>
 	</table>
 	<!--	table End /////////////////////////////////////-->
-	
 	
 	<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">

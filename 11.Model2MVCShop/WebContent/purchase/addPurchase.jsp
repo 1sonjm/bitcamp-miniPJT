@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -100,8 +100,8 @@ $(function(){
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-4	col-sm-4 text-center">
-				<button class="btn btn-default">목록으로 이동</button>
-				<button class="btn btn-default">주문정보 보기</button>
+				<button type="button" class="btn btn-default">목록으로 이동</button>
+				<button type="button" class="btn btn-default">주문정보 보기</button>
 			</div>
 		</div>
 	</div>

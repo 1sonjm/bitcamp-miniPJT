@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -168,8 +168,8 @@ $(function(){
 		
 		<div class="form-group">
 			<div class="col-sm-offset-4	col-sm-4 text-center">
-				<button class="btn btn-default">备概</button>
-				<button class="btn btn-default">秒家</button>
+				<button type="button" class="btn btn-default">备概</button>
+				<button type="button" class="btn btn-default">秒家</button>
 			</div>
 		</div>
 	</form>

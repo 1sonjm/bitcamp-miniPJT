@@ -105,9 +105,9 @@
 		<div class="row">
 				<div class="col-md-12 text-center">
 					<c:if test="${purchase.buyer.userId == user.userId}">
-						<button class="btn btn-default">수정</button>
+						<button type="button" class="btn btn-default">수정</button>
 					</c:if>	
-					<button class="btn btn-default">이전</button>
+					<button type="button" class="btn btn-default">이전</button>
 				</div>
 		</div>
 	</div>
