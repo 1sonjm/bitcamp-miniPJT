@@ -31,3 +31,11 @@
 >
 * JavaScript Framework인 [jQuery](https://github.com/1sonjm/bitcamp-miniPJT/wiki/Framework#jQuery)를 
 이용하여 jsp의 dynamic content(JavaScript)와 static content(HTML tags)의 coupling을 낮추고 동적 UI구성의 편의성을 높임
+>
+# 10.Model2MVCShop(Ajax)
+>
+* javascript로 구현되던 동적인 화면조차 결국 데이터를 교체하기 위해선 다시 페이지를 로드해야 되는 현상을 개선하기위해 Ajax를 이용
+>
+# 11.Model2MVCShop
+>
+* bootstrap & jQuery UI & ETC CSS api 를 이용하여 UI 개선
