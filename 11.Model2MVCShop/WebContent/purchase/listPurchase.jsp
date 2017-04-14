@@ -66,6 +66,9 @@ $(function(){
 	$('.prodItem td:nth-child(6):contains("배송완료")').css('color','#F8C55F').on('click',function(){
 		self.location="/review/addReviewView/"+$(this).parent().attr('tranNo');
 	});
+	$('.prodItem td:nth-child(6):contains("배송중")').css('color','#F8C55F').on( "click", function() {
+		$( "#deliveryCheck-confirm" ).dialog( "open" );
+	});
 	
 });
 
@@ -82,15 +85,12 @@ $(function(){
 		},
 		buttons: {
 			"네": function() {
-				self.location="/purchase/updateTranCode/${user.role}?tranNo="+$('.prodItem td:nth-child(6):contains("배송중")').attr('tranNo');
+				self.location="/purchase/updateTranCode/${user.role}?tranNo="+$('.prodItem td:nth-child(6):contains("배송중")').parents('tr').attr('tranNo');
 			},
 			"아니요": function() {
 				$( this ).dialog( "close" );
 			}
 		}
-	});
-	$('.ct_list_pop td:nth-child(6):contains("배송중")').on( "click", function() {
-		$( "#deliveryCheck-confirm" ).dialog( "open" );
 	});
 });
 </script>
@@ -143,7 +143,9 @@ $(function(){
 			</tbody>
 		</table>
 		<!--	table End /////////////////////////////////////-->
-	
+	<div id="deliveryCheck-confirm" title="Empty the recycle bin?">
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>물품을 수령하시고 배송완료 하시겠습니까?</p>
+	</div>
 	
 	<!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator.jsp"/>

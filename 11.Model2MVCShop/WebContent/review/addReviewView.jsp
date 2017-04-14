@@ -47,7 +47,7 @@
 <script type="text/javascript">
 $(function(){
 	$('button:contains("등록")').on('click',function(){		
-		//$('form').attr('action','/review/addReview/${purchase.tranNo}').submit();
+		$('form').attr('action','/review/addReview/${purchase.tranNo}').submit();
 	});
 	$('button:contains("취소")').on('click',function(){
 		$('form')[0].reset();

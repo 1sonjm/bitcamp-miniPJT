@@ -192,8 +192,8 @@
 							<input type="text" class="form-control" name="searchKeyword" placeholder="검색어" value="${search.searchKeyword}">
 						</div>&nbsp;&nbsp;&nbsp;&nbsp;
 						<div class="form-group" id="chkValue">
-							<input type="text" name="searchValueLow" value="${empty search.searchValueLow?'0':search.searchValueLow}">
-							<input type="text" name="searchValueHigh" value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
+							<input type="hidden" name="searchValueLow" value="${empty search.searchValueLow?'0':search.searchValueLow}">
+							<input type="hidden" name="searchValueHigh" value="${empty search.searchValueHigh?'0':search.searchValueHigh}">
 						</div>
 						<button type="button" class="btn btn-default">검색</button>
 					</div>
@@ -251,7 +251,7 @@
 				});
 			});
 			
-			$('.btn.btn-default:contains("검색")').on('click',function(){
+			$('input[name="viewSoldItem"], .btn.btn-default:contains("검색")').on('click',function(){
 				var dateValues = $('#slider').editRangeSlider('values');
 				var min = dateValues.min.toString();
 				var max = dateValues.max.toString();
