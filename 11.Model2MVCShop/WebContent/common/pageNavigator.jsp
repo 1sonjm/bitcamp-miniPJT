@@ -24,7 +24,7 @@
 			<c:if test="${resultPage.currentPage > 1 }">
 				<li>
 			</c:if>
-					<a href="javascript:fncGetList('${(resultPage.currentPage-5)<1?1:resultPage.currentPage-5}')" aria-label="Previous">
+					<a targetPage="${(resultPage.currentPage-5)<1?1:resultPage.currentPage-5}" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
@@ -32,12 +32,12 @@
 			<c:forEach var="i" begin="${start}" end="${end}" step="1">
 				<c:if test="${resultPage.currentPage!=i}">
 					<li>
-						<a href="javascript:fncGetList('${i}');">${i}</a>
+						<a targetPage="${i}">${i}</a>
 					</li>
 				</c:if>
 				<c:if test="${resultPage.currentPage==i}">
 					<li class="active">
-						<a href="javascript:fncGetList('${i}');">${i}
+						<a targetPage="${i}">${i}
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
@@ -50,7 +50,7 @@
 			<c:if test="${resultPage.currentPage < resultPage.maxPage}">
 				<li>
 			</c:if>
-					<a href="javascript:fncGetList('${(resultPage.currentPage+5)>resultPage.maxPage ? resultPage.maxPage : resultPage.currentPage+5 }')" aria-label="Next">
+					<a targetPage="${(resultPage.currentPage+5)>resultPage.maxPage ? resultPage.maxPage : resultPage.currentPage+5 }" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>

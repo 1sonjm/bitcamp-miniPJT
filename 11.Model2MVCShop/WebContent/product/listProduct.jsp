@@ -81,13 +81,13 @@
 		
 		
 		$('.prodItem .updateProduct').on('click',function(){
-			self.location ="/product/updateProductView?prodNo="+$(this).attr('sendValue');
+			self.location ="/product/updateProductView?prodNo="+$(this).parents('tr').attr('sendValue');
 		});
 		$('.prodItem .getProduct').on('click',function(){
-			self.location ="/product/getProduct?prodNo="+$(this).attr('sendValue');
+			self.location ="/product/getProduct?prodNo="+$(this).parents('tr').attr('sendValue');
 		});
 		$('.prodItem a[sendValue]:contains("배송하기")').on('click',function(){
-			self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).parent().attr('sendValue');
+			self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).parents('tr').attr('sendValue');
 		});
 	});
 	
@@ -110,7 +110,7 @@
 	});
 	
 	
-	
+
 	//제품 정보 보기
 	$(function(){
 		$( ".glyphicon.glyphicon-info-sign" ).on("click" , function() {
@@ -141,6 +141,54 @@
 		});
 		$(document).on('click', '#productInfo', function(){
 			self.location ="/product/getProduct?prodNo="+$('#productInfo').attr('sendValue');
+		});
+	});
+
+	//제품 목록 호출
+	$(function(){
+		$( ".pagination a" ).on("click" , function() {
+			var page = $(this).attr('targetPage');
+			//alert(page);
+			//$("#currentPage").val(page);
+			$.ajax("/product/listJsonProduct/",{
+				method : "GET" ,
+				dataType : "json" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				data:{
+					currentPage:page,
+					sortingTarget:$('#SortingTarget').val(),
+					sortingDESC:$('#SortingDESC').val(),
+					viewSoldItem:$('[name="viewSoldItem"]').val(),
+					searchCondition:$('[name="searchCondition"]').val(),
+					searchKeyword:$('[name="searchKeyword"]').val(),
+					searchValueLow:$('[name="searchValueLow"]').val(),
+					searchValueHigh:$('[name="searchValueHigh"]').val()
+				},
+				success : function(J , status) {
+					//alert(J.list[0].prodNo+"/"+J.list[1].prodNo+"/"+J.list[2].prodNo);
+					//$( "tbody tr" ).remove();
+					for(var i=0;i<J.list.length;i++){
+						//alert(J.list[i].prodNo);
+						$($('.prodItem')[i]).attr('sendValue',J.list[i].prodNo);
+						$($('.table_index')[i]).html(i+1);
+						$($('.table_price')[i]).html(J.list[i].price);
+						$($('.table_prodStock')[i]).html(J.list[i].prodStock);
+						$($('.table_prodTranCode')[i]).html(J.list[i].prodTranCode);
+						$($('.updateProduct, .getProduct')[i]).html(J.list[i].prodName);
+
+						if('${param.menu=="manage"}'){
+							$($('.table_regDate')[i]).html(J.list[i].regDate);
+						}else{
+							$($('.table_image')[i]).attr('src','/images/uploadFiles/'+J.list[i].fileName)
+							$($('.table_image')[i]).attr('name',J.list[i].fileName)
+							$($('.table_image')[i]).attr('prodImg',J.list[i].fileName);
+						}
+					}
+				}
+			});
 		});
 	});
 </script>
@@ -263,9 +311,9 @@
 			
 		</script>
 		
-	<!--	table Start /////////////////////////////////////-->
-	<table class="table table-hover table-striped" >
-		<thead>
+<!--	table Start /////////////////////////////////////-->
+<table class="table table-hover table-striped" >
+	<thead>
 		<tr>
 			<td>No</td>
 			<c:if test='${param.menu=="search"}'>
@@ -295,49 +343,48 @@
 			<td>간략 정보보기</td>
 		</tr>
 	</thead>
-		<tbody>
-		
-		<c:set var="i" value="0"/>
-		<c:forEach var="product" items="${list}" begin="0" step="1">
-			<c:set var="i" value="${i+1}"/>
-			<tr class="prodItem" sendValue="${product.prodNo}">
-				<td align="center">${i}</td>
-				<c:if test='${param.menu=="search"}'>
-					<td class="soldout-overlay">
-						<img name="${product.fileName}" src="/images/uploadFiles/${product.fileName}"
-							class="ui-corner-all listProdImg" prodImg="${product.fileName}">
-					</td>
-				</c:if>
-				<td align="left">
-					<c:if test='${param.menu=="manage"}'>
-						<span class="updateProduct" sendValue="${product.prodNo}">
-							${product.prodName}
-						</span>
-					</c:if>
-					<c:if test='${param.menu=="search"}'>
-						<span class="getProduct" sendValue="${product.prodNo}">
-							${product.prodName}
-						</span>
-					</c:if>
+	<tbody>
+	<c:set var="i" value="0"/>
+	<c:forEach var="product" items="${list}" begin="0" step="1">
+		<c:set var="i" value="${i+1}"/>
+		<tr class="prodItem" sendValue="${product.prodNo}">
+			<td class="table_index" align="center">${i}</td>
+			<c:if test='${param.menu!="manage"}'>
+				<td>
+					<img name="${product.fileName}" src="/images/uploadFiles/${product.fileName}"
+						class="table_image ui-corner-all listProdImg" prodImg="${product.fileName}">
 				</td>
-				<td align="left">${product.price}</td>
-				<td align="left">${product.prodStock}</td>
+			</c:if>
+			<td align="left">
 				<c:if test='${param.menu=="manage"}'>
-					<td align="left">${product.regDate}</td>
+					<span class="updateProduct">
+						${product.prodName}
+					</span>
 				</c:if>
-				<td align="left">
-					${product.prodTranCode}
-					<c:if test='${param.menu=="manage" && product.prodTranCode=="구매완료"}'>
-						<a sendValue="${product.prodNo}">배송하기</a>
-					</c:if>
-				</td>
-				<td><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-				</td>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
-	<!--	table End /////////////////////////////////////-->
+				<c:if test='${param.menu!="manage"}'>
+					<span class="getProduct">
+						${product.prodName}
+					</span>
+				</c:if>
+			</td>
+			<td class="table_price" align="left">${product.price}</td>
+			<td class="table_prodStock" align="left">${product.prodStock}</td>
+			<c:if test='${param.menu=="manage"}'>
+				<td class="table_regDate" align="left">${product.regDate}</td>
+			</c:if>
+			<td class="table_prodTranCode" align="left">
+				${product.prodTranCode}
+				<c:if test='${param.menu=="manage" && product.prodTranCode=="구매완료"}'>
+					<a>배송하기</a>
+				</c:if>
+			</td>
+			<td><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+			</td>
+		</tr>
+	</c:forEach>
+	</tbody>
+</table>
+<!--	table End /////////////////////////////////////-->
 	
 	<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">

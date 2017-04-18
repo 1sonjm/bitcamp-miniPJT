@@ -110,7 +110,7 @@ public class ProductController {
 		productService.updateProduct(product);
 		return "redirect:/product/listProduct?menu=manage";
 	}
-	
+
 	@RequestMapping(value="listProduct")
 	public String listProduct(@ModelAttribute("search")Search search
 							,@RequestParam(value="viewSoldItem", defaultValue="off")String viewSoldItem
@@ -132,6 +132,27 @@ public class ProductController {
 		model.addAttribute("list",map.get("list"));
 		model.addAttribute("search",search);
 		return "forward:/product/listProduct.jsp";
+	}
+	@RequestMapping(value="listJsonProduct")
+	public void listJsonProduct(@ModelAttribute("search")Search search
+							,@RequestParam(value="viewSoldItem", defaultValue="off")String viewSoldItem
+							,Model model)throws Exception{
+
+		if(viewSoldItem.equals("on")){
+			search.setViewSoldItem(true);
+		}
+		if(search.getCurrentPage()==0){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		Map<String, Object> map = productService.getProductList(search);
+		Page resultPage = new Page(search.getCurrentPage()
+						, ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		
+		model.addAttribute("resultPage",resultPage);
+		model.addAttribute("list",map.get("list"));
+		model.addAttribute("search",search);
 	}
 	@RequestMapping(value="getJsonListProduct")
 	public void getJsonlistProduct(@ModelAttribute("search")Search search
