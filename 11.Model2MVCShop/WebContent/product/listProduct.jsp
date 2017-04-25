@@ -182,8 +182,9 @@
 						if('${param.menu=="manage"}'){
 							$($('.table_regDate')[i]).html(J.list[i].regDate);
 						}else{
-							$($('.table_image')[i]).attr('src','/images/uploadFiles/'+J.list[i].fileName)
-							$($('.table_image')[i]).attr('name',J.list[i].fileName)
+							alert('/images/uploadFiles/'+J.list[i].fileName);
+							$($('.table_image')[i]).attr('src','/images/uploadFiles/'+J.list[i].fileName);
+							$($('.table_image')[i]).attr('name',J.list[i].fileName);
 							$($('.table_image')[i]).attr('prodImg',J.list[i].fileName);
 						}
 					}
